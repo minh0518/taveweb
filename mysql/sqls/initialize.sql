@@ -1,0 +1,11 @@
+DROP DATABASE IF EXISTS myapp;
+DROP DATABASE IF EXISTS tave;
+
+CREATE DATABASE tave;
+USE tave;
+
+CREATE TABLE lists (
+    id INTEGER AUTO_INCREMENT,
+    value TEXT,
+    PRIMARY KEY (id)
+)
