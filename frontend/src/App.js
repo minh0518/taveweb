@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import axios from "axios";
+import {Route, Routes, Link} from 'react-router-dom';
+import Navbar from './views/Navbar';
+import Home from './views/Home';
+import About from './views/About';
+import Board from './views/Board';
+import Apply from './views/Apply';
+import QnA from './views/QnA';
 
 function App() {
   const [lists, setLists] = useState([]);
@@ -39,25 +45,18 @@ function App() {
   };
 
   return (
+    <div>
+    <Navbar />
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div className="container">
-          {lists &&
-            lists.map((list, index) => <li key={index}>{list.value} </li>)}
-          <br />
-          <form className="example" onSubmit={submitHandler}>
-            <input
-              type="text"
-              placeholder="입력해주세요..."
-              onChange={changeHandler}
-              value={value}
-            />
-            <button type="submit">확인.</button>
-          </form>
-        </div>
-      </header>
-    </div>
+        <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/About" element={<About />} />
+        <Route exact path="/Board" element={<Board />} />
+        <Route exact path="/Apply" element={<Apply />} />
+        <Route exact path="/QnA" element={<QnA />} />
+        </Routes>
+      </div>
+      </div>
   );
 }
 
