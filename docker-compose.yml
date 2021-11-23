@@ -34,6 +34,8 @@ services:
       MYSQL_DATABASE: tave
       MYSQL_PORT: 3306
       
+      NODE_ENV: development
+      
   mysql:
     build: ./mysql
     restart: unless-stopped
