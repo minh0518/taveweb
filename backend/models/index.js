@@ -1,16 +1,11 @@
-const Sequelize = require('sequelize');
-// const User = require('./user');
-// const Comment = require('./comment');
+const { Sequelize } = require('sequelize');
+const User = require('./user');
+const Comment = require('./comment');
+const Question = require('./question');
+const Answer = require('./answer');
 
 const env = process.env.NODE_ENV || 'development';
-const config = require('../config')[env];
-// const config = {
-//     username: process.env.MYSQL_USER,
-//     password: process.env.MYSQL_ROOT_PASSWORD,
-//     database: process.env.MYSQL_DATABASE,
-//     host: process.env.MYSQL_HOST,
-//     dialect: 'mysql',
-// };
+const config = require('../config/mysql')[env];
 const db = {};
 
 const sequelize = new Sequelize(
@@ -22,5 +17,21 @@ const sequelize = new Sequelize(
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+db.User = User;
+db.Comment = Comment;
+
+db.Question = Question;
+db.Answer = Answer;
+
+User.init(sequelize);
+Comment.init(sequelize);
+User.associate(db);
+Comment.associate(db);
+
+Question.init(sequelize);
+Answer.init(sequelize);
+Question.associate(db);
+Answer.associate(db);
 
 module.exports = db;
