@@ -8,9 +8,14 @@ module.exports = class Question extends Sequelize.Model {
                     type: Sequelize.STRING(100),
                     allowNull: false,
                 },
+                password: {
+                    type: Sequelize.STRING(20),
+                    allowNull: false,
+                },
                 del_flag: {
                     type: Sequelize.BOOLEAN,
                     allowNull: false,
+                    defaultValue: false,
                 },
                 created_at: {
                     type: Sequelize.DATE,
