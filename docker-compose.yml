@@ -48,3 +48,5 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: tave123
             MYSQL_DATABASE: tave
+        cap_add:
+            - SYS_NICE
