@@ -7,7 +7,7 @@ services:
         volumes:
             - /app/node_modules
             - ./frontend:/app
-        container_name: app_frontend
+        container_name: tave_frontend
         stdin_open: true
 
     nginx:
@@ -15,7 +15,7 @@ services:
         build:
             dockerfile: Dockerfile
             context: ./nginx
-        container_name: app_nginx
+        container_name: tave_nginx
         ports:
             - '3000:80'
 
@@ -23,7 +23,7 @@ services:
         build:
             dockerfile: Dockerfile.dev
             context: ./backend
-        container_name: app_backend
+        container_name: tave_backend
         volumes:
             - /app/node_modules
             - ./backend:/app
@@ -39,7 +39,7 @@ services:
     mysql:
         build: ./mysql
         restart: unless-stopped
-        container_name: app_mysql
+        container_name: tave_mysql
         ports:
             - '3307:3306'
         volumes:
