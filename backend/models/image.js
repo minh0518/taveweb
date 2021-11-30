@@ -1,15 +1,11 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Answer extends Sequelize.Model {
+module.exports = class Image extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-                content: {
-                    type: Sequelize.STRING(100),
-                    allowNull: false,
-                },
-                del_flag: {
-                    type: Sequelize.BOOLEAN,
+                image_url: {
+                    type: Sequelize.STRING(500),
                     allowNull: false,
                 },
                 created_at: {
@@ -21,8 +17,8 @@ module.exports = class Answer extends Sequelize.Model {
             {
                 sequelize,
                 timestamps: false,
-                modelName: 'Answer',
-                tableName: 'answers',
+                modelName: 'Image',
+                tableName: 'images',
                 paranoid: false,
                 charset: 'utf8mb4',
                 collate: 'utf8mb4_general_ci',
@@ -31,12 +27,8 @@ module.exports = class Answer extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.Answer.belongsTo(db.Question, {
-            foreignKey: 'question_id',
-            targetKey: 'id',
-        });
-        db.Answer.belongsTo(db.User, {
-            foreignKey: 'user_id',
+        db.Image.belongsTo(db.Board, {
+            foreignKey: 'board_id',
             targetKey: 'id',
         });
     }

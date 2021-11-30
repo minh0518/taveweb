@@ -1,15 +1,23 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Answer extends Sequelize.Model {
+module.exports = class Apply extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-                content: {
-                    type: Sequelize.STRING(100),
+                phone: {
+                    type: Sequelize.STRING(500),
                     allowNull: false,
                 },
-                del_flag: {
-                    type: Sequelize.BOOLEAN,
+                name: {
+                    type: Sequelize.STRING(20),
+                    allowNull: false,
+                },
+                email: {
+                    type: Sequelize.STRING(50),
+                    allowNull: false,
+                },
+                apply_form: {
+                    type: Sequelize.JSON,
                     allowNull: false,
                 },
                 created_at: {
@@ -21,9 +29,9 @@ module.exports = class Answer extends Sequelize.Model {
             {
                 sequelize,
                 timestamps: false,
-                modelName: 'Answer',
-                tableName: 'answers',
-                paranoid: false,
+                modelName: 'Applies',
+                tableName: 'applies',
+                paranoid: true,
                 charset: 'utf8mb4',
                 collate: 'utf8mb4_general_ci',
             }
@@ -31,12 +39,8 @@ module.exports = class Answer extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.Answer.belongsTo(db.Question, {
-            foreignKey: 'question_id',
-            targetKey: 'id',
-        });
-        db.Answer.belongsTo(db.User, {
-            foreignKey: 'user_id',
+        db.Apply.belongsTo(db.Recruit, {
+            foreignKey: 'recruit_id',
             targetKey: 'id',
         });
     }
