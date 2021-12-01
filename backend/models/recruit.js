@@ -30,7 +30,7 @@ module.exports = class Recruit extends (
                 modelName: 'Recruit',
                 tableName: 'recruits',
                 paranoid: true,
-                timestamps: false,
+                timestamps: true,
                 charset: 'utf8mb4',
                 collate: 'utf8mb4_general_ci',
             }
