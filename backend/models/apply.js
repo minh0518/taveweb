@@ -20,6 +20,11 @@ module.exports = class Apply extends Sequelize.Model {
                     type: Sequelize.JSON,
                     allowNull: false,
                 },
+                accepted: {
+                    type: Sequelize.BOOLEAN,
+                    allowNull: false,
+                    defaultValue: false,
+                },
                 created_at: {
                     type: Sequelize.DATE,
                     allowNull: true,
@@ -28,10 +33,11 @@ module.exports = class Apply extends Sequelize.Model {
             },
             {
                 sequelize,
-                timestamps: false,
+                underscored: true,
                 modelName: 'Applies',
                 tableName: 'applies',
                 paranoid: true,
+                timestamps: true,
                 charset: 'utf8mb4',
                 collate: 'utf8mb4_general_ci',
             }

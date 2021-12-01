@@ -6,7 +6,7 @@ module.exports = class Board extends Sequelize.Model {
             {
                 category: {
                     type: Sequelize.ENUM,
-                    values: ['notice', 'news', 'faq'],
+                    values: ['notice', 'news'],
                     allowNull: false,
                 },
                 title: {
@@ -15,15 +15,7 @@ module.exports = class Board extends Sequelize.Model {
                 },
                 content: {
                     type: Sequelize.STRING(500),
-                    allowNull: true,
-                },
-                question: {
-                    type: Sequelize.STRING(500),
-                    allowNull: true,
-                },
-                answer: {
-                    type: Sequelize.STRING(500),
-                    allowNull: true,
+                    allowNull: false,
                 },
                 created_at: {
                     type: Sequelize.DATE,
@@ -33,10 +25,11 @@ module.exports = class Board extends Sequelize.Model {
             },
             {
                 sequelize,
-                timestamps: false,
+                underscored: true,
                 modelName: 'Board',
                 tableName: 'boards',
                 paranoid: true,
+                timestamps: true,
                 charset: 'utf8mb4',
                 collate: 'utf8mb4_general_ci',
             }

@@ -8,10 +8,6 @@ module.exports = class Answer extends Sequelize.Model {
                     type: Sequelize.STRING(100),
                     allowNull: false,
                 },
-                del_flag: {
-                    type: Sequelize.BOOLEAN,
-                    allowNull: false,
-                },
                 created_at: {
                     type: Sequelize.DATE,
                     allowNull: true,
@@ -20,10 +16,11 @@ module.exports = class Answer extends Sequelize.Model {
             },
             {
                 sequelize,
-                timestamps: false,
+                underscored: true,
                 modelName: 'Answer',
                 tableName: 'answers',
-                paranoid: false,
+                paranoid: true,
+                timestamps: true,
                 charset: 'utf8mb4',
                 collate: 'utf8mb4_general_ci',
             }

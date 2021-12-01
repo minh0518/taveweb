@@ -24,10 +24,11 @@ module.exports = class Recruit extends Sequelize.Model {
             },
             {
                 sequelize,
-                timestamps: false,
+                underscored: true,
                 modelName: 'Recruit',
                 tableName: 'recruits',
                 paranoid: true,
+                timestamps: true,
                 charset: 'utf8mb4',
                 collate: 'utf8mb4_general_ci',
             }

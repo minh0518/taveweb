@@ -11,10 +11,11 @@ module.exports = class Json extends Sequelize.Model {
             },
             {
                 sequelize,
-                timestamps: false,
+                underscored: true,
                 modelName: 'Json',
                 tableName: 'jsons',
                 paranoid: false,
+                timestamps: false,
                 charset: 'utf8mb4',
                 collate: 'utf8mb4_general_ci',
             }

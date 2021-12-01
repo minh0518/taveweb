@@ -1,28 +1,27 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Question extends Sequelize.Model {
+module.exports = class FaQ extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-                content: {
-                    type: Sequelize.STRING(100),
-                    allowNull: false,
-                },
-                password: {
+                title: {
                     type: Sequelize.STRING(20),
                     allowNull: false,
                 },
-                created_at: {
-                    type: Sequelize.DATE,
-                    allowNull: true,
-                    defaultValue: Sequelize.NOW,
+                question: {
+                    type: Sequelize.STRING(500),
+                    allowNull: false,
+                },
+                answer: {
+                    type: Sequelize.STRING(500),
+                    allowNull: false,
                 },
             },
             {
                 sequelize,
                 underscored: true,
-                modelName: 'Question',
-                tableName: 'questions',
+                modelName: 'FaQ',
+                tableName: 'faqs',
                 paranoid: true,
                 timestamps: true,
                 charset: 'utf8mb4',
@@ -32,9 +31,9 @@ module.exports = class Question extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.Question.hasMany(db.Answer, {
-            foreignKey: 'question_id',
-            sourceKey: 'id',
+        db.Board.belongsTo(db.User, {
+            foreignKey: 'user_id',
+            targetKey: 'id',
         });
     }
 };

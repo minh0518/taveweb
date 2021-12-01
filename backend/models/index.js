@@ -1,5 +1,6 @@
 const { Sequelize } = require('sequelize');
 const User = require('./user');
+const FaQ = require('./faq');
 const Board = require('./board');
 const Image = require('./image');
 const Question = require('./question');
@@ -23,6 +24,7 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.User = User;
+db.FaQ = FaQ;
 db.Board = Board;
 db.Image = Image;
 db.Question = Question;
@@ -34,14 +36,17 @@ db.Json = Json;
 Json.init(sequelize);
 
 User.init(sequelize);
+FaQ.init(sequelize);
 Board.init(sequelize);
 Image.init(sequelize);
+Board.init(sequelize);
 Question.init(sequelize);
 Answer.init(sequelize);
 Recruit.init(sequelize);
 Apply.init(sequelize);
 
 User.associate(db);
+FaQ.associate(db);
 Board.associate(db);
 Image.associate(db);
 Question.associate(db);

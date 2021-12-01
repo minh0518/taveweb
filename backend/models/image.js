@@ -16,10 +16,11 @@ module.exports = class Image extends Sequelize.Model {
             },
             {
                 sequelize,
-                timestamps: false,
+                underscored: true,
                 modelName: 'Image',
                 tableName: 'images',
-                paranoid: false,
+                paranoid: true,
+                timestamps: true,
                 charset: 'utf8mb4',
                 collate: 'utf8mb4_general_ci',
             }
