@@ -1,12 +1,14 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Board extends Sequelize.Model {
+module.exports = class Board extends (
+    Sequelize.Model
+) {
     static init(sequelize) {
         return super.init(
             {
                 category: {
                     type: Sequelize.ENUM,
-                    values: ['notice', 'news'],
+                    values: ['notice', 'news', 'tave', 'admin', 'history'],
                     allowNull: false,
                 },
                 title: {
