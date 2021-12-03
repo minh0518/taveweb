@@ -5,7 +5,7 @@ const { logger } = require('../config/winston');
 const router = express.Router();
 
 router
-    .route('/') //여기서 id는 question_id,,, 이렇게 해도 되나 모르겠음
+    .route('/')
     .get(async (req, res, next) => {
         try {
             const answers = await Answer.findAll({
