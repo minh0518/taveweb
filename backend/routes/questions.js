@@ -1,4 +1,6 @@
 const express = require('express');
+const logger = require('../config/winston');
+
 const Question = require('../models/question');
 const Answer = require('../models/answer');
 
@@ -13,7 +15,7 @@ router
             });
             res.json({ questions });
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             next(err);
         }
     })
@@ -24,10 +26,10 @@ router
                 content: req.body.content,
                 password: req.body.password,
             });
-            console.log(question);
+            logger.debug(question);
             res.status(201).json(question);
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             next(err);
         }
     });
@@ -36,7 +38,7 @@ router
     .route('/:id')
     .get(async (req, res, next) => {
         try {
-            console.log(req.params.id);
+            logger.log(req.params.id);
             const question = await Question.findOne({
                 include: [
                     {
@@ -48,13 +50,13 @@ router
             });
             res.status(200).json({ question });
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             next(err);
         }
     })
     .patch(async (req, res, next) => {
         try {
-            console.log(req.params.id);
+            logger.log(req.params.id);
             const question = await Question.update(
                 {
                     title: req.body.title,
@@ -66,7 +68,7 @@ router
             );
             res.json({ question });
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             next(err);
         }
     });
@@ -78,7 +80,7 @@ router.route('/:id/password').get(async (req, res, next) => {
         });
         res.status(200).json({ check: question !== null });
     } catch (err) {
-        console.error(err);
+        logger.error(err);
         next(err);
     }
 });

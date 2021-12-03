@@ -1,6 +1,7 @@
 const express = require('express');
+const logger = require('../config/winston');
+
 const Answer = require('../models/answer');
-const { logger } = require('../config/winston');
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ router
             });
             res.status(200).json({ answers });
         } catch (error) {
-            console.error(err);
+            logger.error(err);
             next(err);
         }
     })
@@ -24,10 +25,9 @@ router
                 content: req.body.content,
                 question_id: req.body.question_id,
             });
-            //console.log(answer);
             res.status(201).json(answer);
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             next(err);
         }
     });
@@ -46,7 +46,7 @@ router
             );
             res.json({ answer });
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             next(err);
         }
     })
@@ -57,7 +57,7 @@ router
             });
             res.json({ result });
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             next(err);
         }
     });

@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const nunjucks = require('nunjucks');
 
 const { sequelize } = require('./models');
-const { logger } = require('./config/winston');
+const logger = require('./config/winston');
 
 const indexRouter = require('./routes');
 

@@ -46,4 +46,4 @@ const logger = winston.createLogger({
         new winston.transports.Console({ handleExceptions: true }),
     ],
 });
-module.exports = { logger };
+module.exports = logger;
