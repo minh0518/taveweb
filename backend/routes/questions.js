@@ -56,7 +56,7 @@ router
     })
     .patch(async (req, res, next) => {
         try {
-            logger.log(req.params.id);
+            logger.debug(req.params.id);
             const question = await Question.update(
                 {
                     title: req.body.title,
