@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const nunjucks = require('nunjucks');
 
 const { sequelize } = require('./models');
+const { logger } = require('./config/winston');
+
 const indexRouter = require('./routes');
 
 const app = express();
@@ -25,4 +27,8 @@ app.use('/api', indexRouter);
 
 app.listen(5000, () => {
     console.log('애플리케이션이 5000번 포트에서 시작되었습니다.');
+    logger.debug('debug');
+    logger.info('info');
+    logger.warn('warn');
+    logger.error('error');
 });
