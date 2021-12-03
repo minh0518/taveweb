@@ -10,10 +10,9 @@ module.exports = class Image extends (
                     type: Sequelize.STRING(500),
                     allowNull: false,
                 },
-                created_at: {
-                    type: Sequelize.DATE,
+                image_description: {
+                    type: Sequelize.STRING(500),
                     allowNull: true,
-                    defaultValue: Sequelize.NOW,
                 },
             },
             {

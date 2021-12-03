@@ -9,7 +9,7 @@ router
     .get(async (req, res, next) => {
         try {
             const questions = await Question.findAll({
-                attributes: ['id', 'content'],
+                //attributes: ['id', 'content'],
             });
             res.json({ questions });
         } catch (err) {

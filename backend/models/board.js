@@ -19,11 +19,6 @@ module.exports = class Board extends (
                     type: Sequelize.STRING(500),
                     allowNull: false,
                 },
-                created_at: {
-                    type: Sequelize.DATE,
-                    allowNull: true,
-                    defaultValue: Sequelize.NOW,
-                },
             },
             {
                 sequelize,

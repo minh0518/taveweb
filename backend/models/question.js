@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Question extends Sequelize.Model {
+module.exports = class Question extends (
+    Sequelize.Model
+) {
     static init(sequelize) {
         return super.init(
             {
@@ -11,11 +13,6 @@ module.exports = class Question extends Sequelize.Model {
                 password: {
                     type: Sequelize.STRING(20),
                     allowNull: false,
-                },
-                created_at: {
-                    type: Sequelize.DATE,
-                    allowNull: true,
-                    defaultValue: Sequelize.NOW,
                 },
             },
             {

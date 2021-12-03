@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Apply extends Sequelize.Model {
+module.exports = class Apply extends (
+    Sequelize.Model
+) {
     static init(sequelize) {
         return super.init(
             {
@@ -24,11 +26,6 @@ module.exports = class Apply extends Sequelize.Model {
                     type: Sequelize.BOOLEAN,
                     allowNull: false,
                     defaultValue: false,
-                },
-                created_at: {
-                    type: Sequelize.DATE,
-                    allowNull: true,
-                    defaultValue: Sequelize.NOW,
                 },
             },
             {
