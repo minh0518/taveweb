@@ -38,7 +38,7 @@ router
     .route('/:id')
     .get(async (req, res, next) => {
         try {
-            logger.log(req.params.id);
+            logger.debug(req.params.id);
             const question = await Question.findOne({
                 include: [
                     {
