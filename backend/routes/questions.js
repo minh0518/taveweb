@@ -38,6 +38,11 @@ router
         try {
             console.log(req.params.id);
             const question = await Question.findOne({
+                include: [
+                    {
+                        model: Answer,
+                    },
+                ],
                 attributes: ['id', 'title', 'content'],
                 where: { id: req.params.id },
             });
