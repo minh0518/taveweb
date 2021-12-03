@@ -27,8 +27,8 @@ app.use('/api', indexRouter);
 
 app.listen(5000, () => {
     console.log('애플리케이션이 5000번 포트에서 시작되었습니다.');
-    logger.debug('debug');
-    logger.info('info');
-    logger.warn('warn');
-    logger.error('error');
+    logger.debug('logger 테스트');
+    // logger.info('info');
+    // logger.warn('warn');
+    // logger.error('error');
 });
