@@ -57,7 +57,7 @@ router
     .patch(async (req, res, next) => {
         try {
             logger.debug(req.params.id);
-            const question = await Question.update(
+            const result = await Question.update(
                 {
                     title: req.body.title,
                     content: req.body.content,
@@ -66,7 +66,19 @@ router
                     where: { id: req.params.id },
                 }
             );
-            res.json({ question });
+            res.json({ result });
+        } catch (err) {
+            logger.error(err);
+            next(err);
+        }
+    })
+    .delete(async (req, res, next) => {
+        try {
+            logger.debug(req.params.id);
+            const result = await Question.destroy({
+                where: { id: req.params.id },
+            });
+            res.json({ result });
         } catch (err) {
             logger.error(err);
             next(err);
