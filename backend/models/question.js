@@ -6,6 +6,10 @@ module.exports = class Question extends (
     static init(sequelize) {
         return super.init(
             {
+                title: {
+                    type: Sequelize.STRING(20),
+                    allowNull: false,
+                },
                 content: {
                     type: Sequelize.STRING(100),
                     allowNull: false,
