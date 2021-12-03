@@ -9,7 +9,7 @@ router
     .get(async (req, res, next) => {
         try {
             const questions = await Question.findAll({
-                //attributes: ['id', 'content'],
+                attributes: ['id', 'title', 'content'],
             });
             res.json({ questions });
         } catch (err) {
@@ -20,6 +20,7 @@ router
     .post(async (req, res, next) => {
         try {
             const question = await Question.create({
+                title: req.body.title,
                 content: req.body.content,
                 password: req.body.password,
             });
@@ -37,7 +38,7 @@ router
         try {
             console.log(req.params.id);
             const question = await Question.findOne({
-                attributes: ['id', 'content'],
+                attributes: ['id', 'title', 'content'],
                 where: { id: req.params.id },
             });
             res.status(200).json({ question });
@@ -51,6 +52,7 @@ router
             console.log(req.params.id);
             const question = await Question.update(
                 {
+                    title: req.body.title,
                     content: req.body.content,
                 },
                 {
