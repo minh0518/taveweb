@@ -1,8 +1,8 @@
 const express = require('express');
 const logger = require('../config/winston');
 
-const Question = require('../models/question');
-const Answer = require('../models/answer');
+const  FaQ  = require('../models/faq');
+
 
 const router = express.Router();
  
@@ -10,10 +10,10 @@ router
     .route('/')
     .get(async (req, res, next) => {
         try {
-            const questions = await Question.findAll({
-                attributes: ['id', 'title', 'content'],
+            const faqs = await FaQ.findAll({
+                attributes: ['id', 'title', 'question'],
             });
-            res.json({ questions });
+            res.json({ faqs });
         } catch (err) {
             logger.error(err);
             next(err);
@@ -21,13 +21,13 @@ router
     })
     .post(async (req, res, next) => {
         try {
-            const question = await Question.create({
+            const faq = await FaQ.create({
                 title: req.body.title,
-                content: req.body.content,
-                password: req.body.password,
+                question: req.body.question,
+                answer: req.body.answer,
             });
-            logger.debug(question);
-            res.status(201).json(question);
+            logger.debug(faq);
+            res.status(201).json(faq);
         } catch (err) {
             logger.error(err);
             next(err);
@@ -39,16 +39,11 @@ router
     .get(async (req, res, next) => {
         try {
             logger.debug(req.params.id);
-            const question = await Question.findOne({
-                include: [
-                    {
-                        model: Answer,
-                    },
-                ],
-                attributes: ['id', 'title', 'content'],
+            const faq = await FaQ.findOne({
+                attributes: ['id', 'title', 'question', 'answer'],
                 where: { id: req.params.id },
             });
-            res.status(200).json({ question });
+            res.status(200).json({ faq });
         } catch (err) {
             logger.error(err);
             next(err);
@@ -56,17 +51,32 @@ router
     })
     .patch(async (req, res, next) => {
         try {
-            logger.log(req.params.id);
-            const question = await Question.update(
+            logger.debug(req.params.id);
+            const faq = await FaQ.update(
                 {
                     title: req.body.title,
-                    content: req.body.content,
+                    question: req.body.question,
+                    answer: req.body.answer,
                 },
                 {
                     where: { id: req.params.id },
                 }
             );
-            res.json({ question });
+            res.json({ faq });
+        } catch (err) {
+            logger.error(err);
+            next(err);
+        }
+    })
+    .delete(async (req, res, next) => {
+        try {
+            logger.debug(req.params.id);
+            const result = await FaQ.destroy(
+                {
+                    where: { id: req.params.id },
+                }
+            );
+            res.json(result);
         } catch (err) {
             logger.error(err);
             next(err);
