@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Route, Routes, Link } from 'react-router-dom';
+import Navbar from '../Navbar';
 
 const QnA = () => {
     return (
         <div>
-            <p>QnA 게시판</p>
+            <Navbar>
+            <p>QnA 목록</p>
+            </Navbar>
         </div>
     );
 };
