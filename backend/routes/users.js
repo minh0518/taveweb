@@ -1,39 +1,72 @@
 const express = require('express');
 const logger = require('../config/winston');
+const s3 = require('../config/s3');
+const upload = require('../config/s3');
 
-const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+// const multer = require('multer');
+// const multerS3 = require('multer-s3');
+// const aws = require('aws-sdk');
+const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
 
 const router = express.Router();
 
-router
-    .route('/')
-    .get(async (req, res, next) => {
-        try {
-            const users = await User.findAll({
-                // attributes: ['id', 'title', 'content'],
-            });
-            res.json({ users });
-        } catch (err) {
-            logger.error(err);
-            next(err);
-        }
-    })
-    .post(async (req, res, next) => {
-        try {
-            const question = await Question.create({
-                title: req.body.title,
-                content: req.body.content,
-                password: req.body.password,
-            });
-            logger.debug(question);
-            res.status(201).json(question);
-        } catch (err) {
-            logger.error(err);
-            next(err);
-        }
-    });
+try {
+    fs.readdirSync('uploads');
+} catch (error) {
+    logger.warn('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
+    fs.mkdirSync('uploads');
+}
+
+// const upload = multer({
+//     storage: multer.diskStorage({
+//         destination(req, file, cb) {
+//             cb(null, 'uploads/');
+//         },
+//         filename(req, file, cb) {
+//             const ext = path.extname(file.originalname);
+//             cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+//         },
+//     }),
+//     limits: { fileSize: 5 * 1024 * 1024 },
+// });
+
+router.route('/').get(async (req, res, next) => {
+    try {
+        const users = await User.findAll({
+            // attributes: ['id', 'title', 'content'],
+        });
+        res.json({ users });
+    } catch (err) {
+        logger.error(err);
+        next(err);
+    }
+});
+
+router.post('/', upload.single('profile'), async (req, res, next) => {
+    try {
+        // logger.debug(req.file.location);
+        // logger.debug(req.body.email);
+        // logger.debug(req.body.password);
+        // logger.debug(req.body.name);
+        hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const user = await User.create({
+            email: req.body.email,
+            password: hashedPassword,
+            name: req.body.name,
+            role: 'normal',
+            profile: req.file.location,
+        });
+        logger.debug(user);
+        res.status(201).json({ user });
+    } catch (err) {
+        logger.error(err);
+        next(err);
+    }
+});
 
 router
     .route('/:id')
