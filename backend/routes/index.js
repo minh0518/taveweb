@@ -1,14 +1,16 @@
 const express = require('express');
 
+const usersRouter = require('./users');
 const questionsRouter = require('./questions');
 const answersRouter = require('./answers');
 const testsRouter = require('./test');
 const faqsRouter = require('./faqs');
-const db = require('../db');
+const db = require('../config/db');
 
 const router = express.Router();
 
 /* 라우터 등록 */
+router.use('/users', usersRouter);
 router.use('/questions', questionsRouter);
 router.use('/answers', answersRouter);
 router.use('/test', testsRouter);
