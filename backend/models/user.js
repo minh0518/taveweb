@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Users extends (
-    Sequelize.Model
-) {
+module.exports = class Users extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
@@ -11,7 +9,7 @@ module.exports = class Users extends (
                     allowNull: false,
                 },
                 password: {
-                    type: Sequelize.STRING(20),
+                    type: Sequelize.STRING(100),
                     allowNull: false,
                 },
                 name: {
@@ -25,12 +23,14 @@ module.exports = class Users extends (
                 role: {
                     type: Sequelize.ENUM,
                     values: [
+                        'master',
                         'chairman',
                         'business-head',
                         'pr',
                         'accounting',
                         'tech-head',
                         'tech',
+                        'normal',
                     ],
                     allowNull: false,
                 },
