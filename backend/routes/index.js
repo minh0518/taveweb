@@ -3,6 +3,7 @@ const express = require('express');
 const questionsRouter = require('./questions');
 const answersRouter = require('./answers');
 const testsRouter = require('./test');
+const faqsRouter = require('./faqs');
 const db = require('../db');
 
 const router = express.Router();
@@ -11,6 +12,7 @@ const router = express.Router();
 router.use('/questions', questionsRouter);
 router.use('/answers', answersRouter);
 router.use('/test', testsRouter);
+router.use('/faqs', faqsRouter);
 
 router.get('/', async (req, res, next) => {
     try {
