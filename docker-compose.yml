@@ -34,6 +34,11 @@ services:
             MYSQL_DATABASE: tave
             MYSQL_PORT: 3306
 
+            S3_KEYID: ${S3_KEYID}
+            S3_PRIVATE_KEY: ${S3_PRIVATE_KEY}
+            REGION: ${REGION}
+            BUCKET_NAME: ${BUCKET_NAME}
+
             NODE_ENV: development
 
     mysql:
