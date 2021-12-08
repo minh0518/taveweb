@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Route, Routes, Link } from 'react-router-dom';
-import Navbar from '../Navbar';
 
 const QnA = () => {
+    
+    useEffect(function(){
+        axios.get("/api/questions").then((result)=>{
+            console.log(result.data)
+        })
+    },[])
     return (
         <div>
-            <Navbar>
             <p>QnA 목록</p>
-            </Navbar>
+        
+            
         </div>
     );
 };
+
+
+function List(){
+    
+}
 
 export default QnA;
