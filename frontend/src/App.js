@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
-import { Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Router, Link } from 'react-router-dom';
+import AppLayout from './views/AppLayout';
 import Navbar from './views/Navbar';
 import Home from './views/Home';
 import About from './views/TAVE/About';
@@ -16,6 +17,7 @@ import Apply_check from './views/Recruit/Apply_check';
 import Result from './views/Recruit/Result';
 import QnA from './views/Q&A/QnA';
 import FAQ from './views/Q&A/FAQ';
+import Admin from './views/admin/admin';
 
 function App() {
     const [lists, setLists] = useState([]);
@@ -54,30 +56,32 @@ function App() {
 
     return (
         <div>
-            <Navbar />
             <div className="App">
                 <Routes>
-                    <Route exact path="/" element={<Home />} />
-                    <Route exact path="/About" element={<About />} />
-                    <Route
-                        exact
-                        path="/About_admin"
-                        element={<About_admin />}
-                    />
-                    <Route exact path="/History" element={<History />} />
-                    <Route exact path="/Notice" element={<Notice />} />
-                    <Route exact path="/Tavynews" element={<Tavynews />} />
-                    <Route exact path="/Board" element={<Board />} />
-                    <Route exact path="/Photos" element={<Photos />} />
-                    <Route exact path="/Apply" element={<Apply />} />
-                    <Route
-                        exact
-                        path="/Apply_check"
-                        element={<Apply_check />}
-                    />
-                    <Route exact path="/Result" element={<Result />} />
-                    <Route exact path="/QnA" element={<QnA />} />
-                    <Route exact path="/FAQ" element={<FAQ />} />
+                    <Route exact path="/admin" element={<Admin />} />
+                    <Route path="/" element={<AppLayout />}>
+                        <Route exact path="/" element={<Home />} />
+                        <Route exact path="/About" element={<About />} />
+                        <Route
+                            exact
+                            path="/About_admin"
+                            element={<About_admin />}
+                        />
+                        <Route exact path="/History" element={<History />} />
+                        <Route exact path="/Notice" element={<Notice />} />
+                        <Route exact path="/Tavynews" element={<Tavynews />} />
+                        <Route exact path="/Board" element={<Board />} />
+                        <Route exact path="/Photos" element={<Photos />} />
+                        <Route exact path="/Apply" element={<Apply />} />
+                        <Route
+                            exact
+                            path="/Apply_check"
+                            element={<Apply_check />}
+                        />
+                        <Route exact path="/Result" element={<Result />} />
+                        <Route exact path="/QnA" element={<QnA />} />
+                        <Route exact path="/FAQ" element={<FAQ />} />
+                    </Route>
                 </Routes>
             </div>
         </div>
