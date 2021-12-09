@@ -35,22 +35,23 @@ const QnA = () => {
     
 
         {value.map((question) => ( // 질문들을 보여줌
-        <div>
-        <Link to={question.id}><p>{question.title}</p></Link> 
-        </div> 
+            <div>
+            <Link to={question.id}><p>{question.title}</p></Link> 
+            </div> 
         ))}
 
         {value.map((question) => (   //클릭하면 해당 question_id에 대한 답변 
-        <div>
-        <Routes>
-            <Route exact path={question.id}><DisplayAnswers answers={value2} questionId={question.id}></DisplayAnswers>
-            </Route>
-        </Routes> 
-        </div>
-
-        ))}
         
-    </div>
+            <div>
+            <Routes>
+                <Route exact path={question.id}><DisplayAnswers answers={value2} questionId={question.id}></DisplayAnswers>
+                </Route>
+            </Routes> 
+            </div>
+
+            ))}
+        
+        </div>
     );
 };
 
