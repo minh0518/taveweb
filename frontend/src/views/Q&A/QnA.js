@@ -26,7 +26,9 @@ const QnA = () => {
     }
 
   
-
+    const searchedAnswers=value2.filter(function(answer){
+        return (answer.question_id).includes()
+    })
 
     
     return (
