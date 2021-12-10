@@ -3,72 +3,31 @@ import axios from 'axios';
 import { Route, Routes, Link } from 'react-router-dom';
 
 const QnA = () => {
-    const [value, setValue] = useState([]);//질문들
-
-    const [value2, setValue2] = useState([]);//답변들
+    const [value, setValue] = useState([]);
 
     useEffect(function(){
-        Questions()
+        test()
     },[])
 
-    useEffect(function(){
-        Answers()
-    },[])
-
-    async function Questions(){
+    async function test(){
         const response=await axios.get("/api/questions")
         setValue(response.data.questions)
     }
-    
-    async function Answers(){
-        const response=await axios.get("/api/answers")
-        setValue2(response.data.answers)
-    }
 
-    
     return (
         <div>
-        <p>QnA</p>
-    
-
-        {value.map((question) => ( // 질문들을 보여줌
-        <div>
-        <Link to={question.id}><p>{question.title}</p></Link> 
-        </div> 
+        <p>FAQ</p>
+        {value.map((question) => (
+            <div>
+                <div>{question.id}</div>
+                <div>{question.title}</div>
+                <div>{question.createdAt}</div>
+                <div>{question.updatedAt}</div>
+            </div>
         ))}
-
-        {value.map((question) => (   //클릭하면 해당 question_id에 대한 답변 
-        <div>
-        <Routes>
-            <Route exact path={question.id}><DisplayAnswers answers={value2} questionId={question.id}></DisplayAnswers>
-            </Route>
-        </Routes> 
-        </div>
-
-        ))}
-        
     </div>
     );
 };
-
-
-const DisplayAnswers=function({answers,questionId}){
-    
-    const searchedAnswers=answers.filter(function(answer){
-        return (answer.question_id)==questionId
-    })
-
-
-    searchedAnswers.map(function(answer){
-         return(
-            <div>{answer.content}</div>
-            )
-        
-        
-    })
-
-    
-}
 
 
 export default QnA;
