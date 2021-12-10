@@ -25,11 +25,6 @@ const QnA = () => {
         setValue2(response.data.answers)
     }
 
-  
-    const searchedAnswers=value2.filter(function(answer){
-        return (answer.question_id).includes()
-    })
-
     
     return (
         <div>
@@ -59,13 +54,16 @@ const QnA = () => {
 
 const DisplayAnswers=function({answers,questionId}){
     
-    answers.map(function(answer){
+    const searchedAnswers=answers.filter(function(answer){
+        return (answer.question_id)==questionId
+    })
 
-        if(answer.question_id==={questionId}){
-            return(
+
+    searchedAnswers.map(function(answer){
+         return(
             <div>{answer.content}</div>
             )
-        }
+        
         
     })
 
