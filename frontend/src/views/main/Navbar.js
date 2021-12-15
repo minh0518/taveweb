@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
+import '../../App.css';
 
 function Navbar() {
     return (
@@ -13,14 +13,14 @@ function Navbar() {
                 </li>
 
                 <li class="menuhover">
-                    <Link to="/About" class="menuLink">
+                    <Link to="/about" class="menuLink">
                         TAVE
                     </Link>
 
                     <div class="submenu">
-                        <Link to="/About">TAVE 소개</Link>
-                        <Link to="/History">연혁</Link>
-                        <Link to="/About_admin">운영진 소개</Link>
+                        <Link to="/about">TAVE 소개</Link>
+                        <Link to="/about/history">연혁</Link>
+                        <Link to="/about/manager">운영진 소개</Link>
                         <a href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ">
                             유튜브
                         </a>
@@ -28,47 +28,47 @@ function Navbar() {
                 </li>
 
                 <li class="menuhover">
-                    <Link to="/Notice" class="menuLink">
+                    <Link to="/notice" class="menuLink">
                         Notice
                     </Link>
 
                     <div class="submenu">
-                        <Link to="/Notice">공지사항</Link>
-                        <Link to="/Tavynews">Tavy News</Link>
+                        <Link to="/notice">공지사항</Link>
+                        <Link to="/news">Tavy News</Link>
                     </div>
                 </li>
 
                 <li class="menuhover">
-                    <Link to="/Board" class="menuLink">
+                    <Link to="/board" class="menuLink">
                         TAVY
                     </Link>
 
                     <div class="submenu">
-                        <Link to="/Board">활동 후기</Link>
-                        <Link to="/Photos">활동 사진</Link>
+                        <Link to="/board">활동 후기</Link>
+                        <Link to="/photo">활동 사진</Link>
                     </div>
                 </li>
 
                 <li class="menuhover">
-                    <Link to="/QnA" class="menuLink">
+                    <Link to="/qna" class="menuLink">
                         Q&A
                     </Link>
 
                     <div class="submenu">
-                        <Link to="/FAQ">FAQ</Link>
-                        <Link to="/QnA">Q&A</Link>
+                        <Link to="/faq">FAQ</Link>
+                        <Link to="/qna">Q&A</Link>
                     </div>
                 </li>
 
                 <li class="menuhover">
-                    <Link to="/Apply" class="menuLink">
+                    <Link to="/apply" class="menuLink">
                         Recruit
                     </Link>
 
                     <div class="submenu">
-                        <Link to="/Apply">지원하기</Link>
-                        <Link to="/Apply_check">지원 확인</Link>
-                        <Link to="/Result">합격 확인</Link>
+                        <Link to="/apply">지원하기</Link>
+                        <Link to="/apply/check">지원 확인</Link>
+                        <Link to="/apply/result">합격 확인</Link>
                     </div>
                 </li>
             </ul>
