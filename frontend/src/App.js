@@ -2,22 +2,26 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
 import { BrowserRouter, Route, Routes, Router, Link } from 'react-router-dom';
-import AppLayout from './views/AppLayout';
-import Navbar from './views/Navbar';
-import Home from './views/Home';
-import About from './views/TAVE/About';
-import About_admin from './views/TAVE/About_admin';
-import History from './views/TAVE/History';
-import Notice from './views/Notice/Notice';
-import Tavynews from './views/Notice/Tavynews';
-import Board from './views/TAVY/Board';
-import Photos from './views/TAVY/Photos';
-import Apply from './views/Recruit/Apply';
-import Apply_check from './views/Recruit/Apply_check';
-import Result from './views/Recruit/Result';
-import QnA from './views/Q&A/QnA';
-import FAQ from './views/Q&A/FAQ';
-import Admin from './views/admin/admin';
+
+// Main
+import AppLayout from './views/main/AppLayout';
+import Home from './views/main/Home';
+import About from './views/main/about/About';
+import AboutManager from './views/main/about/AboutManager';
+import History from './views/main/about/History';
+import Notice from './views/main/notice/Notice';
+import News from './views/main/notice/News';
+import Board from './views/main/tavy/Board';
+import Photos from './views/main/tavy/Photos';
+import Apply from './views/main/recruit/Apply';
+import ApplyCheck from './views/main/recruit/ApplyCheck';
+import Result from './views/main/recruit/Result';
+import QnA from './views/main/qna/QnA';
+import FAQ from './views/main/qna/FAQ';
+
+// Admin
+import AdminLayout from './views/admin/AdminLayout';
+import AdminNotice from './views/admin/notice/AdminNotice';
 
 function App() {
     const [lists, setLists] = useState([]);
@@ -58,29 +62,42 @@ function App() {
         <div>
             <div className="App">
                 <Routes>
-                    <Route exact path="/admin" element={<Admin />} />
+                    {/* Admin */}
+                    <Route path="/admin" element={<AdminLayout />}>
+                        <Route exact path="notice" element={<AdminNotice />} />
+                    </Route>
+
+                    {/* Main */}
                     <Route path="/" element={<AppLayout />}>
                         <Route exact path="/" element={<Home />} />
-                        <Route exact path="/About" element={<About />} />
+                        <Route exact path="/about" element={<About />} />
                         <Route
                             exact
-                            path="/About_admin"
-                            element={<About_admin />}
+                            path="/about/manager"
+                            element={<AboutManager />}
                         />
-                        <Route exact path="/History" element={<History />} />
-                        <Route exact path="/Notice" element={<Notice />} />
-                        <Route exact path="/Tavynews" element={<Tavynews />} />
-                        <Route exact path="/Board" element={<Board />} />
-                        <Route exact path="/Photos" element={<Photos />} />
-                        <Route exact path="/Apply" element={<Apply />} />
                         <Route
                             exact
-                            path="/Apply_check"
-                            element={<Apply_check />}
+                            path="/about/history"
+                            element={<History />}
                         />
-                        <Route exact path="/Result" element={<Result />} />
-                        <Route exact path="/QnA" element={<QnA />} />
-                        <Route exact path="/FAQ" element={<FAQ />} />
+                        <Route exact path="/notice" element={<Notice />} />
+                        <Route exact path="/news" element={<News />} />
+                        <Route exact path="/board" element={<Board />} />
+                        <Route exact path="/photo" element={<Photos />} />
+                        <Route exact path="/apply" element={<Apply />} />
+                        <Route
+                            exact
+                            path="/apply/check"
+                            element={<ApplyCheck />}
+                        />
+                        <Route
+                            exact
+                            path="/apply/result"
+                            element={<Result />}
+                        />
+                        <Route exact path="/qna" element={<QnA />} />
+                        <Route exact path="/faq" element={<FAQ />} />
                     </Route>
                 </Routes>
             </div>

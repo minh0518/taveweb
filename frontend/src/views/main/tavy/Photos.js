@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Admin = () => {
+const Photos = () => {
     return (
         <div>
-            <p>Admin 페이지</p>
+            <p>활동 사진</p>
         </div>
     );
 };
 
-export default Admin;
+export default Photos;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Apply_check = () => {
+const ApplyCheck = () => {
     return (
         <div>
             <p>지원 확인</p>
@@ -8,4 +8,4 @@ const Apply_check = () => {
     );
 };
 
-export default Apply_check;
+export default ApplyCheck;

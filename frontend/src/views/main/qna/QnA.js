@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Tavynews = () => {
+const QnA = () => {
     return (
         <div>
-            <p>tavy news</p>
+            <p>QnA 게시판</p>
         </div>
     );
 };
 
-export default Tavynews;
+export default QnA;
