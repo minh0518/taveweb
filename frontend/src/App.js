@@ -22,6 +22,10 @@ import FAQ from './views/main/qna/FAQ';
 // Admin
 import AdminLayout from './views/admin/AdminLayout';
 import AdminNotice from './views/admin/notice/AdminNotice';
+import AdminHome from './views/admin/AdminHome';
+import AdminAbout from './views/admin/about/AdminAbout';
+import AdminAboutManager from './views/admin/about/AdminAboutManager';
+import AdminHistory from './views/admin/about/AdminHistory';
 
 function App() {
     const [lists, setLists] = useState([]);
@@ -64,7 +68,31 @@ function App() {
                 <Routes>
                     {/* Admin */}
                     <Route path="/admin" element={<AdminLayout />}>
+                        <Route exact path="" element={<AdminHome />} />
+                        <Route exact path="about" element={<AdminAbout />} />
+                        <Route
+                            exact
+                            path="about/history"
+                            element={<AdminHistory />}
+                        />
+                        <Route
+                            exact
+                            path="about/manager"
+                            element={<AdminAboutManager />}
+                        />
                         <Route exact path="notice" element={<AdminNotice />} />
+                        <Route exact path="news" element={<News />} />
+                        <Route exact path="board" element={<Board />} />
+                        <Route exact path="photo" element={<Photos />} />
+                        <Route exact path="apply" element={<Apply />} />
+                        <Route
+                            exact
+                            path="apply/check"
+                            element={<ApplyCheck />}
+                        />
+                        <Route exact path="apply/result" element={<Result />} />
+                        <Route exact path="qna" element={<QnA />} />
+                        <Route exact path="faq" element={<FAQ />} />
                     </Route>
 
                     {/* Main */}
