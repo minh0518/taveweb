@@ -1,11 +1,11 @@
 import React from 'react';
 
-const History = () => {
+const AdminNews = () => {
     return (
         <div>
-            <p>연혁</p>
+            <p>tavy news</p>
         </div>
     );
 };
 
-export default History;
+export default AdminNews;

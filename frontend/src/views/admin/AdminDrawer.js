@@ -17,7 +17,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { Outlet } from 'react-router-dom';
+
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Collapse from '@mui/material/Collapse';
+import ListItemButton from '@mui/material/ListItemButton';
+import StarBorder from '@mui/icons-material/StarBorder';
+import { Outlet, Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -98,6 +104,12 @@ export default function AdminDrawer() {
         setOpen(false);
     };
 
+    const [openHome, setOpenHome] = React.useState(false);
+
+    const handleHomeListOpen = () => {
+        setOpenHome(!openHome);
+    };
+
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
@@ -130,6 +142,89 @@ export default function AdminDrawer() {
                         )}
                     </IconButton>
                 </DrawerHeader>
+                <Divider />
+                <List>
+                    <Link
+                        to=""
+                        style={{
+                            color: 'inherit',
+                            textDecoration: 'inherit',
+                        }}
+                    >
+                        <ListItem button>
+                            <ListItemIcon>
+                                <InboxIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Home" />
+                        </ListItem>
+                    </Link>
+                </List>
+                <Divider />
+
+                {/* About */}
+                <List>
+                    <ListItemButton onClick={handleHomeListOpen}>
+                        <ListItemIcon>
+                            <InboxIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="About" />
+                        {openHome ? <ExpandLess /> : <ExpandMore />}
+                    </ListItemButton>
+                    <Collapse in={openHome} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            <Link
+                                to="about"
+                                style={{
+                                    color: 'inherit',
+                                    textDecoration: 'inherit',
+                                }}
+                            >
+                                <ListItemButton sx={{ pl: 4 }}>
+                                    <ListItemIcon>
+                                        <StarBorder />
+                                    </ListItemIcon>
+                                    <ListItemText primary="TAVE 소개" />
+                                </ListItemButton>
+                            </Link>
+                        </List>
+                    </Collapse>
+                    <Collapse in={openHome} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            <Link
+                                to="about/history"
+                                style={{
+                                    color: 'inherit',
+                                    textDecoration: 'inherit',
+                                }}
+                            >
+                                <ListItemButton sx={{ pl: 4 }}>
+                                    <ListItemIcon>
+                                        <StarBorder />
+                                    </ListItemIcon>
+                                    <ListItemText primary="연혁" />
+                                </ListItemButton>
+                            </Link>
+                        </List>
+                    </Collapse>
+                    <Collapse in={openHome} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            <Link
+                                to="about/manager"
+                                style={{
+                                    color: 'inherit',
+                                    textDecoration: 'inherit',
+                                }}
+                            >
+                                <ListItemButton sx={{ pl: 4 }}>
+                                    <ListItemIcon>
+                                        <StarBorder />
+                                    </ListItemIcon>
+                                    <ListItemText primary="운영진 소개" />
+                                </ListItemButton>
+                            </Link>
+                        </List>
+                    </Collapse>
+                </List>
                 <Divider />
                 <List>
                     {['Inbox', 'Starred', 'Send email', 'Drafts'].map(
