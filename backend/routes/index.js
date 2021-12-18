@@ -6,11 +6,8 @@ const answersRouter = require('./answers');
 const testsRouter = require('./test');
 const faqsRouter = require('./faqs');
 const applyRouter = require('./apply');
-<<<<<<< HEAD
 const recruitRouter = require('./recruit');
-=======
-const abouttaveRouter = require('./about_tave');
->>>>>>> 3f93892aedbc8f67349126ecb81ba1e6fe10f537
+const abouttaveRouter = require('./abouttave');
 const db = require('../config/db');
 
 const router = express.Router();
@@ -22,11 +19,8 @@ router.use('/answers', answersRouter);
 router.use('/test', testsRouter);
 router.use('/faqs', faqsRouter);
 router.use('/apply', applyRouter);
-<<<<<<< HEAD
-router.use('/recruit',recruitRouter);
-=======
-router.use('/about_tave', abouttaveRouter);
->>>>>>> 3f93892aedbc8f67349126ecb81ba1e6fe10f537
+router.use('/recruit', recruitRouter);
+router.use('/abouttave', abouttaveRouter);
 
 router.get('/', async (req, res, next) => {
     try {
