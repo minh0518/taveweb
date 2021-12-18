@@ -13,7 +13,7 @@ router
                 attributes: ['id', 'content', 'question_id'],
             });
             res.status(200).json({ answers });
-        } catch (error) {
+        } catch (err) {
             logger.error(err);
             next(err);
         }
