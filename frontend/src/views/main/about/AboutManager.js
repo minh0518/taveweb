@@ -1,6 +1,6 @@
 import React from 'react';
 
-const About_admin = () => {
+const AboutManager = () => {
     return (
         <div>
             <p>운영진 소개</p>
@@ -8,4 +8,4 @@ const About_admin = () => {
     );
 };
 
-export default About_admin;
+export default AboutManager;
