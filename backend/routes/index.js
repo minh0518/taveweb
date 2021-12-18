@@ -22,7 +22,7 @@ router.use('/test', testsRouter);
 router.use('/faqs', faqsRouter);
 router.use('/apply', applyRouter);
 router.use('/recruit', recruitRouter);
-router.use('/abouttave', abouttaveRouter);
+router.use('/about/tave', abouttaveRouter);
 router.use('/history', historyRouter);
 router.use('/news', newsRouter);
 

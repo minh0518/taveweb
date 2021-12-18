@@ -5,6 +5,7 @@ const nunjucks = require('nunjucks');
 
 const { sequelize } = require('./models');
 const logger = require('./config/winston');
+const { swaggerUi, specs } = require('./config/swagger');
 
 const indexRouter = require('./routes');
 
@@ -22,6 +23,7 @@ app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/api', indexRouter);
 
