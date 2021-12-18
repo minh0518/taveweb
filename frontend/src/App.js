@@ -79,7 +79,10 @@ function App() {
                             element={<Apply_check />}
                         />
                         <Route exact path="/Result" element={<Result />} />
-                        <Route exact path="/QnA" element={<QnA />} />
+                        <Route exact path="/QnA" element={<QnA />} >
+                            
+                        <Route exact path=":id" element={<Home />} />
+                        </Route>
                         <Route exact path="/FAQ" element={<FAQ />} />
                     </Route>
                 </Routes>
