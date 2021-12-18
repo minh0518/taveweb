@@ -8,7 +8,7 @@ const fs = require('fs');
 // const multer = require('multer');
 // const multerS3 = require('multer-s3');
 // const aws = require('aws-sdk');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
 
