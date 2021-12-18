@@ -48,7 +48,7 @@ router.route('/').get(async (req, res, next) => {
 
 router.post('/', upload.single('profile'), async (req, res, next) => {
     try {
-        // logger.debug(req.file.location);
+        //logger.debug(req.file.location);
         // logger.debug(req.body.email);
         // logger.debug(req.body.password);
         // logger.debug(req.body.name);

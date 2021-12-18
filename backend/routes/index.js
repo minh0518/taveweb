@@ -6,6 +6,7 @@ const answersRouter = require('./answers');
 const testsRouter = require('./test');
 const faqsRouter = require('./faqs');
 const applyRouter = require('./apply');
+const abouttaveRouter = require('./about_tave');
 const db = require('../config/db');
 
 const router = express.Router();
@@ -17,6 +18,7 @@ router.use('/answers', answersRouter);
 router.use('/test', testsRouter);
 router.use('/faqs', faqsRouter);
 router.use('/apply', applyRouter);
+router.use('/about_tave', abouttaveRouter);
 
 router.get('/', async (req, res, next) => {
     try {
