@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Image extends (
-    Sequelize.Model
-) {
+module.exports = class Image extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
@@ -20,7 +18,7 @@ module.exports = class Image extends (
                 underscored: true,
                 modelName: 'Image',
                 tableName: 'images',
-                paranoid: true,
+                paranoid: false,
                 timestamps: true,
                 charset: 'utf8mb4',
                 collate: 'utf8mb4_general_ci',
