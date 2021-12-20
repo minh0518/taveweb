@@ -19,7 +19,6 @@ try {
     fs.mkdirSync('uploads');
 }
 
-
 router
     .route('/')
     .get(async (req, res, next) => {
@@ -45,18 +44,27 @@ router
         }
     })
 
-    .post(upload.single('image_url'), async (req, res, next) => {
+    .post(upload.array('images'), async (req, res, next) => {
         try {
             const news = await Board.create({
                 category: 'news',
                 title: req.body.title,
                 content: req.body.content,
             });
-            const news_image = await Image.create({
-                image_url: req.file.location,
-                image_description: req.body.image_description,
-                board_id: news.id,
-            });
+
+            img_desc_json = JSON.parse(req.body.image_description);
+
+            await Promise.all(
+                req.files.map(async (file) => {
+                    logger.debug(file);
+                    const news_image = await Image.create({
+                        image_url: file.location,
+                        image_description: img_desc_json[file.originalname],
+                        board_id: news.id,
+                    });
+                })
+            );
+
             res.status(201).json({ news });
         } catch (err) {
             logger.error(err);
@@ -64,7 +72,25 @@ router
         }
     })
 
-    
+    // .post(upload.single('image_url'), async (req, res, next) => {
+    //     try {
+    //         const news = await Board.create({
+    //             category: 'news',
+    //             title: req.body.title,
+    //             content: req.body.content,
+    //         });
+    //         const news_image = await Image.create({
+    //             image_url: req.file.location,
+    //             image_description: req.body.image_description,
+    //             board_id: news.id,
+    //         });
+    //         res.status(201).json({ news });
+    //     } catch (err) {
+    //         logger.error(err);
+    //         next(err);
+    //     }
+    // })
+
     .patch(upload.single('image_url'), async (req, res, next) => {
         try {
             const news = await Board.update(
@@ -88,7 +114,6 @@ router
             next(err);
         }
     })
-    
 
     .delete(async (req, res, next) => {
         try {
