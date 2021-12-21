@@ -6,7 +6,15 @@ module.exports = class Board extends Sequelize.Model {
             {
                 category: {
                     type: Sequelize.ENUM,
-                    values: ['notice', 'news', 'tave', 'admin', 'history'],
+                    values: [
+                        'about_tave',
+                        'about_history',
+                        'about_admin',
+                        'notice',
+                        'news',
+                        'activity_review',
+                        'activity_picture',
+                    ],
                     allowNull: false,
                 },
                 title: {
