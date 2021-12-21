@@ -4,12 +4,16 @@ module.exports = class Image extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
+                image_key: {
+                    type: Sequelize.STRING(200),
+                    allowNull: false,
+                },
                 image_url: {
                     type: Sequelize.STRING(500),
                     allowNull: false,
                 },
                 image_description: {
-                    type: Sequelize.STRING(500),
+                    type: Sequelize.STRING(1000),
                     allowNull: true,
                 },
             },
