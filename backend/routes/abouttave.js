@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('../config/winston');
 
 const s3 = require('../config/s3');
-const upload = require('../config/s3');
+const { aboutTaveUpload } = require('../config/s3');
 const path = require('path');
 const fs = require('fs');
 
@@ -44,7 +44,7 @@ router
         }
     })
 
-    .post(upload.single('image_url'), async (req, res, next) => {
+    .post(aboutTaveUpload.single('image_url'), async (req, res, next) => {
         try {
             const about_tave = await Board.create({
                 category: 'tave',
@@ -63,7 +63,7 @@ router
         }
     })
 
-    .patch(upload.single('image_url'), async (req, res, next) => {
+    .patch(aboutTaveUpload.single('image_url'), async (req, res, next) => {
         try {
             const about_tave = await Board.update(
                 {
