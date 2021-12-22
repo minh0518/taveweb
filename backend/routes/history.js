@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('../config/winston');
 
 const s3 = require('../config/s3');
-const upload = require('../config/s3');
+const { aboutHistoryUpload } = require('../config/s3');
 const path = require('path');
 const fs = require('fs');
 
@@ -18,7 +18,6 @@ try {
     logger.warn('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
     fs.mkdirSync('uploads');
 }
-
 
 router
     .route('/')
@@ -45,7 +44,7 @@ router
         }
     })
 
-    .post(upload.single('image_url'), async (req, res, next) => {
+    .post(aboutHistoryUpload.single('image_url'), async (req, res, next) => {
         try {
             const history = await Board.create({
                 category: 'history',
@@ -64,8 +63,7 @@ router
         }
     })
 
-    
-    .patch(upload.single('image_url'), async (req, res, next) => {
+    .patch(aboutHistoryUpload.single('image_url'), async (req, res, next) => {
         try {
             const history = await Board.update(
                 {
@@ -88,7 +86,6 @@ router
             next(err);
         }
     })
-    
 
     .delete(async (req, res, next) => {
         try {

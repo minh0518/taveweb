@@ -10,6 +10,7 @@ const recruitRouter = require('./recruit');
 const abouttaveRouter = require('./abouttave');
 const historyRouter = require('./history');
 const newsRouter = require('./news');
+const noticeRouter = require('./notice');
 const db = require('../config/db');
 
 const router = express.Router();
@@ -25,6 +26,7 @@ router.use('/recruit', recruitRouter);
 router.use('/about/tave', abouttaveRouter);
 router.use('/history', historyRouter);
 router.use('/news', newsRouter);
+router.use('/notice', noticeRouter);
 
 router.get('/', async (req, res, next) => {
     try {

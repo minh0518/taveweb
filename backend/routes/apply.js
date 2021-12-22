@@ -12,7 +12,6 @@ router
             const applies = await Applies.findAll({
                 attributes: ['id', 'phone','name','email','apply_form'],
             });
-            //res.json({ applies });
             res.status(200).json({ applies });
         } catch (err) {
             logger.error(err);
@@ -33,9 +32,7 @@ router
             logger.error(err);
             next(err);
         }
-    });
-
-    
+    });   
     
     
 module.exports = router;
