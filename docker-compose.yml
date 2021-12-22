@@ -6,6 +6,7 @@ services:
             context: ./frontend
         restart: always
         volumes:
+            - /app/static
             - /app/node_modules
             - ./frontend:/app
         container_name: tave_frontend
@@ -26,6 +27,7 @@ services:
             context: ./backend
         container_name: tave_backend
         volumes:
+            - /app/static
             - /app/node_modules
             - ./backend:/app
         environment:
