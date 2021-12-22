@@ -9,6 +9,7 @@ const fs = require('fs');
 const Board = require('../models/board');
 const { json } = require('body-parser');
 const Image = require('../models/image');
+const swagger = require('../config/swagger');
 
 const router = express.Router();
 
@@ -103,3 +104,24 @@ router
     });
 
 module.exports = router;
+
+/**
+ * @swagger
+ *  /about/tave:
+ *      get:
+ *          tags:
+ *          - product
+ *          description: 모든 제품 조회
+ *          produces:
+ *          - application/json
+ *          parameters:
+ *              - in: query
+ *              name: category
+ *              required: false
+ *              schema:
+ *                  type: integer
+ *                  description: 카테고리
+ *          responses:
+ *              200:
+ *                  description: 제품 조회 성공
+ */
