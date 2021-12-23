@@ -6,37 +6,64 @@ import { Link , useParams} from 'react-router-dom';
 
 
 const DisplayAnswers=function(){
-    let params=useParams();
+    let params=useParams(); 
     console.log(params);
     console.log(params.questionID);
 
+    const [question,setQuestion]=useState([]);//ì§ˆë¬¸ content
+    const [answer, setAnswer] = useState([]);//ë‹µë³€
     
-    const [value, setValue] = useState([]);//´äº¯µé
+    useEffect(function(){
+        Questions()
+    },[])
 
+    
     useEffect(function(){
         Answers()
     },[])
        
+
+    async function Questions(){
+        const response=await axios.get("/api/questions")
+        setQuestion(response.data.questions)
+    }
+
     async function Answers(){
         const response=await axios.get("/api/answers")
-        setValue(response.data.answers)
+        setAnswer(response.data.answers)
     }
 
+
+
+    let question_content={
+        content : "ì§ˆë¬¸ ë‚´ìš©ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤"
+    }
 
     let selected_answer={
-        content : "´äº¯À» Ã£À» ¼ö°¡ ¾ø½À´Ï´Ù"
+        content : "ë‹µë³€ì„ ì°¾ì„ ìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤"
     }
-    for(let i=0; i<value.length; i++){
-        if(value[i].question_id===Number(params.questionID)){
-            selected_answer.content=value[i].content
+    
+    for(let i=0; i<question.length; i++){
+        if(question[i].id===Number(params.questionID)){
+            question_content.content=question[i].content
             break;
         }
     }
 
+    for(let i=0; i<answer.length; i++){
+        if(answer[i].question_id===Number(params.questionID)){
+            selected_answer.content=answer[i].content
+            break;
+        }
+    }
+
+
+
+
     return(
     <div>
-      <p>{selected_answer.content}</p>
-      
+        <div><h3>ì§ˆë¬¸</h3><p>{question_content.content}</p></div>
+        <div><h3>ë‹µë³€</h3><p>{selected_answer.content}</p></div>
     </div>
     )
 }
