@@ -1,0 +1,75 @@
+import React, { Fragment } from 'react';
+
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Collapse from '@mui/material/Collapse';
+import StarBorder from '@mui/icons-material/StarBorder';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+
+import { Link } from 'react-router-dom';
+
+const NoticeRouter = () => {
+    const [openNotice, setOpenNotice] = React.useState(false);
+
+    const handleNoticeListOpen = () => {
+        setOpenNotice(!openNotice);
+    };
+
+    return (
+        <Fragment>
+            <List>
+                <ListItemButton onClick={handleNoticeListOpen}>
+                    <ListItemIcon>
+                        <NewspaperIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Notice" />
+                    {openNotice ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={openNotice} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <Link
+                            to="notice"
+                            style={{
+                                color: 'inherit',
+                                textDecoration: 'inherit',
+                            }}
+                        >
+                            <ListItemButton sx={{ pl: 4 }}>
+                                <ListItemIcon>
+                                    <StarBorder />
+                                </ListItemIcon>
+                                <ListItemText primary="공지사항" />
+                            </ListItemButton>
+                        </Link>
+                    </List>
+                </Collapse>
+                <Collapse in={openNotice} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <Link
+                            to="news"
+                            style={{
+                                color: 'inherit',
+                                textDecoration: 'inherit',
+                            }}
+                        >
+                            <ListItemButton sx={{ pl: 4 }}>
+                                <ListItemIcon>
+                                    <StarBorder />
+                                </ListItemIcon>
+                                <ListItemText primary="테이비 뉴스" />
+                            </ListItemButton>
+                        </Link>
+                    </List>
+                </Collapse>
+            </List>
+            <Divider />
+        </Fragment>
+    );
+};
+
+export default NoticeRouter;

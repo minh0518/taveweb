@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('../config/winston');
 
-const  Applies = require('../models/apply');
+const  Recruit = require('../models/recruit');
 
 const router = express.Router();
 
@@ -9,10 +9,10 @@ router
     .route('/')
     .get(async (req, res, next) => {
         try {
-            const applies = await Applies.findAll({
-                attributes: ['id', 'phone','name','email','apply_form'],
+            const recruits = await Recruit.findAll({
+                attributes: ['id', 'title','generation','recruit_form'],
             });
-            res.status(200).json({ applies });
+            res.status(200).json({ recruits });
         } catch (err) {
             logger.error(err);
             next(err);
@@ -20,14 +20,13 @@ router
     })
     .post(async (req, res, next) => {
         try {
-            const apply = await Applies.create({
-                phone: req.body.phone,
-                name: req.body.name,
-                email: req.body.email,
-                apply_form: req.body.apply_form
+            const recruit = await Recruit.create({
+                title: req.body.title,
+                generation: req.body.generation,
+                recruit_form: req.body.recruit_form
             });
-            logger.debug(apply);
-            res.status(201).json(apply);
+            logger.debug(recruit);
+            res.status(201).json(recruit);
         } catch (err) {
             logger.error(err);
             next(err);

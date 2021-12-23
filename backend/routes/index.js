@@ -6,6 +6,11 @@ const answersRouter = require('./answers');
 const testsRouter = require('./test');
 const faqsRouter = require('./faqs');
 const applyRouter = require('./apply');
+const recruitRouter = require('./recruit');
+const abouttaveRouter = require('./abouttave');
+const historyRouter = require('./history');
+const newsRouter = require('./news');
+const noticeRouter = require('./notice');
 const db = require('../config/db');
 
 const router = express.Router();
@@ -17,6 +22,11 @@ router.use('/answers', answersRouter);
 router.use('/test', testsRouter);
 router.use('/faqs', faqsRouter);
 router.use('/apply', applyRouter);
+router.use('/recruit', recruitRouter);
+router.use('/about/tave', abouttaveRouter);
+router.use('/history', historyRouter);
+router.use('/news', newsRouter);
+router.use('/notice', noticeRouter);
 
 router.get('/', async (req, res, next) => {
     try {

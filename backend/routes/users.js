@@ -1,14 +1,14 @@
 const express = require('express');
 const logger = require('../config/winston');
 const s3 = require('../config/s3');
-const upload = require('../config/s3');
+const { userUpload } = require('../config/s3');
 
 const path = require('path');
 const fs = require('fs');
 // const multer = require('multer');
 // const multerS3 = require('multer-s3');
 // const aws = require('aws-sdk');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
 
@@ -46,9 +46,9 @@ router.route('/').get(async (req, res, next) => {
     }
 });
 
-router.post('/', upload.single('profile'), async (req, res, next) => {
+router.post('/', userUpload.single('profile'), async (req, res, next) => {
     try {
-        // logger.debug(req.file.location);
+        //logger.debug(req.file.location);
         // logger.debug(req.body.email);
         // logger.debug(req.body.password);
         // logger.debug(req.body.name);

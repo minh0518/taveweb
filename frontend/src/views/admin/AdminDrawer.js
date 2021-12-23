@@ -12,18 +12,15 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import Collapse from '@mui/material/Collapse';
-import ListItemButton from '@mui/material/ListItemButton';
-import StarBorder from '@mui/icons-material/StarBorder';
 import { Outlet, Link } from 'react-router-dom';
+
+import HomeRouter from './router/HomeRouter';
+import AboutRouter from './router/AboutRouter';
+import NoticeRouter from './router/NoticeRouter';
+import ActivityRouter from './router/ActivityRouter';
+import QnARouter from './router/QnARouter';
+import ApplyRouter from './router/ApplyRouter';
 
 const drawerWidth = 240;
 
@@ -104,12 +101,6 @@ export default function AdminDrawer() {
         setOpen(false);
     };
 
-    const [openHome, setOpenHome] = React.useState(false);
-
-    const handleHomeListOpen = () => {
-        setOpenHome(!openHome);
-    };
-
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
@@ -128,7 +119,7 @@ export default function AdminDrawer() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        Mini variant drawer
+                        Tave Admin
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -143,153 +134,17 @@ export default function AdminDrawer() {
                     </IconButton>
                 </DrawerHeader>
                 <Divider />
-                <List>
-                    <Link
-                        to=""
-                        style={{
-                            color: 'inherit',
-                            textDecoration: 'inherit',
-                        }}
-                    >
-                        <ListItem button>
-                            <ListItemIcon>
-                                <InboxIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Home" />
-                        </ListItem>
-                    </Link>
-                </List>
-                <Divider />
 
-                {/* About */}
-                <List>
-                    <ListItemButton onClick={handleHomeListOpen}>
-                        <ListItemIcon>
-                            <InboxIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="About" />
-                        {openHome ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={openHome} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <Link
-                                to="about"
-                                style={{
-                                    color: 'inherit',
-                                    textDecoration: 'inherit',
-                                }}
-                            >
-                                <ListItemButton sx={{ pl: 4 }}>
-                                    <ListItemIcon>
-                                        <StarBorder />
-                                    </ListItemIcon>
-                                    <ListItemText primary="TAVE 소개" />
-                                </ListItemButton>
-                            </Link>
-                        </List>
-                    </Collapse>
-                    <Collapse in={openHome} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <Link
-                                to="about/history"
-                                style={{
-                                    color: 'inherit',
-                                    textDecoration: 'inherit',
-                                }}
-                            >
-                                <ListItemButton sx={{ pl: 4 }}>
-                                    <ListItemIcon>
-                                        <StarBorder />
-                                    </ListItemIcon>
-                                    <ListItemText primary="연혁" />
-                                </ListItemButton>
-                            </Link>
-                        </List>
-                    </Collapse>
-                    <Collapse in={openHome} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <Link
-                                to="about/manager"
-                                style={{
-                                    color: 'inherit',
-                                    textDecoration: 'inherit',
-                                }}
-                            >
-                                <ListItemButton sx={{ pl: 4 }}>
-                                    <ListItemIcon>
-                                        <StarBorder />
-                                    </ListItemIcon>
-                                    <ListItemText primary="운영진 소개" />
-                                </ListItemButton>
-                            </Link>
-                        </List>
-                    </Collapse>
-                </List>
-                <Divider />
-                <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map(
-                        (text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>
-                                    {index % 2 === 0 ? (
-                                        <InboxIcon />
-                                    ) : (
-                                        <MailIcon />
-                                    )}
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        )
-                    )}
-                </List>
-                <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
+                {/* 라우터 */}
+                <HomeRouter />
+                <AboutRouter />
+                <NoticeRouter />
+                <ActivityRouter />
+                <QnARouter />
+                <ApplyRouter />
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
-                <Typography paragraph>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Rhoncus dolor purus non enim praesent elementum
-                    facilisis leo vel. Risus at ultrices mi tempus imperdiet.
-                    Semper risus in hendrerit gravida rutrum quisque non tellus.
-                    Convallis convallis tellus id interdum velit laoreet id
-                    donec ultrices. Odio morbi quis commodo odio aenean sed
-                    adipiscing. Amet nisl suscipit adipiscing bibendum est
-                    ultricies integer quis. Cursus euismod quis viverra nibh
-                    cras. Metus vulputate eu scelerisque felis imperdiet proin
-                    fermentum leo. Mauris commodo quis imperdiet massa
-                    tincidunt. Cras tincidunt lobortis feugiat vivamus at augue.
-                    At augue eget arcu dictum varius duis at consectetur lorem.
-                    Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-                    sapien faucibus et molestie ac.
-                </Typography>
-                <Typography paragraph>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla
-                    est ullamcorper eget nulla facilisi etiam dignissim diam.
-                    Pulvinar elementum integer enim neque volutpat ac tincidunt.
-                    Ornare suspendisse sed nisi lacus sed viverra tellus. Purus
-                    sit amet volutpat consequat mauris. Elementum eu facilisis
-                    sed odio morbi. Euismod lacinia at quis risus sed vulputate
-                    odio. Morbi tincidunt ornare massa eget egestas purus
-                    viverra accumsan in. In hendrerit gravida rutrum quisque non
-                    tellus orci ac. Pellentesque nec nam aliquam sem et tortor.
-                    Habitant morbi tristique senectus et. Adipiscing elit duis
-                    tristique sollicitudin nibh sit. Ornare aenean euismod
-                    elementum nisi quis eleifend. Commodo viverra maecenas
-                    accumsan lacus vel facilisis. Nulla posuere sollicitudin
-                    aliquam ultrices sagittis orci a.
-                </Typography>
-
                 <Outlet />
             </Box>
         </Box>

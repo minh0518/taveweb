@@ -5,12 +5,13 @@ const nunjucks = require('nunjucks');
 
 const { sequelize } = require('./models');
 const logger = require('./config/winston');
+const { swaggerUi, specs } = require('./config/swagger');
 
 const indexRouter = require('./routes');
 
 const app = express();
 sequelize
-    .sync({ force: false })
+    .sync({ force: false, alter: false })
     .then(() => {
         console.log('데이터베이스 연결 성공');
     })
@@ -22,6 +23,7 @@ app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/api', indexRouter);
 

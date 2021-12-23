@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Recruit extends (
-    Sequelize.Model
-) {
+module.exports = class Recruit extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
@@ -29,7 +27,7 @@ module.exports = class Recruit extends (
                 underscored: true,
                 modelName: 'Recruit',
                 tableName: 'recruits',
-                paranoid: true,
+                paranoid: false,
                 timestamps: true,
                 charset: 'utf8mb4',
                 collate: 'utf8mb4_general_ci',

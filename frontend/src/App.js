@@ -13,9 +13,10 @@ import Notice from './views/main/notice/Notice';
 import News from './views/main/notice/News';
 import Board from './views/main/tavy/Board';
 import Photos from './views/main/tavy/Photos';
-import Apply from './views/main/recruit/Apply';
-import ApplyCheck from './views/main/recruit/ApplyCheck';
-import Result from './views/main/recruit/Result';
+import Apply from './views/main/apply/Apply';
+import ApplyForm from './views/main/apply/ApplyForm';
+import ApplyCheck from './views/main/apply/ApplyCheck';
+import ApplyResult from './views/main/apply/ApplyResult';
 import QnA from './views/main/qna/QnA';
 import FAQ from './views/main/qna/FAQ';
 import DisplayAnswers from './views/main/qna/Display'
@@ -23,10 +24,14 @@ import DisplayAnswers from './views/main/qna/Display'
 // Admin
 import AdminLayout from './views/admin/AdminLayout';
 import AdminNotice from './views/admin/notice/AdminNotice';
-import AdminHome from './views/admin/AdminHome';
+import AdminHome from './views/admin/home/AdminHome';
 import AdminAbout from './views/admin/about/AdminAbout';
 import AdminAboutManager from './views/admin/about/AdminAboutManager';
 import AdminHistory from './views/admin/about/AdminHistory';
+import AdminApply from './views/admin/apply/AdminApply';
+import AdminApplyCheck from './views/admin/apply/AdminApplyCheck';
+import AdminApplyForm from './views/admin/apply/AdminApplyForm';
+import AdminApplyResult from './views/admin/apply/AdminApplyResult';
 
 function App() {
     const [lists, setLists] = useState([]);
@@ -85,13 +90,22 @@ function App() {
                         <Route exact path="news" element={<News />} />
                         <Route exact path="board" element={<Board />} />
                         <Route exact path="photo" element={<Photos />} />
-                        <Route exact path="apply" element={<Apply />} />
+                        <Route exact path="apply" element={<AdminApply />} />
+                        <Route
+                            exact
+                            path="apply/form"
+                            element={<AdminApplyForm />}
+                        />
                         <Route
                             exact
                             path="apply/check"
-                            element={<ApplyCheck />}
+                            element={<AdminApplyCheck />}
                         />
-                        <Route exact path="apply/result" element={<Result />} />
+                        <Route
+                            exact
+                            path="apply/result"
+                            element={<AdminApplyResult />}
+                        />
                         <Route exact path="qna" element={<QnA />} />
                         <Route exact path="faq" element={<FAQ />} />
                     </Route>
@@ -117,13 +131,18 @@ function App() {
                         <Route exact path="/apply" element={<Apply />} />
                         <Route
                             exact
+                            path="/apply/form"
+                            element={<ApplyForm />}
+                        />
+                        <Route
+                            exact
                             path="/apply/check"
                             element={<ApplyCheck />}
                         />
                         <Route
                             exact
                             path="/apply/result"
-                            element={<Result />}
+                            element={<ApplyResult />}
                         />
 
                         <Route exact path="/qna" element={<QnA />} />
