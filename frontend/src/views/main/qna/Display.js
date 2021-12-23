@@ -62,7 +62,7 @@ const DisplayAnswers=function(){
 
     return(
     <div>
-        <div><h3>질문</h3><p>{question_content.content}</p></div>
+        <div><h3>질문내용</h3><p>{question_content.content}</p></div>
         <div><h3>답변</h3><p>{selected_answer.content}</p></div>
     </div>
     )
