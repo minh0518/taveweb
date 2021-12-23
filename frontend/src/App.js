@@ -18,6 +18,7 @@ import ApplyCheck from './views/main/recruit/ApplyCheck';
 import Result from './views/main/recruit/Result';
 import QnA from './views/main/qna/QnA';
 import FAQ from './views/main/qna/FAQ';
+import DisplayAnswers from './views/main/qna/Display'
 
 // Admin
 import AdminLayout from './views/admin/AdminLayout';
@@ -124,7 +125,10 @@ function App() {
                             path="/apply/result"
                             element={<Result />}
                         />
+
                         <Route exact path="/qna" element={<QnA />} />
+                        <Route exact path="/qna/:questionID" element={<DisplayAnswers/>}/>
+                        
                         <Route exact path="/faq" element={<FAQ />} />
                     </Route>
                 </Routes>

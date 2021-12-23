@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Route, Routes, Link , useParams} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const QnA = () => {
     const [value, setValue] = useState([]);//질문들
@@ -26,14 +26,14 @@ const QnA = () => {
         {value.map((question) => ( // 질문들을 보여줌
         <div>
         <ul>
-            <li key={question.id}><Link to={"/QnA/"+question.id}><p>{question.title}</p></Link> </li>
+            <li key={question.id}><Link to={`/qna/${question.id}`}><p>{question.title}</p></Link> </li>
         </ul>
         </div> 
         ))}
 
-        <Routes>
+        {/* <Routes>
             <Route path="/QnA/:questionID" element={<DisplayAnswers/>}/>
-        </Routes> 
+        </Routes>  */}
 
         
         
@@ -42,40 +42,42 @@ const QnA = () => {
 };  
 
 
-const DisplayAnswers=function(){
-    let params=useParams();
-   console.log(params.questionID);
+// const DisplayAnswers=function(){
+//     let params=useParams();
+//    console.log(params);
+//    console.log(params.questionID);
+//    console.log(params);
 
     
-    const [value, setValue] = useState([]);//답변들
+//     const [value, setValue] = useState([]);//답변들
 
-    useEffect(function(){
-        Answers()
-    },[])
+//     useEffect(function(){
+//         Answers()
+//     },[])
        
-    async function Answers(){
-        const response=await axios.get("/api/answers")
-        setValue(response.data.answers)
-    }
+//     async function Answers(){
+//         const response=await axios.get("/api/answers")
+//         setValue(response.data.answers)
+//     }
 
 
-    let selected_answer={
-        content : "답변을 찾을 수가 없습니다"
-    }
-    for(let i=0; i<value.length; i++){
-        if(value[i].question_id===Number(params.questionID)){
-            selected_answer.content=value[i].content
-            break;
-        }
-    }
+//     let selected_answer={
+//         content : "답변을 찾을 수가 없습니다"
+//     }
+//     for(let i=0; i<value.length; i++){
+//         if(value[i].question_id===Number(params.questionID)){
+//             selected_answer.content=value[i].content
+//             break;
+//         }
+//     }
 
-    return(
-    <div>
-      <p>{selected_answer.content}</p>
+//     return(
+//     <div>
+//       <p>{selected_answer.content}</p>
       
-    </div>
-    )
-}
+//     </div>
+//     )
+// }
 
 
 export default QnA;
