@@ -26,7 +26,7 @@ router.use('/recruit', recruitRouter);
 router.use('/about/tave', abouttaveRouter);
 router.use('/history', historyRouter);
 router.use('/news', newsRouter);
-router.use('/notice', noticeRouter);
+router.use('/notices', noticeRouter);
 
 router.get('/', async (req, res, next) => {
     try {

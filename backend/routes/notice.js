@@ -24,9 +24,9 @@ router
     .route('/')
     .get(async (req, res, next) => {
         try {
-            const notice = await Board.findAll(
+            const notices = await Board.findAll(
                 {
-                    attributes: ['id', 'title', 'content'],
+                    attributes: ['id', 'title', 'content', 'created_at'],
                     include: [
                         {
                             model: Image,
@@ -42,7 +42,7 @@ router
                     where: { category: { values: 'notice' } },
                 }
             );
-            res.status(200).json({ notice });
+            res.status(200).json({ notices });
         } catch (err) {
             logger.error(err);
             next(err);
@@ -116,7 +116,7 @@ router
                     image_description: req.body.image_description,
                 },
                 { where: { board_id: notice } }
-            ); 
+            );
             res.status(201).json({ notice });
         } catch (err) {
             logger.error(err);
