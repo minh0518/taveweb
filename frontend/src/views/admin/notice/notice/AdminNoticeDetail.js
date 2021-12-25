@@ -1,18 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import { useParams, useNavigate } from 'react-router-dom';
@@ -21,7 +14,7 @@ export default function AdminNotice() {
     const { id } = useParams();
     // const navigate = useNavigate();
 
-    const [notice, setNotice] = useState({});
+    const [notice, setNotice] = useState({ Images: [] });
 
     useEffect(() => {
         axios.get(`/api/notices/${id}`).then((response) => {
@@ -34,75 +27,43 @@ export default function AdminNotice() {
     return (
         <Fragment>
             <Card sx={{ minWidth: 275 }}>
-                {notice.id}
-                {notice.title}
-                {notice.content}
                 <CardContent>
-                    <Typography align="left" variant="h5" component="div">
-                        공지사항
+                    <Typography
+                        sx={{ fontSize: 14 }}
+                        color="text.secondary"
+                        gutterBottom
+                    >
+                        작성: {notice.created_at}
+                        <br />
+                        수정: {notice.updated_at}
+                    </Typography>
+                    <Typography variant="h5" component="div">
+                        {notice.title}
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                        adjective
+                    </Typography>
+                    <Typography variant="body2">
+                        {notice.content}
+                        <br />
+                        {notice.Images.map((image) => {
+                            return (
+                                <Fragment>
+                                    <img
+                                        src={`${image.image_url}`}
+                                        alt={image.image_description}
+                                        loading="lazy"
+                                    />
+                                    <br />
+                                    {image.image_description}
+                                    <br />
+                                </Fragment>
+                            );
+                        })}
                     </Typography>
                 </CardContent>
-                <TableContainer component={Paper} elevation={0}>
-                    <Table sx={{ minWidth: 275 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>ID</TableCell>
-                                <TableCell align="right">제목</TableCell>
-                                <TableCell align="right">작성일자</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {/* {notices.map((row) => (
-                                <TableRow
-                                    key={row.name}
-                                    sx={{
-                                        '&:last-child td, &:last-child th': {
-                                            border: 0,
-                                        },
-                                    }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {row.name}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {row.calories}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {row.fat}
-                                    </TableCell>
-                                </TableRow>
-                            ))} */}
-                            {/* {notices.map((notice) => (
-                                <TableRow
-                                    key={notice.id}
-                                    sx={{
-                                        '&:last-child td, &:last-child th': {
-                                            border: 0,
-                                        },
-                                    }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {notice.id}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {notice.title}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {notice.created_at}
-                                    </TableCell>
-                                </TableRow>
-                            ))} */}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
                 <CardActions>
-                    <Stack spacing={2}>
-                        {/* <Pagination
-                            count={getLength()}
-                            variant="outlined"
-                            onChange={handlePaginationClick}
-                        /> */}
-                    </Stack>
+                    <Button size="small">Learn More</Button>
                 </CardActions>
             </Card>
         </Fragment>
