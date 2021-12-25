@@ -1,11 +1,10 @@
 const express = require('express');
 const logger = require('../config/winston');
 
-const  FaQ  = require('../models/faq');
-
+const FaQ = require('../models/faq');
 
 const router = express.Router();
- 
+
 router
     .route('/')
     .get(async (req, res, next) => {
@@ -71,11 +70,9 @@ router
     .delete(async (req, res, next) => {
         try {
             logger.debug(req.params.id);
-            const result = await FaQ.destroy(
-                {
-                    where: { id: req.params.id },
-                }
-            );
+            const result = await FaQ.destroy({
+                where: { id: req.params.id },
+            });
             res.json(result);
         } catch (err) {
             logger.error(err);
@@ -94,5 +91,140 @@ router.route('/:id/password').get(async (req, res, next) => {
         next(err);
     }
 });
+
+/**
+ * @swagger
+ * paths:
+ *  /api/faqs:
+ *      get:
+ *          tags: [faqs]
+ *          summary: FAQ 전체 조회
+ *          description: FAQ 전체 조회
+ *          produces:
+ *          - application/json
+ *          responses:
+ *              200:
+ *                  description: 전체 FAQ조회 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Faq'
+ *      post:
+ *          tags: [faqs]
+ *          summary: FAQ 작성
+ *          description: FAQ 작성
+ *          consumes:
+ *          - application/json
+ *          parameters:
+ *          - in: body
+ *            name: "title"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: FAQ 제목
+ *          - in: body
+ *            name: "question"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 질문 내용
+ *          - in: body
+ *            name: "answer"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 답변 내용
+ *          responses:
+ *              201:
+ *                  description: FAQ 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Faq'
+ *  /api/faqs/{id}:
+ *      get:
+ *          tags: [faqs]
+ *          summary: FAQ 상세 조회
+ *          description: FAQ 상세 조회
+ *          produces:
+ *          - application/json
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          responses:
+ *              200:
+ *                  description: FAQ 상세 조회 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Faq'
+ *      patch:
+ *          tags: [faqs]
+ *          summary: FAQ 수정
+ *          description: FAQ 수정
+ *          consumes:
+ *          - application/json
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          - in: body
+ *            name: "title"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: FAQ 제목
+ *          - in: body
+ *            name: "question"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 질문 내용
+ *          - in: body
+ *            name: "answer"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 답변 내용
+ *          responses:
+ *              201:
+ *                  description: FAQ 수정 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Faq'
+ *      delete:
+ *          tags: [faqs]
+ *          summary: FAQ 삭제
+ *          description: FAQ 삭제
+ *          produces:
+ *          - application/json
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          responses:
+ *              200:
+ *                  description: FAQ 삭제 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Faq'
+ *  /api/faqs/{id}/password:
+ *      get:
+ *          tags: [faqs]
+ *          summary: 질문 비밀번호 확인
+ *          description: FAQ 질문 비밀번호 확인
+ *          produces:
+ *          - application/json
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          responses:
+ *              200:
+ *                  description: 비밀번호 확인 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Faq'
+ */
 
 module.exports = router;

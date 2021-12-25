@@ -167,4 +167,143 @@ router
         }
     });
 
+/**
+ * @swagger
+ * paths:
+ *  /api/news:
+ *      get:
+ *          tags: [news]
+ *          summary: Tavy news 페이지 조회
+ *          description: Tavy news 전체 조회
+ *          produces:
+ *          - application/json
+ *          responses:
+ *              200:
+ *                  description: Tavy news 페이지 조회 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *      post:
+ *          tags: [news]
+ *          summary: Tavy news 작성
+ *          description: Tavy news 작성
+ *          consumes:
+ *          - multipart/form-data
+ *          parameters:
+ *          - in: formData
+ *            name: "title"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: Tavy news 제목
+ *          - in: formData
+ *            name: "content"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: Tavy news 내용
+ *          - in: formData
+ *            name: "image_key"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_url"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_description"
+ *            required: false
+ *            schema:
+ *                type: string
+ *                description: 이미지 설명
+ *          responses:
+ *              201:
+ *                  description: Tavy news 작성 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *  /api/news/{id}:
+ *      get:
+ *          tags: [news]
+ *          summary: Tavy news 상세 조회
+ *          description: Tavy news 상세 조회
+ *          produces:
+ *          - application/json
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          responses:
+ *              200:
+ *                  description: Tavy news 상세 조회 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *      patch:
+ *          tags: [news]
+ *          summary: Tavy news 수정
+ *          description: Tavy news 수정
+ *          consumes:
+ *          - multipart/form-data
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          - in: formData
+ *            name: "title"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: Tavy news 제목
+ *          - in: formData
+ *            name: "content"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: Tavy news 내용
+ *          - in: formData
+ *            name: "image_key"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_url"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_description"
+ *            required: false
+ *            schema:
+ *                type: string
+ *                description: 이미지 설명
+ *          responses:
+ *              201:
+ *                  description: Tavy news 수정 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *      delete:
+ *          tags: [news]
+ *          summary: Tavy news 삭제
+ *          description: Tavy news 삭제
+ *          produces:
+ *          - application/json
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          responses:
+ *              200:
+ *                  description: Tavy news 삭제 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ */
+
 module.exports = router;

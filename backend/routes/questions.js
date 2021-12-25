@@ -5,7 +5,7 @@ const Question = require('../models/question');
 const Answer = require('../models/answer');
 
 const router = express.Router();
- 
+
 router
     .route('/')
     .get(async (req, res, next) => {
@@ -96,5 +96,140 @@ router.route('/:id/password').get(async (req, res, next) => {
         next(err);
     }
 });
+
+/**
+ * @swagger
+ * paths:
+ *  /api/questions:
+ *      get:
+ *          tags: [questions]
+ *          summary: Q&A 질문 전체 조회
+ *          description: Q&A 질문 전체 조회
+ *          produces:
+ *          - application/json
+ *          responses:
+ *              200:
+ *                  description: 전체 질문 조회 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Question'
+ *      post:
+ *          tags: [questions]
+ *          summary: Q&A 질문 작성
+ *          description: Q&A 질문 작성
+ *          consumes:
+ *          - application/json
+ *          parameters:
+ *          - in: body
+ *            name: "title"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 질문 제목
+ *          - in: body
+ *            name: "content"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 질문 내용
+ *          - in: body
+ *            name: "password"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 질문 비밀번호
+ *          responses:
+ *              201:
+ *                  description: 질문 작성 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Question'
+ *  /api/questions/{id}:
+ *      get:
+ *          tags: [questions]
+ *          summary: Q&A 질문 상세 조회
+ *          description: Q&A 질문 상세 조회
+ *          produces:
+ *          - application/json
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          responses:
+ *              200:
+ *                  description: 질문 상세 조회 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Question'
+ *      patch:
+ *          tags: [questions]
+ *          summary: Q&A 질문 수정
+ *          description: Q&A 질문 수정
+ *          consumes:
+ *          - application/json
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          - in: body
+ *            name: "title"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 질문 제목
+ *          - in: body
+ *            name: "content"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 질문 내용
+ *          - in: body
+ *            name: "password"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 질문 비밀번호
+ *          responses:
+ *              201:
+ *                  description: 질문 수정 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Question'
+ *      delete:
+ *          tags: [questions]
+ *          summary: Q&A 질문 삭제
+ *          description: Q&A 질문 삭제
+ *          produces:
+ *          - application/json
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          responses:
+ *              200:
+ *                  description: 질문 삭제 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Question'
+ *  /api/questions/{id}/password:
+ *      get:
+ *          tags: [questions]
+ *          summary: Q&A 질문 비밀번호 확인
+ *          description: Q&A 질문 비밀번호 확인
+ *          produces:
+ *          - application/json
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          responses:
+ *              200:
+ *                  description: 비밀번호 확인 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Question'
+ */
 
 module.exports = router;
