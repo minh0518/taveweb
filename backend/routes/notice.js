@@ -91,7 +91,13 @@ router
                         //attributes: ['image_key','image_url', 'image_description'],
                     },
                 ],
-                attributes: ['id', 'title', 'content'],
+                attributes: [
+                    'id',
+                    'title',
+                    'content',
+                    'created_at',
+                    'updated_at',
+                ],
                 where: { id: req.params.id },
             });
             res.status(200).json({ notice });
