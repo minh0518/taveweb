@@ -1,19 +1,13 @@
-import React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
+import React, { Fragment, useState } from 'react';
+import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
-import { Outlet, Link } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import AppBar from '@mui/material/AppBar';
+import CssBaseline from '@mui/material/CssBaseline';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 
 import HomeRouter from './router/HomeRouter';
 import AboutRouter from './router/AboutRouter';
@@ -22,28 +16,9 @@ import ActivityRouter from './router/ActivityRouter';
 import QnARouter from './router/QnARouter';
 import ApplyRouter from './router/ApplyRouter';
 
+import { Outlet } from 'react-router-dom';
+
 const drawerWidth = 240;
-
-const openedMixin = (theme) => ({
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-    }),
-    overflowX: 'hidden',
-});
-
-const closedMixin = (theme) => ({
-    transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.up('sm')]: {
-        width: `calc(${theme.spacing(9)} + 1px)`,
-    },
-});
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -54,66 +29,79 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     ...theme.mixins.toolbar,
 }));
 
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
-}));
-
-const Drawer = styled(MuiDrawer, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-        ...openedMixin(theme),
-        '& .MuiDrawer-paper': openedMixin(theme),
-    }),
-    ...(!open && {
-        ...closedMixin(theme),
-        '& .MuiDrawer-paper': closedMixin(theme),
-    }),
-}));
-
 export default function AdminDrawer() {
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const [state, setState] = useState(false);
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
+    const toggleDrawer = (open) => (event) => {
+        if (
+            event.type === 'keydown' &&
+            (event.key === 'Tab' || event.key === 'Shift')
+        ) {
+            return;
+        }
+        console.log(state);
+
+        setState(open);
     };
 
-    const handleDrawerClose = () => {
-        setOpen(false);
+    const RouterList = () => {
+        return (
+            <Fragment>
+                <HomeRouter toggleDrawer={toggleDrawer} />
+                <AboutRouter toggleDrawer={toggleDrawer} />
+                <NoticeRouter toggleDrawer={toggleDrawer} />
+                <ActivityRouter toggleDrawer={toggleDrawer} />
+                <QnARouter toggleDrawer={toggleDrawer} />
+                <ApplyRouter toggleDrawer={toggleDrawer} />
+            </Fragment>
+        );
+    };
+
+    const CustomDrawer = () => {
+        return (
+            <Drawer
+                variant="permanent"
+                sx={{
+                    width: drawerWidth,
+                    flexShrink: 0,
+                    [`& .MuiDrawer-paper`]: {
+                        width: drawerWidth,
+                        boxSizing: 'border-box',
+                    },
+                    display: { xs: 'none', md: 'block' },
+                }}
+            >
+                <Toolbar />
+                <RouterList />
+            </Drawer>
+        );
+    };
+
+    const AppBarDrawer = () => {
+        return (
+            <Drawer anchor="top" open={state} onClose={toggleDrawer(false)}>
+                <Toolbar />
+                <RouterList />
+            </Drawer>
+        );
     };
 
     return (
         <Box sx={{ display: 'flex' }}>
-            <AppBar position="fixed" open={open}>
+            <AppBarDrawer />
+            <CssBaseline />
+            <AppBar
+                position="fixed"
+                sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            >
                 <Toolbar>
                     <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
+                        size="large"
                         edge="start"
-                        sx={{
-                            marginRight: '36px',
-                            ...(open && { display: 'none' }),
-                        }}
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{ mr: 2, display: { xs: 'block', md: 'none' } }}
+                        onClick={toggleDrawer(!state)}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -122,26 +110,7 @@ export default function AdminDrawer() {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <Drawer variant="permanent" open={open}>
-                <DrawerHeader>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? (
-                            <ChevronRightIcon />
-                        ) : (
-                            <ChevronLeftIcon />
-                        )}
-                    </IconButton>
-                </DrawerHeader>
-                <Divider />
-
-                {/* 라우터 */}
-                <HomeRouter />
-                <AboutRouter />
-                <NoticeRouter />
-                <ActivityRouter />
-                <QnARouter />
-                <ApplyRouter />
-            </Drawer>
+            <CustomDrawer />
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
                 <Outlet />
