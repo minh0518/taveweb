@@ -131,4 +131,57 @@ router.route('/:id/password').get(async (req, res, next) => {
     }
 });
 
+/**
+ * @swagger
+ * paths:
+ *  /api/users:
+ *      get:
+ *          tags: [users]
+ *          summary: users 조회
+ *          description: users 조회
+ *          produces:
+ *          - application/json
+ *          responses:
+ *              200:
+ *                  description: users 조회 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/User'
+ *      post:
+ *          tags: [users]
+ *          summary: user 추가
+ *          description: user 추가
+ *          consumes:
+ *          - multipart/form-data
+ *          parameters:
+ *          - in: formData
+ *            name: "emial"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이메일
+ *          - in: formData
+ *            name: "password"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 비밀번호
+ *          - in: formData
+ *            name: "name"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이름
+ *          - in: formData
+ *            name: "profile"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 프로필
+ *          responses:
+ *              201:
+ *                  description: user 추가 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/User'
+ */
+
 module.exports = router;
