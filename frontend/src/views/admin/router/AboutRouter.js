@@ -13,7 +13,7 @@ import InfoIcon from '@mui/icons-material/Info';
 
 import { Link } from 'react-router-dom';
 
-const AboutRouter = () => {
+const AboutRouter = ({ toggleDrawer }) => {
     const [openAbout, setOpenAbout] = React.useState(false);
 
     const handleAboutListOpen = () => {
@@ -36,6 +36,8 @@ const AboutRouter = () => {
                             component={Link}
                             to="about"
                             sx={{ pl: 4 }}
+                            onClick={toggleDrawer(false)}
+                            onKeyDown={toggleDrawer(false)}
                         >
                             <ListItemIcon>
                                 <StarBorder />
@@ -50,6 +52,8 @@ const AboutRouter = () => {
                             component={Link}
                             to="about/history"
                             sx={{ pl: 4 }}
+                            onClick={toggleDrawer(false)}
+                            onKeyDown={toggleDrawer(false)}
                         >
                             <ListItemIcon>
                                 <StarBorder />
@@ -64,6 +68,8 @@ const AboutRouter = () => {
                             component={Link}
                             to="about/manager"
                             sx={{ pl: 4 }}
+                            onClick={toggleDrawer(false)}
+                            onKeyDown={toggleDrawer(false)}
                         >
                             <ListItemIcon>
                                 <StarBorder />

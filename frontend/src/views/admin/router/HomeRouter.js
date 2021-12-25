@@ -9,7 +9,7 @@ import HomeIcon from '@mui/icons-material/Home';
 
 import { Link } from 'react-router-dom';
 
-const HomeRouter = () => {
+const HomeRouter = ({ toggleDrawer }) => {
     return (
         <Fragment>
             <List>
@@ -19,6 +19,8 @@ const HomeRouter = () => {
                         color: 'inherit',
                         textDecoration: 'inherit',
                     }}
+                    onClick={toggleDrawer(false)}
+                    onKeyDown={toggleDrawer(false)}
                 >
                     <ListItem button>
                         <ListItemIcon>

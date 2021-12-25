@@ -13,7 +13,7 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 
 import { Link } from 'react-router-dom';
 
-const NoticeRouter = () => {
+const NoticeRouter = ({ toggleDrawer }) => {
     const [openNotice, setOpenNotice] = React.useState(false);
 
     const handleNoticeListOpen = () => {
@@ -32,38 +32,34 @@ const NoticeRouter = () => {
                 </ListItemButton>
                 <Collapse in={openNotice} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             to="notice"
-                            style={{
-                                color: 'inherit',
-                                textDecoration: 'inherit',
-                            }}
+                            sx={{ pl: 4 }}
+                            onClick={toggleDrawer(false)}
+                            onKeyDown={toggleDrawer(false)}
                         >
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="공지사항" />
-                            </ListItemButton>
-                        </Link>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="공지사항" />
+                        </ListItemButton>
                     </List>
                 </Collapse>
                 <Collapse in={openNotice} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             to="news"
-                            style={{
-                                color: 'inherit',
-                                textDecoration: 'inherit',
-                            }}
+                            sx={{ pl: 4 }}
+                            onClick={toggleDrawer(false)}
+                            onKeyDown={toggleDrawer(false)}
                         >
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="테이비 뉴스" />
-                            </ListItemButton>
-                        </Link>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="테이비 뉴스" />
+                        </ListItemButton>
                     </List>
                 </Collapse>
             </List>

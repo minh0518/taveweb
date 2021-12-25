@@ -13,7 +13,7 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
 import { Link } from 'react-router-dom';
 
-const QnARouter = () => {
+const QnARouter = ({ toggleDrawer }) => {
     const [openQnA, setOpenQnA] = React.useState(false);
 
     const handleQnAListOpen = () => {
@@ -32,38 +32,34 @@ const QnARouter = () => {
                 </ListItemButton>
                 <Collapse in={openQnA} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             to="qna"
-                            style={{
-                                color: 'inherit',
-                                textDecoration: 'inherit',
-                            }}
+                            sx={{ pl: 4 }}
+                            onClick={toggleDrawer(false)}
+                            onKeyDown={toggleDrawer(false)}
                         >
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="QnA" />
-                            </ListItemButton>
-                        </Link>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="QnA" />
+                        </ListItemButton>
                     </List>
                 </Collapse>
                 <Collapse in={openQnA} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             to="faq"
-                            style={{
-                                color: 'inherit',
-                                textDecoration: 'inherit',
-                            }}
+                            sx={{ pl: 4 }}
+                            onClick={toggleDrawer(false)}
+                            onKeyDown={toggleDrawer(false)}
                         >
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="FAQ" />
-                            </ListItemButton>
-                        </Link>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="FAQ" />
+                        </ListItemButton>
                     </List>
                 </Collapse>
             </List>

@@ -13,7 +13,7 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 import { Link } from 'react-router-dom';
 
-const ActivityRouter = () => {
+const ActivityRouter = ({ toggleDrawer }) => {
     const [openActivity, setOpenActivity] = React.useState(false);
 
     const handleActivityListOpen = () => {
@@ -36,6 +36,8 @@ const ActivityRouter = () => {
                             component={Link}
                             to="board"
                             sx={{ pl: 4 }}
+                            onClick={toggleDrawer(false)}
+                            onKeyDown={toggleDrawer(false)}
                         >
                             <ListItemIcon>
                                 <StarBorder />
@@ -50,6 +52,8 @@ const ActivityRouter = () => {
                             component={Link}
                             to="photo"
                             sx={{ pl: 4 }}
+                            onClick={toggleDrawer(false)}
+                            onKeyDown={toggleDrawer(false)}
                         >
                             <ListItemIcon>
                                 <StarBorder />

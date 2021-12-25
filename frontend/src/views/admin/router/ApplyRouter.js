@@ -13,7 +13,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 
 import { Link } from 'react-router-dom';
 
-const ApplyRouter = () => {
+const ApplyRouter = ({ toggleDrawer }) => {
     const [openApply, setOpenApply] = React.useState(false);
 
     const handleApplyListOpen = () => {
@@ -32,74 +32,66 @@ const ApplyRouter = () => {
                 </ListItemButton>
                 <Collapse in={openApply} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             to="apply"
-                            style={{
-                                color: 'inherit',
-                                textDecoration: 'inherit',
-                            }}
+                            sx={{ pl: 4 }}
+                            onClick={toggleDrawer(false)}
+                            onKeyDown={toggleDrawer(false)}
                         >
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="신청 페이지" />
-                            </ListItemButton>
-                        </Link>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="신청 페이지" />
+                        </ListItemButton>
                     </List>
                 </Collapse>
                 <Collapse in={openApply} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             to="apply/form"
-                            style={{
-                                color: 'inherit',
-                                textDecoration: 'inherit',
-                            }}
+                            sx={{ pl: 4 }}
+                            onClick={toggleDrawer(false)}
+                            onKeyDown={toggleDrawer(false)}
                         >
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="신청서" />
-                            </ListItemButton>
-                        </Link>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="신청서" />
+                        </ListItemButton>
                     </List>
                 </Collapse>
                 <Collapse in={openApply} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             to="apply/check"
-                            style={{
-                                color: 'inherit',
-                                textDecoration: 'inherit',
-                            }}
+                            sx={{ pl: 4 }}
+                            onClick={toggleDrawer(false)}
+                            onKeyDown={toggleDrawer(false)}
                         >
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="지원 확인" />
-                            </ListItemButton>
-                        </Link>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="지원 확인" />
+                        </ListItemButton>
                     </List>
                 </Collapse>
                 <Collapse in={openApply} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             to="apply/result"
-                            style={{
-                                color: 'inherit',
-                                textDecoration: 'inherit',
-                            }}
+                            sx={{ pl: 4 }}
+                            onClick={toggleDrawer(false)}
+                            onKeyDown={toggleDrawer(false)}
                         >
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="지원 결과" />
-                            </ListItemButton>
-                        </Link>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="지원 결과" />
+                        </ListItemButton>
                     </List>
                 </Collapse>
             </List>
