@@ -32,38 +32,30 @@ const ActivityRouter = () => {
                 </ListItemButton>
                 <Collapse in={openActivity} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             to="board"
-                            style={{
-                                color: 'inherit',
-                                textDecoration: 'inherit',
-                            }}
+                            sx={{ pl: 4 }}
                         >
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="활동 후기" />
-                            </ListItemButton>
-                        </Link>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="활동 후기" />
+                        </ListItemButton>
                     </List>
                 </Collapse>
                 <Collapse in={openActivity} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             to="photo"
-                            style={{
-                                color: 'inherit',
-                                textDecoration: 'inherit',
-                            }}
+                            sx={{ pl: 4 }}
                         >
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="활동 사진" />
-                            </ListItemButton>
-                        </Link>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="활동 사진" />
+                        </ListItemButton>
                     </List>
                 </Collapse>
             </List>

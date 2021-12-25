@@ -32,56 +32,44 @@ const AboutRouter = () => {
                 </ListItemButton>
                 <Collapse in={openAbout} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             to="about"
-                            style={{
-                                color: 'inherit',
-                                textDecoration: 'inherit',
-                            }}
+                            sx={{ pl: 4 }}
                         >
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="TAVE 소개" />
-                            </ListItemButton>
-                        </Link>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="TAVE 소개" />
+                        </ListItemButton>
                     </List>
                 </Collapse>
                 <Collapse in={openAbout} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             to="about/history"
-                            style={{
-                                color: 'inherit',
-                                textDecoration: 'inherit',
-                            }}
+                            sx={{ pl: 4 }}
                         >
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="연혁" />
-                            </ListItemButton>
-                        </Link>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="연혁" />
+                        </ListItemButton>
                     </List>
                 </Collapse>
                 <Collapse in={openAbout} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             to="about/manager"
-                            style={{
-                                color: 'inherit',
-                                textDecoration: 'inherit',
-                            }}
+                            sx={{ pl: 4 }}
                         >
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="운영진 소개" />
-                            </ListItemButton>
-                        </Link>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="운영진 소개" />
+                        </ListItemButton>
                     </List>
                 </Collapse>
             </List>

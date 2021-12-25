@@ -3,7 +3,7 @@ import './App.css';
 import axios from 'axios';
 import { BrowserRouter, Route, Routes, Router, Link } from 'react-router-dom';
 
-// Main
+/* Main */
 import AppLayout from './views/main/AppLayout';
 import Home from './views/main/Home';
 import About from './views/main/about/About';
@@ -19,12 +19,14 @@ import ApplyCheck from './views/main/apply/ApplyCheck';
 import ApplyResult from './views/main/apply/ApplyResult';
 import QnA from './views/main/qna/QnA';
 import FAQ from './views/main/qna/FAQ';
-import DisplayAnswers from './views/main/qna/Display'
+import DisplayAnswers from './views/main/qna/Display';
 
-// Admin
+/* Admin */
 import AdminLayout from './views/admin/AdminLayout';
-import AdminNotice from './views/admin/notice/AdminNotice';
-import AdminNewNotice from './views/admin/notice/AdminNewNotice';
+// Notice
+import AdminNotice from './views/admin/notice/notice/AdminNotice';
+import AdminNoticeDetail from './views/admin/notice/notice/AdminNoticeDetail';
+import AdminNoticeNew from './views/admin/notice/notice/AdminNoticeNew';
 import AdminHome from './views/admin/home/AdminHome';
 import AdminAbout from './views/admin/about/AdminAbout';
 import AdminAboutManager from './views/admin/about/AdminAboutManager';
@@ -89,7 +91,11 @@ function App() {
                         />
                         {/* Notice */}
                         <Route path="notice" element={<AdminNotice />} />
-                        <Route path="notice/new" element={<AdminNewNotice />} />
+                        <Route
+                            path="notice/:id"
+                            element={<AdminNoticeDetail />}
+                        />
+                        <Route path="notice/new" element={<AdminNoticeNew />} />
                         <Route path="news" element={<News />} />
                         {/* Activity */}
                         <Route path="board" element={<Board />} />
@@ -146,8 +152,12 @@ function App() {
                         />
 
                         <Route exact path="/qna" element={<QnA />} />
-                        <Route exact path="/qna/:questionID" element={<DisplayAnswers/>}/>
-                        
+                        <Route
+                            exact
+                            path="/qna/:questionID"
+                            element={<DisplayAnswers />}
+                        />
+
                         <Route exact path="/faq" element={<FAQ />} />
                     </Route>
                 </Routes>
