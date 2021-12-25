@@ -26,7 +26,8 @@ import AdminLayout from './views/admin/AdminLayout';
 // Notice
 import AdminNotice from './views/admin/notice/notice/AdminNotice';
 import AdminNoticeDetail from './views/admin/notice/notice/AdminNoticeDetail';
-import AdminNoticeNew from './views/admin/notice/notice/AdminNoticeNew';
+import AdminNoticeCreate from './views/admin/notice/notice/AdminNoticeCreate';
+import AdminNews from './views/admin/notice/news/AdminNews';
 import AdminHome from './views/admin/home/AdminHome';
 import AdminAbout from './views/admin/about/AdminAbout';
 import AdminAboutManager from './views/admin/about/AdminAboutManager';
@@ -95,8 +96,11 @@ function App() {
                             path="notice/:id"
                             element={<AdminNoticeDetail />}
                         />
-                        <Route path="notice/new" element={<AdminNoticeNew />} />
-                        <Route path="news" element={<News />} />
+                        <Route
+                            path="notice/new"
+                            element={<AdminNoticeCreate />}
+                        />
+                        <Route path="news" element={<AdminNews />} />
                         {/* Activity */}
                         <Route path="board" element={<Board />} />
                         <Route path="photo" element={<Photos />} />
