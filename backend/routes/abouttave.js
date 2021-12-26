@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('../config/winston');
 
-const s3 = require('../config/s3');
+const { s3, newsUpload } = require('../config/s3');
 const { aboutTaveUpload } = require('../config/s3');
 const path = require('path');
 const fs = require('fs');
@@ -44,19 +44,29 @@ router
             next(err);
         }
     })
-
-    .post(aboutTaveUpload.single('image_url'), async (req, res, next) => {
+    .post(aboutTaveUpload.array('images'), async (req, res, next) => {
         try {
             const about_tave = await Board.create({
-                category: 'tave',
+                category: 'about_tave',
                 title: req.body.title,
                 content: req.body.content,
             });
-            const about_tave_image = await Image.create({
-                image_url: req.file.location,
-                image_description: req.body.image_description,
-                board_id: about_tave.id,
-            });
+
+            img_desc_json = JSON.parse(req.body.image_description);
+
+            logger.debug(JSON.stringify(req.files));
+
+            await Promise.all(
+                req.files.map(async (file) => {
+                    logger.debug(file);
+                    const about_tave_image = await Image.create({
+                        image_key: file.key,
+                        image_url: file.location,
+                        image_description: img_desc_json[file.originalname],
+                        board_id: about_tave.id,
+                    });
+                })
+            );
             res.status(201).json({ about_tave });
         } catch (err) {
             logger.error(err);
@@ -71,9 +81,9 @@ router
                     title: req.body.title,
                     content: req.body.content,
                 },
-                { where: { category: 'tave' } }
+                { where: { category: 'about_tave' } }
             );
-            //logger.debug(about_tave); //about_tave 자체가 id값을 가짐
+            //logger.debug(about_tave); //about_tave: 카테고리가 about_tave인 row 개수
             const about_tave_image = await Image.update(
                 {
                     image_url: req.file.location,
@@ -91,7 +101,7 @@ router
     .delete(async (req, res, next) => {
         try {
             const about_tave = await Board.destroy({
-                where: { category: 'tave' },
+                where: { category: 'about_tave' },
             });
             const about_tave_image = await Image.destroy({
                 where: { board_id: about_tave },
@@ -140,13 +150,7 @@ module.exports = router;
  *                type: string
  *                description: 테이브 소개 내용
  *          - in: formData
- *            name: "image_key"
- *            required: true
- *            schema:
- *                type: string
- *                description: 이미지 경로
- *          - in: formData
- *            name: "image_url"
+ *            name: "images"
  *            required: true
  *            schema:
  *                type: string
