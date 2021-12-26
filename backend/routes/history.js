@@ -79,7 +79,7 @@ router
                     image_description: req.body.image_description,
                 },
                 { where: { board_id: history } }
-            ); //histor 자체가 자체가 id값을 가짐
+            ); //history 자체가 자체가 id값을 가짐
             res.status(201).json({ history });
         } catch (err) {
             logger.error(err);
@@ -89,6 +89,7 @@ router
 
     .delete(async (req, res, next) => {
         try {
+    
             const history = await Board.destroy({
                 where: { category: 'history' },
             });

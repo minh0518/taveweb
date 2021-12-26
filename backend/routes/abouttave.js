@@ -35,7 +35,7 @@ router
                     ],
                 },
                 {
-                    where: { category: { values: 'tave' } },
+                    where: { category: { values: 'about_tave' } },
                 }
             );
             res.status(200).json({ about_tave });

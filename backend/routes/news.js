@@ -155,10 +155,10 @@ router
 
             /* 4. 이미지 삭제가 완료 되면 db 데이터 삭제 */
             const news = await Board.destroy({
-                where: { category: 'news' },
+                where: { category: 'news', id: req.params.id},
             });
             const news_image = await Image.destroy({
-                where: { board_id: news },
+                where: { board_id: req.params.id },
             });
             res.status(200).json({ success: true });
         } catch (err) {
