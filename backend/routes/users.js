@@ -1,14 +1,14 @@
 const express = require('express');
 const logger = require('../config/winston');
 const s3 = require('../config/s3');
-const upload = require('../config/s3');
+const { userUpload } = require('../config/s3');
 
 const path = require('path');
 const fs = require('fs');
 // const multer = require('multer');
 // const multerS3 = require('multer-s3');
 // const aws = require('aws-sdk');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
 
@@ -46,7 +46,7 @@ router.route('/').get(async (req, res, next) => {
     }
 });
 
-router.post('/', upload.single('profile'), async (req, res, next) => {
+router.post('/', userUpload.single('profile'), async (req, res, next) => {
     try {
         //logger.debug(req.file.location);
         // logger.debug(req.body.email);
@@ -130,5 +130,58 @@ router.route('/:id/password').get(async (req, res, next) => {
         next(err);
     }
 });
+
+/**
+ * @swagger
+ * paths:
+ *  /api/users:
+ *      get:
+ *          tags: [users]
+ *          summary: users 조회
+ *          description: users 조회
+ *          produces:
+ *          - application/json
+ *          responses:
+ *              200:
+ *                  description: users 조회 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/User'
+ *      post:
+ *          tags: [users]
+ *          summary: user 추가
+ *          description: user 추가
+ *          consumes:
+ *          - multipart/form-data
+ *          parameters:
+ *          - in: formData
+ *            name: "emial"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이메일
+ *          - in: formData
+ *            name: "password"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 비밀번호
+ *          - in: formData
+ *            name: "name"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이름
+ *          - in: formData
+ *            name: "profile"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 프로필
+ *          responses:
+ *              201:
+ *                  description: user 추가 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/User'
+ */
 
 module.exports = router;

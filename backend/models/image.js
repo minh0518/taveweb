@@ -1,17 +1,19 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Image extends (
-    Sequelize.Model
-) {
+module.exports = class Image extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
+                image_key: {
+                    type: Sequelize.STRING(200),
+                    allowNull: false,
+                },
                 image_url: {
                     type: Sequelize.STRING(500),
                     allowNull: false,
                 },
                 image_description: {
-                    type: Sequelize.STRING(500),
+                    type: Sequelize.STRING(1000),
                     allowNull: true,
                 },
             },
@@ -20,7 +22,7 @@ module.exports = class Image extends (
                 underscored: true,
                 modelName: 'Image',
                 tableName: 'images',
-                paranoid: true,
+                paranoid: false,
                 timestamps: true,
                 charset: 'utf8mb4',
                 collate: 'utf8mb4_general_ci',

@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Apply extends (
-    Sequelize.Model
-) {
+module.exports = class Apply extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
@@ -33,7 +31,7 @@ module.exports = class Apply extends (
                 underscored: true,
                 modelName: 'Applies',
                 tableName: 'applies',
-                paranoid: true,
+                paranoid: false,
                 timestamps: true,
                 charset: 'utf8mb4',
                 collate: 'utf8mb4_general_ci',

@@ -62,4 +62,88 @@ router
         }
     });
 
+/**
+ * @swagger
+ * paths:
+ *  /api/answers:
+ *      get:
+ *          tags: [answers]
+ *          summary: Q&A 답변 전체 조회
+ *          description: Q&A 답변 전체 조회
+ *          produces:
+ *          - application/json
+ *          responses:
+ *              200:
+ *                  description: 전체 답변 조회 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Answer'
+ *      post:
+ *          tags: [answers]
+ *          summary: Q&A 답변 작성
+ *          description: Q&A 답변 작성
+ *          produces:
+ *          - application/json
+ *          consumes:
+ *          - application/json
+ *          parameters:
+ *          - in: body
+ *            name: "content"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 답변 내용
+ *          - in: body
+ *            name: "question_id"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 답변할 질문 id
+ *          responses:
+ *              201:
+ *                  description: 답변 작성 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Answer'
+ *  /api/answers/{id}:
+ *      patch:
+ *          tags: [answers]
+ *          summary: Q&A 답변 수정
+ *          description: Q&A 답변 수정
+ *          consumes:
+ *          - application/json
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          - in: body
+ *            name: "content"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 답변 내용
+ *          responses:
+ *              201:
+ *                  description: 답변 수정 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Answer'
+ *      delete:
+ *          tags: [answers]
+ *          summary: Q&A 답변 삭제
+ *          description: Q&A 답변 삭제
+ *          produces:
+ *          - application/json
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          responses:
+ *              200:
+ *                  description: 답변 삭제 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Answer'
+ */
+
 module.exports = router;

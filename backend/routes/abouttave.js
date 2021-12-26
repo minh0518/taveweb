@@ -2,13 +2,14 @@ const express = require('express');
 const logger = require('../config/winston');
 
 const s3 = require('../config/s3');
-const upload = require('../config/s3');
+const { aboutTaveUpload } = require('../config/s3');
 const path = require('path');
 const fs = require('fs');
 
 const Board = require('../models/board');
 const { json } = require('body-parser');
 const Image = require('../models/image');
+const swagger = require('../config/swagger');
 
 const router = express.Router();
 
@@ -44,7 +45,7 @@ router
         }
     })
 
-    .post(upload.single('image_url'), async (req, res, next) => {
+    .post(aboutTaveUpload.single('image_url'), async (req, res, next) => {
         try {
             const about_tave = await Board.create({
                 category: 'tave',
@@ -63,7 +64,7 @@ router
         }
     })
 
-    .patch(upload.single('image_url'), async (req, res, next) => {
+    .patch(aboutTaveUpload.single('image_url'), async (req, res, next) => {
         try {
             const about_tave = await Board.update(
                 {
@@ -103,3 +104,116 @@ router
     });
 
 module.exports = router;
+
+/**
+ * @swagger
+ * paths:
+ *  /api/about/tave:
+ *      get:
+ *          tags: [about-tave]
+ *          summary: 테이브 소개 조회
+ *          description: TAVE 소개 페이지 조회
+ *          produces:
+ *          - application/json
+ *          responses:
+ *              200:
+ *                  description: TAVE 소개 페이지 조회 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *      post:
+ *          tags: [about-tave]
+ *          summary: 테이브 소개 작성
+ *          description: TAVE 소개 페이지 작성
+ *          consumes:
+ *          - multipart/form-data
+ *          parameters:
+ *          - in: formData
+ *            name: "title"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 테이브 소개 제목
+ *          - in: formData
+ *            name: "content"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 테이브 소개 내용
+ *          - in: formData
+ *            name: "image_key"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_url"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_description"
+ *            required: false
+ *            schema:
+ *                type: string
+ *                description: 이미지 설명
+ *          responses:
+ *              201:
+ *                  description: TAVE 소개 페이지 작성 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *
+ *      patch:
+ *          tags: [about-tave]
+ *          summary: 테이브 소개 수정
+ *          description: TAVE 소개 페이지 수정
+ *          consumes:
+ *          - multipart/form-data
+ *          parameters:
+ *          - in: formData
+ *            name: "title"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 테이브 소개 제목
+ *          - in: formData
+ *            name: "content"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 테이브 소개 내용
+ *          - in: formData
+ *            name: "image_key"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_url"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_description"
+ *            required: false
+ *            schema:
+ *                type: string
+ *                description: 이미지 설명
+ *          responses:
+ *              201:
+ *                  description: TAVE 소개 페이지 수정 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *      delete:
+ *          tags: [about-tave]
+ *          summary: 테이브 소개 삭제
+ *          description: TAVE 소개 페이지 삭제
+ *          produces:
+ *          - application/json
+ *          responses:
+ *              200:
+ *                  description: TAVE 소개 페이지 삭제 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ */

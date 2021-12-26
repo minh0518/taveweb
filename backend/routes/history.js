@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('../config/winston');
 
 const s3 = require('../config/s3');
-const upload = require('../config/s3');
+const { aboutHistoryUpload } = require('../config/s3');
 const path = require('path');
 const fs = require('fs');
 
@@ -18,7 +18,6 @@ try {
     logger.warn('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
     fs.mkdirSync('uploads');
 }
-
 
 router
     .route('/')
@@ -45,7 +44,7 @@ router
         }
     })
 
-    .post(upload.single('image_url'), async (req, res, next) => {
+    .post(aboutHistoryUpload.single('image_url'), async (req, res, next) => {
         try {
             const history = await Board.create({
                 category: 'history',
@@ -64,8 +63,7 @@ router
         }
     })
 
-    
-    .patch(upload.single('image_url'), async (req, res, next) => {
+    .patch(aboutHistoryUpload.single('image_url'), async (req, res, next) => {
         try {
             const history = await Board.update(
                 {
@@ -88,7 +86,6 @@ router
             next(err);
         }
     })
-    
 
     .delete(async (req, res, next) => {
         try {
@@ -104,5 +101,118 @@ router
             next(err);
         }
     });
+
+/**
+ * @swagger
+ * paths:
+ *  /api/history:
+ *      get:
+ *          tags: [history]
+ *          summary: 테이브 연혁 조회
+ *          description: TAVE 연혁 조회
+ *          produces:
+ *          - application/json
+ *          responses:
+ *              200:
+ *                  description: TAVE 연혁 조회 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *      post:
+ *          tags: [history]
+ *          summary: 테이브 연혁 작성
+ *          description: TAVE 연혁 작성
+ *          consumes:
+ *          - multipart/form-data
+ *          parameters:
+ *          - in: formData
+ *            name: "title"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 테이브 연혁 제목
+ *          - in: formData
+ *            name: "content"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 테이브 연혁 내용
+ *          - in: formData
+ *            name: "image_key"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_url"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_description"
+ *            required: false
+ *            schema:
+ *                type: string
+ *                description: 이미지 설명
+ *          responses:
+ *              201:
+ *                  description: TAVE 연혁 작성 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *
+ *      patch:
+ *          tags: [history]
+ *          summary: 테이브 연혁 수정
+ *          description: TAVE 연혁 수정
+ *          consumes:
+ *          - multipart/form-data
+ *          parameters:
+ *          - in: formData
+ *            name: "title"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 테이브 연혁 제목
+ *          - in: formData
+ *            name: "content"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 테이브 연혁 내용
+ *          - in: formData
+ *            name: "image_key"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_url"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_description"
+ *            required: false
+ *            schema:
+ *                type: string
+ *                description: 이미지 설명
+ *          responses:
+ *              201:
+ *                  description: TAVE 연혁지 수정 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *      delete:
+ *          tags: [history]
+ *          summary: 테이브 연혁 삭제
+ *          description: TAVE 연혁 삭제
+ *          produces:
+ *          - application/json
+ *          responses:
+ *              200:
+ *                  description: TAVE 연혁 삭제 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ */
 
 module.exports = router;
