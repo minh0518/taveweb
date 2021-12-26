@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Recruit extends Sequelize.Model {
+module.exports = class Recruit extends (
+    Sequelize.Model
+) {
     static init(sequelize) {
         return super.init(
             {
@@ -15,11 +17,6 @@ module.exports = class Recruit extends Sequelize.Model {
                 recruit_form: {
                     type: Sequelize.JSON,
                     allowNull: false,
-                },
-                created_at: {
-                    type: Sequelize.DATE,
-                    allowNull: true,
-                    defaultValue: Sequelize.NOW,
                 },
             },
             {
