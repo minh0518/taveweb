@@ -103,7 +103,7 @@ router
                     title: req.body.title,
                     content: req.body.content,
                 },
-                { where: { id: req.params.id } }
+                { where: { category: 'news', id: req.params.id } }
             );
 
             img_desc_json = JSON.parse(req.body.image_description);
