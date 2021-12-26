@@ -11,6 +11,7 @@ const abouttaveRouter = require('./abouttave');
 const historyRouter = require('./history');
 const newsRouter = require('./news');
 const noticeRouter = require('./notice');
+const activityreviewRouter = require('./activityreview');
 const db = require('../config/db');
 
 const router = express.Router();
@@ -27,6 +28,7 @@ router.use('/about/tave', abouttaveRouter);
 router.use('/history', historyRouter);
 router.use('/news', newsRouter);
 router.use('/notices', noticeRouter);
+router.use('/activity/review', activityreviewRouter);
 
 router.get('/', async (req, res, next) => {
     try {
