@@ -23,25 +23,25 @@ try {
 router
     .route('/')
     .get(async (req, res, next) => {
+        // logger.debug(req.query.skip);
+        // logger.debug(req.query.limit);
         try {
-            const notices = await Board.findAll(
-                {
-                    attributes: ['id', 'title', 'content', 'created_at'],
-                    include: [
-                        {
-                            model: Image,
-                            attributes: [
-                                'image_key',
-                                'image_url',
-                                'image_description',
-                            ],
-                        },
-                    ],
-                },
-                {
-                    where: { category: { values: 'notice' } },
-                }
-            );
+            const notices = await Board.findAll({
+                attributes: ['id', 'title', 'content', 'created_at'],
+                include: [
+                    {
+                        model: Image,
+                        attributes: [
+                            'image_key',
+                            'image_url',
+                            'image_description',
+                        ],
+                    },
+                ],
+                where: { category: 'notice' },
+                offset: Number(req.query.skip),
+                limit: Number(req.query.limit),
+            });
             res.status(200).json({ notices });
         } catch (err) {
             logger.error(err);
@@ -178,11 +178,24 @@ router
 /**
  * @swagger
  * paths:
- *  /api/notice:
+ *  /api/notices:
  *      get:
  *          tags: [notice]
  *          summary: 공지 페이지 조회
  *          description: 전체 공지사항 조회
+ *          parameters:
+ *          - in: query string
+ *            name: "skip"
+ *            required: true
+ *            schema:
+ *                type: int
+ *                description: 시작 위치
+ *          - in: query string
+ *            name: "limit"
+ *            required: true
+ *            schema:
+ *                type: int
+ *                description: 조회할 개수
  *          produces:
  *          - application/json
  *          responses:
@@ -232,7 +245,7 @@ router
  *                  description: 공지 작성 성공
  *                  schema:
  *                      $ref: '#/components/schemas/Board'
- *  /api/notice/{id}:
+ *  /api/notices/{id}:
  *      get:
  *          tags: [notice]
  *          summary: 공지 상세 조회
