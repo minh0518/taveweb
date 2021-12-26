@@ -39,19 +39,19 @@ router
  *  /api/recruit:
  *      get:
  *          tags: [recruit]
- *          summary: 지원서 조회
- *          description: 지원서 조회
+ *          summary: 지원서 양식 조회
+ *          description: 지원서 양식 조회
  *          produces:
  *          - application/json
  *          responses:
  *              200:
- *                  description: 지원서 조회 성공
+ *                  description: 지원서 양식 조회 성공
  *                  schema:
  *                      $ref: '#/components/schemas/Recruit'
  *      post:
  *          tags: [recruit]
- *          summary:  지원서 작성
- *          description: 지원서 작성
+ *          summary:  지원서 양식 작성
+ *          description: 지원서 양식 작성
  *          consumes:
  *          - application/json
  *          parameters:
@@ -75,7 +75,7 @@ router
  *                description: 지원서 폼
  *          responses:
  *              201:
- *                  description: 지원서 작성 성공
+ *                  description: 지원서 양식 작성 성공
  *                  schema:
  *                      $ref: '#/components/schemas/Recruit'
  */
