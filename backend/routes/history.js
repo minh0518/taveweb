@@ -90,7 +90,8 @@ router
                     image_description: req.body.image_description,
                 },
                 { where: { board_id: history } }
-            );
+
+            ); 
             res.status(201).json({ history });
         } catch (err) {
             logger.error(err);
@@ -100,6 +101,7 @@ router
 
     .delete(async (req, res, next) => {
         try {
+    
             const history = await Board.destroy({
                 where: { category: 'history' },
             });

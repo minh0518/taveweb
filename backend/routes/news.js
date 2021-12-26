@@ -164,7 +164,7 @@ router
 
             /* 4. 이미지 삭제가 완료 되면 db 데이터 삭제 */
             const news = await Board.destroy({
-                where: { category: 'news', id: req.params.id },
+                where: { category: 'news', id: req.params.id},
             });
             logger.debug('news 값:' + news);
             const news_image = await Image.destroy({
