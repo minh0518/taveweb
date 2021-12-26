@@ -23,24 +23,22 @@ router
     .route('/')
     .get(async (req, res, next) => {
         try {
-            const news = await Board.findAll(
-                {
-                    attributes: ['id', 'title', 'content'],
-                    include: [
-                        {
-                            model: Image,
-                            attributes: [
-                                'image_key',
-                                'image_url',
-                                'image_description',
-                            ],
-                        },
-                    ],
-                },
-                {
-                    where: { category: { values: 'news' } },
-                }
-            );
+            const news = await Board.findAll({
+                attributes: ['id', 'title', 'content'],
+                include: [
+                    {
+                        model: Image,
+                        attributes: [
+                            'image_key',
+                            'image_url',
+                            'image_description',
+                        ],
+                    },
+                ],
+                where: { category: 'news' },
+                offset: Number(req.query.skip),
+                limit: Number(req.query.limit),
+            });
             res.status(200).json({ news });
         } catch (err) {
             logger.error(err);
