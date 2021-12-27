@@ -50,7 +50,13 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-import { Link } from 'react-router-dom';
+import {
+    Link,
+    useNavigate,
+    useLocation,
+    generatePath,
+    createSearchParams,
+} from 'react-router-dom';
 
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -77,35 +83,47 @@ const rows = [
 
 export default function AdminNotice() {
     const [currentPage, setCurrentPage] = useState(1);
-    // let currentPage = 1;
-    const [notices, setNotices] = useState(rows.slice(0, 5));
+    const [skip, setSkip] = useState(0);
+    const [limit, setLimit] = useState(5);
+
+    const [notices, setNotices] = useState([]);
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
-        axios.get('/api/notices').then((response) => {
-            console.log('response', response);
-            console.log('response', response.data);
-            setNotices(response.data['notices']);
-        });
-    }, []);
+        axios
+            .get('/api/notices', { params: { skip, limit } })
+            .then((response) => {
+                console.log('response', response);
+                console.log('response', response.data);
+                setNotices(response.data['notices']);
+            });
+    }, [skip, limit]);
 
     const getLength = () => {
         let count = Math.floor(rows.length / 5);
         if (rows.length % 5 !== 0) count++;
 
-        return count;
+        return 20;
     };
 
     const handlePaginationClick = (e, page) => {
         setCurrentPage(page);
+
         /* 
         1. skip: 0, limit: 5 - 1
         2. skip: 5, limit: 10 - 1
         2. skip: 10, limit: 15 - 1
         */
-        let skip = (page - 1) * 5;
-        let limit = page * 5;
-        setNotices(rows.slice(skip, limit));
-        console.log(page);
+        let skip = (page - 1) * limit;
+        setSkip(skip);
+
+        navigate({
+            search: `?${createSearchParams({
+                page,
+            })}`,
+        });
     };
 
     return (
@@ -126,26 +144,6 @@ export default function AdminNotice() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {/* {notices.map((row) => (
-                                <TableRow
-                                    key={row.name}
-                                    sx={{
-                                        '&:last-child td, &:last-child th': {
-                                            border: 0,
-                                        },
-                                    }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {row.name}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {row.calories}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {row.fat}
-                                    </TableCell>
-                                </TableRow>
-                            ))} */}
                             {notices.map((notice) => (
                                 <TableRow
                                     component={Link}
