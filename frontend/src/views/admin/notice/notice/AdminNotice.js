@@ -53,71 +53,42 @@ import Typography from '@mui/material/Typography';
 import {
     Link,
     useNavigate,
-    useLocation,
-    generatePath,
     createSearchParams,
+    useSearchParams,
 } from 'react-router-dom';
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('햄버거', 159, 6.0, 24, 4.0),
-    createData('치킨', 237, 9.0, 37, 4.3),
-    createData('피자', 262, 16.0, 24, 6.0),
-    createData('족발', 305, 3.7, 67, 4.3),
-    createData('초밥', 356, 16.0, 49, 3.9),
-    createData('짜장면', 159, 6.0, 24, 4.0),
-    createData('짬뽕', 237, 9.0, 37, 4.3),
-    createData('볶음밥', 262, 16.0, 24, 6.0),
-    createData('라조기', 305, 3.7, 67, 4.3),
-    createData('취두부', 356, 16.0, 49, 3.9),
-    createData('깐풍기', 356, 16.0, 49, 3.9),
-];
-
 export default function AdminNotice() {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [notices, setNotices] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(5);
 
-    const [notices, setNotices] = useState([]);
-
     const navigate = useNavigate();
-    const location = useLocation();
 
     useEffect(() => {
         axios
             .get('/api/notices', { params: { skip, limit } })
             .then((response) => {
-                console.log('response', response);
-                console.log('response', response.data);
+                // console.log('response', response);
+                // console.log('response', response.data);
                 setNotices(response.data['notices']);
             });
     }, [skip, limit]);
 
-    const getLength = () => {
-        let count = Math.floor(rows.length / 5);
-        if (rows.length % 5 !== 0) count++;
+    useEffect(() => {
+        let page = Number(searchParams.get('page'));
+        page = page ? page : 1;
+        console.log(page);
+        let skip = (page - 1) * limit;
 
-        return 20;
-    };
+        setSkip(skip);
+        setCurrentPage(page);
+    }, [searchParams]);
 
     const handlePaginationClick = (e, page) => {
         setCurrentPage(page);
-
-        /* 
-        1. skip: 0, limit: 5 - 1
-        2. skip: 5, limit: 10 - 1
-        2. skip: 10, limit: 15 - 1
-        */
-        let skip = (page - 1) * limit;
-        setSkip(skip);
 
         navigate({
             search: `?${createSearchParams({
@@ -174,8 +145,9 @@ export default function AdminNotice() {
                 <CardActions>
                     <Stack spacing={2}>
                         <Pagination
-                            count={getLength()}
-                            variant="outlined"
+                            count={20}
+                            page={currentPage}
+                            boundaryCount={1}
                             onChange={handlePaginationClick}
                         />
                     </Stack>
