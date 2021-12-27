@@ -1,38 +1,3 @@
-// import React, { Fragment } from 'react';
-
-// import Button from '@mui/material/Button';
-// import DeleteIcon from '@mui/icons-material/Delete';
-// import SendIcon from '@mui/icons-material/Send';
-// import Stack from '@mui/material/Stack';
-
-// import { Link } from 'react-router-dom';
-
-// const AdminNotice = () => {
-//     return (
-//         <Fragment>
-//             <p>공지사항</p>
-//             <Stack direction="row" spacing={2}>
-//                 <Button variant="outlined" startIcon={<DeleteIcon />}>
-//                     Delete
-//                 </Button>
-//                 <Link
-//                     to="new"
-//                     style={{
-//                         color: 'inherit',
-//                         textDecoration: 'inherit',
-//                     }}
-//                 >
-//                     <Button variant="contained" endIcon={<SendIcon />}>
-//                         Send
-//                     </Button>
-//                 </Link>
-//             </Stack>
-//         </Fragment>
-//     );
-// };
-
-// export default AdminNotice;
-
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -62,10 +27,22 @@ export default function AdminNotice() {
 
     const [notices, setNotices] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [count, setCount] = useState(0);
+    const [search, setSearch] = useState('');
     const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(5);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        axios
+            .get('/api/notices/count', { params: { search } })
+            .then((response) => {
+                const pageCount = Math.ceil(response.data['count'] / limit);
+
+                setCount(pageCount);
+            });
+    }, [count]);
 
     useEffect(() => {
         axios
@@ -102,7 +79,14 @@ export default function AdminNotice() {
             <Card sx={{ minWidth: 275 }}>
                 <CardContent>
                     <Typography align="left" variant="h5" component="div">
-                        공지사항 {currentPage}
+                        공지사항
+                        <Typography
+                            sx={{ fontSize: 14 }}
+                            color="text.secondary"
+                            gutterBottom
+                        >
+                            Page: {currentPage}
+                        </Typography>
                     </Typography>
                 </CardContent>
                 <TableContainer component={Paper} elevation={0}>
@@ -118,8 +102,8 @@ export default function AdminNotice() {
                             {notices.map((notice) => (
                                 <TableRow
                                     component={Link}
-                                    key={notice.id}
                                     to={`${notice.id}`}
+                                    key={notice.id}
                                     sx={{
                                         '&:last-child td, &:last-child th': {
                                             border: 0,
@@ -145,7 +129,7 @@ export default function AdminNotice() {
                 <CardActions>
                     <Stack spacing={2}>
                         <Pagination
-                            count={20}
+                            count={count}
                             page={currentPage}
                             boundaryCount={1}
                             onChange={handlePaginationClick}
