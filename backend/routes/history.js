@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('../config/winston');
 
-const s3 = require('../config/s3');
+const { s3, newsUpload } = require('../config/s3');
 const { aboutHistoryUpload } = require('../config/s3');
 const path = require('path');
 const fs = require('fs');
@@ -44,19 +44,30 @@ router
         }
     })
 
-    .post(aboutHistoryUpload.single('image_url'), async (req, res, next) => {
+    .post(aboutHistoryUpload.array('images'), async (req, res, next) => {
         try {
-            const history = await Board.create({
-                category: 'history',
+            const about_history = await Board.create({
+                category: 'about_history',
                 title: req.body.title,
                 content: req.body.content,
             });
-            const history_image = await Image.create({
-                image_url: req.file.location,
-                image_description: req.body.image_description,
-                board_id: history.id,
-            });
-            res.status(201).json({ history });
+
+            img_desc_json = JSON.parse(req.body.image_description);
+
+            logger.debug(JSON.stringify(req.files));
+
+            await Promise.all(
+                req.files.map(async (file) => {
+                    logger.debug(file);
+                    const about_history_image = await Image.create({
+                        image_key: file.key,
+                        image_url: file.location,
+                        image_description: img_desc_json[file.originalname],
+                        board_id: about_history.id,
+                    });
+                })
+            );
+            res.status(201).json({ about_history });
         } catch (err) {
             logger.error(err);
             next(err);
@@ -79,7 +90,8 @@ router
                     image_description: req.body.image_description,
                 },
                 { where: { board_id: history } }
-            ); //histor 자체가 자체가 id값을 가짐
+
+            ); 
             res.status(201).json({ history });
         } catch (err) {
             logger.error(err);
@@ -89,6 +101,7 @@ router
 
     .delete(async (req, res, next) => {
         try {
+    
             const history = await Board.destroy({
                 where: { category: 'history' },
             });
@@ -180,13 +193,7 @@ router
  *                type: string
  *                description: 테이브 연혁 내용
  *          - in: formData
- *            name: "image_key"
- *            required: true
- *            schema:
- *                type: string
- *                description: 이미지 경로
- *          - in: formData
- *            name: "image_url"
+ *            name: "images"
  *            required: true
  *            schema:
  *                type: string

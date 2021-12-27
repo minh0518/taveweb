@@ -80,18 +80,6 @@ router
         }
     });
 
-router.route('/:id/password').get(async (req, res, next) => {
-    try {
-        const question = await Question.findOne({
-            where: { id: req.params.id, password: req.body.password },
-        });
-        res.status(200).json({ check: question !== null });
-    } catch (err) {
-        logger.error(err);
-        next(err);
-    }
-});
-
 /**
  * @swagger
  * paths:
@@ -205,24 +193,6 @@ router.route('/:id/password').get(async (req, res, next) => {
  *          responses:
  *              200:
  *                  description: FAQ 삭제 성공
- *                  schema:
- *                      $ref: '#/components/schemas/Faq'
- *  /api/faqs/{id}/password:
- *      get:
- *          tags: [faqs]
- *          summary: 질문 비밀번호 확인
- *          description: FAQ 질문 비밀번호 확인
- *          produces:
- *          - application/json
- *          parameters:
- *          - in: path
- *            name: id
- *            required: true
- *            schema:
- *                type: string
- *          responses:
- *              200:
- *                  description: 비밀번호 확인 성공
  *                  schema:
  *                      $ref: '#/components/schemas/Faq'
  */

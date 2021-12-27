@@ -106,22 +106,32 @@ router
             next(err);
         }
     })
-    .patch(noticeUpload.single('image_url'), async (req, res, next) => {
+    .patch(noticeUpload.array('images'), async (req, res, next) => {
         try {
             const notice = await Board.update(
                 {
                     title: req.body.title,
                     content: req.body.content,
                 },
-                { where: { category: 'notice' } }
+                { where: { id: req.params.id } }
             );
-
-            const notice_image = await Image.update(
-                {
-                    image_url: req.file.location,
-                    image_description: req.body.image_description,
-                },
-                { where: { board_id: notice } }
+    
+            img_desc_json = JSON.parse(req.body.image_description);
+    
+            logger.debug(JSON.stringify(req.files));
+    
+            await Promise.all(
+                req.files.map(async (file) => {
+                    logger.debug(file);
+                    const notice_image = await Image.update(
+                        {
+                            image_key: file.key,
+                            image_url: file.location,
+                            image_description: img_desc_json[file.originalname],
+                        },
+                        { where: { board_id: req.params.id } }
+                    );
+                })
             );
             res.status(201).json({ notice });
         } catch (err) {
@@ -163,10 +173,10 @@ router
 
             /* 4. 이미지 삭제가 완료 되면 db 데이터 삭제 */
             const notice = await Board.destroy({
-                where: { category: 'notice' },
+                where: { category: 'notice', id: req.params.id },
             });
             const notice_image = await Image.destroy({
-                where: { board_id: notice },
+                where: { board_id: req.params.id },
             });
             res.status(200).json({ success: true });
         } catch (err) {
@@ -223,13 +233,7 @@ router
  *                type: string
  *                description: 공지 내용
  *          - in: formData
- *            name: "image_key"
- *            required: true
- *            schema:
- *                type: string
- *                description: 이미지 경로
- *          - in: formData
- *            name: "image_url"
+ *            name: "images"
  *            required: true
  *            schema:
  *                type: string

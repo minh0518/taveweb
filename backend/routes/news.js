@@ -96,29 +96,40 @@ router
             next(err);
         }
     })
-    .patch(newsUpload.single('image_url'), async (req, res, next) => {
+    .patch(newsUpload.array('images'), async (req, res, next) => {
         try {
             const news = await Board.update(
                 {
                     title: req.body.title,
                     content: req.body.content,
                 },
-                { where: { category: 'news' } }
+                { where: { id: req.params.id } }
             );
 
-            const news_image = await Image.update(
-                {
-                    image_url: req.file.location,
-                    image_description: req.body.image_description,
-                },
-                { where: { board_id: news } }
-            ); //histor 자체가 자체가 id값을 가짐
+            img_desc_json = JSON.parse(req.body.image_description);
+
+            logger.debug(JSON.stringify(req.files));
+
+            await Promise.all(
+                req.files.map(async (file) => {
+                    logger.debug(file);
+                    const news_image = await Image.update(
+                        {
+                            image_key: file.key,
+                            image_url: file.location,
+                            image_description: img_desc_json[file.originalname],
+                        },
+                        { where: { board_id: req.params.id } }
+                    );
+                })
+            );
             res.status(201).json({ news });
         } catch (err) {
             logger.error(err);
             next(err);
         }
     })
+
     .delete(async (req, res, next) => {
         try {
             logger.debug(req.params.id);
@@ -153,10 +164,11 @@ router
 
             /* 4. 이미지 삭제가 완료 되면 db 데이터 삭제 */
             const news = await Board.destroy({
-                where: { category: 'news' },
+                where: { category: 'news', id: req.params.id},
             });
+            logger.debug('news 값:' + news);
             const news_image = await Image.destroy({
-                where: { board_id: news },
+                where: { board_id: req.params.id },
             });
             res.status(200).json({ success: true });
         } catch (err) {
@@ -200,13 +212,7 @@ router
  *                type: string
  *                description: Tavy news 내용
  *          - in: formData
- *            name: "image_key"
- *            required: true
- *            schema:
- *                type: string
- *                description: 이미지 경로
- *          - in: formData
- *            name: "image_url"
+ *            name: "images"
  *            required: true
  *            schema:
  *                type: string
