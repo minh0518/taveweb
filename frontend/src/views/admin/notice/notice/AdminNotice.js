@@ -15,6 +15,10 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import Grid from '@mui/material/Grid';
+
 import {
     Link,
     useNavigate,
@@ -29,7 +33,6 @@ export default function AdminNotice() {
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState(0);
     const [search, setSearch] = useState('');
-    const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(5);
 
     const navigate = useNavigate();
@@ -42,26 +45,21 @@ export default function AdminNotice() {
 
                 setCount(pageCount);
             });
-    }, [count]);
-
-    useEffect(() => {
-        axios
-            .get('/api/notices', { params: { skip, limit } })
-            .then((response) => {
-                // console.log('response', response);
-                // console.log('response', response.data);
-                setNotices(response.data['notices']);
-            });
-    }, [skip, limit]);
+    }, [limit]);
 
     useEffect(() => {
         let page = Number(searchParams.get('page'));
-        page = page ? page : 1;
+        page = page ? page : 1; // undefined면 1을 채워 넣음
         console.log(page);
         let skip = (page - 1) * limit;
 
-        setSkip(skip);
         setCurrentPage(page);
+
+        axios
+            .get('/api/notices', { params: { skip, limit } })
+            .then((response) => {
+                setNotices(response.data['notices']);
+            });
     }, [searchParams]);
 
     const handlePaginationClick = (e, page) => {
@@ -78,16 +76,34 @@ export default function AdminNotice() {
         <Fragment>
             <Card sx={{ minWidth: 275 }}>
                 <CardContent>
-                    <Typography align="left" variant="h5" component="div">
-                        공지사항
-                        <Typography
-                            sx={{ fontSize: 14 }}
-                            color="text.secondary"
-                            gutterBottom
-                        >
-                            Page: {currentPage}
-                        </Typography>
-                    </Typography>
+                    <Grid container spacing={2}>
+                        <Grid item xs={8}>
+                            <Typography
+                                align="left"
+                                variant="h5"
+                                component="div"
+                            >
+                                공지사항
+                                <Typography
+                                    sx={{ fontSize: 14 }}
+                                    color="text.secondary"
+                                    gutterBottom
+                                >
+                                    Page: {currentPage}
+                                </Typography>
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={4} align={'right'}>
+                            <Button
+                                component={Link}
+                                to={`create`}
+                                variant="contained"
+                                endIcon={<AddIcon />}
+                            >
+                                작성
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </CardContent>
                 <TableContainer component={Paper} elevation={0}>
                     <Table sx={{ minWidth: 275 }} aria-label="simple table">
@@ -126,7 +142,7 @@ export default function AdminNotice() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <CardActions>
+                <CardActions sx={{ justifyContent: 'center' }}>
                     <Stack spacing={2}>
                         <Pagination
                             count={count}
