@@ -97,7 +97,7 @@ function App() {
                             element={<AdminNoticeDetail />}
                         />
                         <Route
-                            path="notice/new"
+                            path="notice/create"
                             element={<AdminNoticeCreate />}
                         />
                         <Route path="news" element={<AdminNews />} />
