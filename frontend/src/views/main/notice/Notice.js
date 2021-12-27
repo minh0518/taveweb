@@ -9,8 +9,11 @@ const Notice = () => {
         Notices()
     },[])
 
+    let skip=0;
+    let limit=3;
+
     async function Notices(){
-        const response=await axios.get("api/notices")
+        const response=await axios.get("api/notices",{params:{skip,limit}})
         setValue(response.data.notices);
     }
 
@@ -19,6 +22,13 @@ const Notice = () => {
         <div>
             <h2>Notices</h2>
            
+            {value.map((notice)=>(
+                <div>
+                    <ul>
+                        <li key={notice.id}><Link to={`/notice/${notice.id}`}><p>{notice.title}</p></Link></li>
+                    </ul>
+                </div>
+            ))}
         </div>
     );
 };

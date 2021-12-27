@@ -10,6 +10,7 @@ import About from './views/main/about/About';
 import AboutManager from './views/main/about/AboutManager';
 import History from './views/main/about/History';
 import Notice from './views/main/notice/Notice';
+import Notices from './views/main/notice/NoticeDetail'
 import News from './views/main/notice/News';
 import Board from './views/main/tavy/Board';
 import Photos from './views/main/tavy/Photos';
@@ -20,6 +21,7 @@ import ApplyResult from './views/main/apply/ApplyResult';
 import QnA from './views/main/qna/QnA';
 import FAQ from './views/main/qna/FAQ';
 import DisplayAnswers from './views/main/qna/Display';
+
 
 /* Admin */
 import AdminLayout from './views/admin/AdminLayout';
@@ -134,7 +136,17 @@ function App() {
                             path="/about/history"
                             element={<History />}
                         />
+
+
+                        {/* 공지사항목록, 세부내용 */}
                         <Route exact path="/notice" element={<Notice />} />
+                        <Route exact 
+                               path="/notice/:noticeID" 
+                               element={<Notices/>}
+                        />
+
+
+
                         <Route exact path="/news" element={<News />} />
                         <Route exact path="/board" element={<Board />} />
                         <Route exact path="/photo" element={<Photos />} />
@@ -154,7 +166,8 @@ function App() {
                             path="/apply/result"
                             element={<ApplyResult />}
                         />
-
+                        
+                        {/* QnA목록,답변들 */}
                         <Route exact path="/qna" element={<QnA />} />
                         <Route
                             exact
