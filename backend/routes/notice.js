@@ -10,6 +10,7 @@ const url = require('url');
 const Board = require('../models/board');
 const { json } = require('body-parser');
 const Image = require('../models/image');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -79,6 +80,20 @@ router
         }
     });
 
+router.route('/count').get(async (req, res, next) => {
+    logger.debug(req.query.search);
+    const title = req.query.search ? req.query.search : '';
+    try {
+        const count = await Board.count({
+            where: { category: 'notice', title: { [Op.like]: `%${title}%` } },
+        });
+        res.status(200).json({ count });
+    } catch (err) {
+        logger.error(err);
+        next(err);
+    }
+});
+
 router
     .route('/:id')
     .get(async (req, res, next) => {
@@ -115,11 +130,11 @@ router
                 },
                 { where: { id: req.params.id } }
             );
-    
+
             img_desc_json = JSON.parse(req.body.image_description);
-    
+
             logger.debug(JSON.stringify(req.files));
-    
+
             await Promise.all(
                 req.files.map(async (file) => {
                     logger.debug(file);

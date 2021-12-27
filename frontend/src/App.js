@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
-import axios from 'axios';
-import { BrowserRouter, Route, Routes, Router, Link } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 /* Main */
 import AppLayout from './views/main/AppLayout';
@@ -40,40 +39,6 @@ import AdminApplyForm from './views/admin/apply/AdminApplyForm';
 import AdminApplyResult from './views/admin/apply/AdminApplyResult';
 
 function App() {
-    const [lists, setLists] = useState([]);
-    const [value, setValue] = useState('');
-
-    useEffect(() => {
-        axios.get('/api/hi').then((response) => {
-            console.log('response', response);
-        });
-    }, []);
-
-    useEffect(() => {
-        axios.get('/api/values').then((response) => {
-            console.log('response', response);
-            setLists(response.data);
-        });
-    }, []);
-
-    const changeHandler = (event) => {
-        setValue(event.currentTarget.value);
-    };
-
-    const submitHandler = (event) => {
-        event.preventDefault();
-
-        axios.post('/api/value', { value: value }).then((response) => {
-            if (response.data.success) {
-                console.log('response', response);
-                setLists([...lists, response.data]);
-                setValue('');
-            } else {
-                alert('값을 DB에 넣는데 실패했습니다.');
-            }
-        });
-    };
-
     return (
         <div>
             <div className="App">
@@ -99,7 +64,7 @@ function App() {
                             element={<AdminNoticeDetail />}
                         />
                         <Route
-                            path="notice/new"
+                            path="notice/create"
                             element={<AdminNoticeCreate />}
                         />
                         <Route path="news" element={<AdminNews />} />
