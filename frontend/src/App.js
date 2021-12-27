@@ -41,18 +41,18 @@ function App() {
     const [lists, setLists] = useState([]);
     const [value, setValue] = useState('');
 
-    useEffect(() => {
-        axios.get('/api/hi').then((response) => {
-            console.log('response', response);
-        });
-    }, []);
+    // useEffect(() => {
+    //     axios.get('/api/hi').then((response) => {
+    //         console.log('response', response);
+    //     });
+    // }, []);
 
-    useEffect(() => {
-        axios.get('/api/values').then((response) => {
-            console.log('response', response);
-            setLists(response.data);
-        });
-    }, []);
+    // useEffect(() => {
+    //     axios.get('/api/values').then((response) => {
+    //         console.log('response', response);
+    //         setLists(response.data);
+    //     });
+    // }, []);
 
     const changeHandler = (event) => {
         setValue(event.currentTarget.value);
