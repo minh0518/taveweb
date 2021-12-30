@@ -31,12 +31,7 @@ export default function AdminAbout() {
         <Fragment>
             <Card sx={{ minWidth: 275 }}>
                 <CardContent>
-                    <Typography
-                        sx={{ fontSize: 14 }}
-                        color="text.secondary"
-                        gutterBottom
-                    ></Typography>
-                    <Grid item xs={4} align={'right'}>
+                    <Grid container justify="flex-end">
                         <Button
                             component={Link}
                             to={`create`}
@@ -46,6 +41,7 @@ export default function AdminAbout() {
                             작성
                         </Button>
                     </Grid>
+
                     <Typography variant="h5" component="div">
                         {about_tave.title}
                     </Typography>
