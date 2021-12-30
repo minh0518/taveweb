@@ -74,7 +74,7 @@ export default function AdminNotice() {
 
     return (
         <Fragment>
-            <Card sx={{ minWidth: 275 }}>
+            <Card elevation={3} sx={{ minWidth: 275 }}>
                 <CardContent>
                     <Grid container spacing={2}>
                         <Grid item xs={8}>
@@ -135,7 +135,9 @@ export default function AdminNotice() {
                                         {notice.title}
                                     </TableCell>
                                     <TableCell align="right">
-                                        {notice.created_at}
+                                        {new Date(
+                                            Date.parse(notice?.created_at)
+                                        ).toLocaleString()}
                                     </TableCell>
                                 </TableRow>
                             ))}
