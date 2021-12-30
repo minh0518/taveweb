@@ -28,9 +28,16 @@ import AdminNoticeDetail from './views/admin/notice/notice/AdminNoticeDetail';
 import AdminNoticeCreate from './views/admin/notice/notice/AdminNoticeCreate';
 import AdminNews from './views/admin/notice/news/AdminNews';
 import AdminHome from './views/admin/home/AdminHome';
-import AdminAbout from './views/admin/about/AdminAbout';
-import AdminAboutManager from './views/admin/about/AdminAboutManager';
-import AdminHistory from './views/admin/about/AdminHistory';
+//About_Tave
+import AdminAbout from './views/admin/about/about_tave/AdminAbout';
+import AdminAboutCreate from './views/admin/about/about_tave/AdminAboutCreate';
+//About_Admin
+import AdminAboutManager from './views/admin/about/about_admin/AdminAboutManager';
+import AdminAboutManagerCreate from './views/admin/about/about_admin/AdminAboutManagerCreate';
+//About_History
+import AdminHistory from './views/admin/about/about_history/AdminHistory';
+import AdminHistoryCreate from './views/admin/about/about_history/AdminHistoryCreate';
+
 import AdminApply from './views/admin/apply/AdminApply';
 import AdminApplyCheck from './views/admin/apply/AdminApplyCheck';
 import AdminApplyForm from './views/admin/apply/AdminApplyForm';
@@ -48,12 +55,24 @@ function App() {
                         {/* About */}
                         <Route path="about" element={<AdminAbout />} />
                         <Route
+                            path="about/create"
+                            element={<AdminAboutCreate />}
+                        />
+                        <Route
                             path="about/history"
                             element={<AdminHistory />}
                         />
                         <Route
+                            path="about/history/create"
+                            element={<AdminHistoryCreate />}
+                        />
+                        <Route
                             path="about/manager"
                             element={<AdminAboutManager />}
+                        />
+                        <Route
+                            path="about/manager/create"
+                            element={<AdminAboutManagerCreate />}
                         />
                         {/* Notice */}
                         <Route path="notice" element={<AdminNotice />} />

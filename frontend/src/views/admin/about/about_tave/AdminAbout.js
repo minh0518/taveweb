@@ -1,14 +1,20 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import Grid from '@mui/material/Grid';
 
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+    Link,
+    useNavigate,
+    createSearchParams,
+    useSearchParams,
+} from 'react-router-dom';
 
 export default function AdminAbout() {
     const [about_tave, setAbouttave] = useState({ Images: [] });
@@ -30,6 +36,16 @@ export default function AdminAbout() {
                         color="text.secondary"
                         gutterBottom
                     ></Typography>
+                    <Grid item xs={4} align={'right'}>
+                        <Button
+                            component={Link}
+                            to={`create`}
+                            variant="contained"
+                            endIcon={<AddIcon />}
+                        >
+                            작성
+                        </Button>
+                    </Grid>
                     <Typography variant="h5" component="div">
                         {about_tave.title}
                     </Typography>
