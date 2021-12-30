@@ -90,8 +90,7 @@ router
                     image_description: req.body.image_description,
                 },
                 { where: { board_id: history } }
-
-            ); 
+            );
             res.status(201).json({ history });
         } catch (err) {
             logger.error(err);
@@ -101,7 +100,6 @@ router
 
     .delete(async (req, res, next) => {
         try {
-    
             const history = await Board.destroy({
                 where: { category: 'history' },
             });
@@ -149,12 +147,6 @@ router
  *            schema:
  *                type: string
  *                description: 테이브 연혁 내용
- *          - in: formData
- *            name: "image_key"
- *            required: true
- *            schema:
- *                type: string
- *                description: 이미지 경로
  *          - in: formData
  *            name: "image_url"
  *            required: true

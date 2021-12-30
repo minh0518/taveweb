@@ -209,13 +209,13 @@ router
  *          summary: 공지 페이지 조회
  *          description: 전체 공지사항 조회
  *          parameters:
- *          - in: query string
+ *          - in: query
  *            name: "skip"
  *            required: true
  *            schema:
  *                type: int
  *                description: 시작 위치
- *          - in: query string
+ *          - in: query
  *            name: "limit"
  *            required: true
  *            schema:
@@ -271,6 +271,7 @@ router
  *          description: 공지 상세 조회
  *          produces:
  *          - application/json
+ *          parameters:
  *          - in: path
  *            name: id
  *            required: true
@@ -306,13 +307,7 @@ router
  *                type: string
  *                description: 공지 내용
  *          - in: formData
- *            name: "image_key"
- *            required: true
- *            schema:
- *                type: string
- *                description: 이미지 경로
- *          - in: formData
- *            name: "image_url"
+ *            name: "images"
  *            required: true
  *            schema:
  *                type: string
@@ -334,6 +329,7 @@ router
  *          description: 공지 삭제
  *          produces:
  *          - application/json
+ *          parameters:
  *          - in: path
  *            name: id
  *            required: true

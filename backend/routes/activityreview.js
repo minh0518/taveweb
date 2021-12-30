@@ -19,7 +19,6 @@ try {
     fs.mkdirSync('uploads');
 }
 
-
 router
     .route('/')
     .get(async (req, res, next) => {
@@ -81,104 +80,245 @@ router
         }
     });
 
-    
 router
-.route('/:id')
-.get(async (req, res, next) => {
-    try {
-        logger.debug(req.params.id);
-        const activity_review = await Board.findOne({
-            include: [
-                {
-                    model: Image,
-                },
-            ],
-            attributes: ['id', 'title', 'content'],
-            where: { id: req.params.id },
-        });
-        res.status(200).json({ news });
-    } catch (err) {
-        logger.error(err);
-        next(err);
-    }
-})
-.patch(activityReviewUpload.array('images'), async (req, res, next) => {
-    try {
-        const activity_review = await Board.update(
-            {
-                title: req.body.title,
-                content: req.body.content,
-            },
-            { where: { id: req.params.id } }
-        );
-
-        img_desc_json = JSON.parse(req.body.image_description);
-
-        logger.debug(JSON.stringify(req.files));
-
-        await Promise.all(
-            req.files.map(async (file) => {
-                logger.debug(file);
-                const activity_review_image = await Image.update(
+    .route('/:id')
+    .get(async (req, res, next) => {
+        try {
+            logger.debug(req.params.id);
+            const activity_review = await Board.findOne({
+                include: [
                     {
-                        image_key: file.key,
-                        image_url: file.location,
-                        image_description: img_desc_json[file.originalname],
+                        model: Image,
                     },
-                    { where: { board_id: req.params.id } }
-                );
-            })
-        );
-        res.status(201).json({ activity_review });
-    } catch (err) {
-        logger.error(err);
-        next(err);
-    }
-})
-.delete(async (req, res, next) => {
-    try {
-        logger.debug(req.params.id);
-
-        /* 1. 일단 board_id에 대한 이미지 전체 조회 */
-        const images = await Image.findAll({
-            attributes: [
-                'id',
-                'image_key',
-                'image_url',
-                'image_description',
-            ],
-            where: { board_id: req.params.id },
-        });
-
-        /* 2. 삭제 폼 작성 */
-        let Objects = [];
-        images.map((image) => Objects.push({ Key: image['image_key'] }));
-        var params = {
-            Bucket: 'tave-bucket',
-            Delete: { Objects },
-        };
-
-        /* 3. 삭제 요청 */
-        if (Objects.length !== 0) {
-            // 빈 배열이 아닐때만
-            s3.deleteObjects(params, function (err, data) {
-                if (err) console.log(err, err.stack);
-                else console.log(data);
+                ],
+                attributes: ['id', 'title', 'content'],
+                where: { id: req.params.id },
             });
+            res.status(200).json({ news });
+        } catch (err) {
+            logger.error(err);
+            next(err);
         }
+    })
+    .patch(activityReviewUpload.array('images'), async (req, res, next) => {
+        try {
+            const activity_review = await Board.update(
+                {
+                    title: req.body.title,
+                    content: req.body.content,
+                },
+                { where: { id: req.params.id } }
+            );
 
-        /* 4. 이미지 삭제가 완료 되면 db 데이터 삭제 */
-        const activity_review = await Board.destroy({
-            where: { category: 'activity_review', id: req.params.id},
-        });
-        const activity_review_image = await Image.destroy({
-            where: { board_id: req.params.id },
-        });
-        res.status(200).json({ success: true });
-    } catch (err) {
-        logger.error(err);
-        next(err);
-    }
-});
+            img_desc_json = JSON.parse(req.body.image_description);
+
+            logger.debug(JSON.stringify(req.files));
+
+            await Promise.all(
+                req.files.map(async (file) => {
+                    logger.debug(file);
+                    const activity_review_image = await Image.update(
+                        {
+                            image_key: file.key,
+                            image_url: file.location,
+                            image_description: img_desc_json[file.originalname],
+                        },
+                        { where: { board_id: req.params.id } }
+                    );
+                })
+            );
+            res.status(201).json({ activity_review });
+        } catch (err) {
+            logger.error(err);
+            next(err);
+        }
+    })
+    .delete(async (req, res, next) => {
+        try {
+            logger.debug(req.params.id);
+
+            /* 1. 일단 board_id에 대한 이미지 전체 조회 */
+            const images = await Image.findAll({
+                attributes: [
+                    'id',
+                    'image_key',
+                    'image_url',
+                    'image_description',
+                ],
+                where: { board_id: req.params.id },
+            });
+
+            /* 2. 삭제 폼 작성 */
+            let Objects = [];
+            images.map((image) => Objects.push({ Key: image['image_key'] }));
+            var params = {
+                Bucket: 'tave-bucket',
+                Delete: { Objects },
+            };
+
+            /* 3. 삭제 요청 */
+            if (Objects.length !== 0) {
+                // 빈 배열이 아닐때만
+                s3.deleteObjects(params, function (err, data) {
+                    if (err) console.log(err, err.stack);
+                    else console.log(data);
+                });
+            }
+
+            /* 4. 이미지 삭제가 완료 되면 db 데이터 삭제 */
+            const activity_review = await Board.destroy({
+                where: { category: 'activity_review', id: req.params.id },
+            });
+            const activity_review_image = await Image.destroy({
+                where: { board_id: req.params.id },
+            });
+            res.status(200).json({ success: true });
+        } catch (err) {
+            logger.error(err);
+            next(err);
+        }
+    });
 
 module.exports = router;
+
+/**
+ * @swagger
+ * paths:
+ *  /api/activity/review:
+ *      get:
+ *          tags: [activity_review]
+ *          summary: 활동 후기 페이지 조회
+ *          description: 전체 활동 후기 조회
+ *          parameters:
+ *          - in: query
+ *            name: "skip"
+ *            required: true
+ *            schema:
+ *                type: int
+ *                description: 시작 위치
+ *          - in: query
+ *            name: "limit"
+ *            required: true
+ *            schema:
+ *                type: int
+ *                description: 조회할 개수
+ *          produces:
+ *          - application/json
+ *          responses:
+ *              200:
+ *                  description: 활동 후기 페이지 조회 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *      post:
+ *          tags: [activity_review]
+ *          summary: 활동 후기 작성
+ *          description: 활동 후기 작성
+ *          consumes:
+ *          - multipart/form-data
+ *          parameters:
+ *          - in: formData
+ *            name: "title"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 활동 후기 제목
+ *          - in: formData
+ *            name: "content"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 활동 후기 내용
+ *          - in: formData
+ *            name: "images"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_description"
+ *            required: false
+ *            schema:
+ *                type: string
+ *                description: 이미지 설명
+ *          responses:
+ *              201:
+ *                  description: 활동 후기 작성 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *  /api/activity/review/{id}:
+ *      get:
+ *          tags: [activity_review]
+ *          summary: 활동 후기 상세 조회
+ *          description: 활동 후기 상세 조회
+ *          produces:
+ *          - application/json
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          responses:
+ *              200:
+ *                  description: 활동 후기 상세 조회 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *      patch:
+ *          tags: [activity_review]
+ *          summary: 활동 후기 수정
+ *          description: 활동 후기 수정
+ *          consumes:
+ *          - multipart/form-data
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          - in: formData
+ *            name: "title"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 활동 후기 제목
+ *          - in: formData
+ *            name: "content"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 활동 후기 내용
+ *          - in: formData
+ *            name: "images"
+ *            required: true
+ *            schema:
+ *                type: string
+ *                description: 이미지 경로
+ *          - in: formData
+ *            name: "image_description"
+ *            required: false
+ *            schema:
+ *                type: string
+ *                description: 이미지 설명
+ *          responses:
+ *              201:
+ *                  description: 활동 후기 수정 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ *      delete:
+ *          tags: [activity_review]
+ *          summary: 활동 후기 삭제
+ *          description: 활동 후기 삭제
+ *          produces:
+ *          - application/json
+ *          parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *          responses:
+ *              200:
+ *                  description: 활동 후기 삭제 성공
+ *                  schema:
+ *                      $ref: '#/components/schemas/Board'
+ */
