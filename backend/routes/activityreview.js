@@ -23,26 +23,22 @@ router
     .route('/')
     .get(async (req, res, next) => {
         try {
-            const activity_review = await Board.findAll(
-                {
-                    attributes: ['id', 'title', 'content'],
-                    include: [
-                        {
-                            model: Image,
-                            attributes: [
-                                'image_key',
-                                'image_url',
-                                'image_description',
-                            ],
-                        },
-                    ],
-                },
-                {
-                    where: { category: 'activity_review' },
-                    offset: Number(req.query.skip),
-                    limit: Number(req.query.limit),
-                }
-            );
+            const activity_review = await Board.findAll({
+                attributes: ['id', 'title', 'content'],
+                include: [
+                    {
+                        model: Image,
+                        attributes: [
+                            'image_key',
+                            'image_url',
+                            'image_description',
+                        ],
+                    },
+                ],
+                where: { category: 'activity_review' },
+                offset: Number(req.query.skip),
+                limit: Number(req.query.limit),
+            });
             res.status(200).json({ activity_review });
         } catch (err) {
             logger.error(err);

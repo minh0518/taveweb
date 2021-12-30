@@ -23,20 +23,16 @@ router
     .route('/')
     .get(async (req, res, next) => {
         try {
-            const history = await Board.findAll(
-                {
-                    attributes: ['title', 'content'],
-                    include: [
-                        {
-                            model: Image,
-                            attributes: ['image_url', 'image_description'],
-                        },
-                    ],
-                },
-                {
-                    where: { category: { values: 'history' } },
-                }
-            );
+            const history = await Board.findOne({
+                attributes: ['title', 'content'],
+                include: [
+                    {
+                        model: Image,
+                        //attributes: ['image_url', 'image_description'],
+                    },
+                ],
+                where: { category: 'about_history' },
+            });
             res.status(200).json({ history });
         } catch (err) {
             logger.error(err);
@@ -81,7 +77,7 @@ router
                     title: req.body.title,
                     content: req.body.content,
                 },
-                { where: { category: 'history' } }
+                { where: { category: 'about_history' } }
             );
 
             const about_tave_image = await Image.update(
@@ -101,7 +97,7 @@ router
     .delete(async (req, res, next) => {
         try {
             const history = await Board.destroy({
-                where: { category: 'history' },
+                where: { category: 'about_history' },
             });
             const history_image = await Image.destroy({
                 where: { board_id: history },

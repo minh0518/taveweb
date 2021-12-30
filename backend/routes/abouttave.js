@@ -24,20 +24,16 @@ router
     .route('/')
     .get(async (req, res, next) => {
         try {
-            const about_tave = await Board.findAll(
-                {
-                    attributes: ['id', 'title', 'content'],
-                    include: [
-                        {
-                            model: Image,
-                            attributes: ['image_url', 'image_description'],
-                        },
-                    ],
-                },
-                {
-                    where: { category: { values: 'about_tave' } },
-                }
-            );
+            const about_tave = await Board.findOne({
+                include: [
+                    {
+                        model: Image,
+                        //attributes: ['image_key','image_url', 'image_description'],
+                    },
+                ],
+                attributes: ['title', 'content'],
+                where: { category: 'about_tave' },
+            });
             res.status(200).json({ about_tave });
         } catch (err) {
             logger.error(err);
