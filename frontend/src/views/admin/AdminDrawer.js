@@ -111,7 +111,7 @@ export default function AdminDrawer() {
                 </Toolbar>
             </AppBar>
             <CustomDrawer />
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            <Box component="main" sx={{ flexGrow: 1, p: 1 }}>
                 <DrawerHeader />
                 <Outlet />
             </Box>
