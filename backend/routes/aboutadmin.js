@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('../config/winston');
 
 const { s3, newsUpload } = require('../config/s3');
-const { aboutTaveUpload } = require('../config/s3');
+const { aboutAdminUpload } = require('../config/s3');
 const path = require('path');
 const fs = require('fs');
 
@@ -24,7 +24,7 @@ router
     .route('/')
     .get(async (req, res, next) => {
         try {
-            const about_tave = await Board.findOne({
+            const about_admin = await Board.findOne({
                 include: [
                     {
                         model: Image,
@@ -32,18 +32,18 @@ router
                     },
                 ],
                 attributes: ['title', 'content'],
-                where: { category: 'about_tave' },
+                where: { category: 'about_admin' },
             });
-            res.status(200).json({ about_tave });
+            res.status(200).json({ about_admin });
         } catch (err) {
             logger.error(err);
             next(err);
         }
     })
-    .post(aboutTaveUpload.array('images'), async (req, res, next) => {
+    .post(aboutAdminUpload.array('images'), async (req, res, next) => {
         try {
-            const about_tave = await Board.create({
-                category: 'about_tave',
+            const about_admin = await Board.create({
+                category: 'about_admin',
                 title: req.body.title,
                 content: req.body.content,
             });
@@ -51,57 +51,59 @@ router
             img_desc_json = JSON.parse(req.body.image_description);
 
             logger.debug(JSON.stringify(req.files));
+            logger.debug('about_admin.id:' + about_admin.id); // 여기선 제대로 id값을 가짐
 
             await Promise.all(
                 req.files.map(async (file) => {
                     logger.debug(file);
-                    const about_tave_image = await Image.create({
+                    const about_admin_image = await Image.create({
                         image_key: file.key,
                         image_url: file.location,
                         image_description: img_desc_json[file.originalname],
-                        board_id: about_tave.id,
+                        board_id: about_admin.id,
                     });
                 })
             );
-            res.status(201).json({ about_tave });
+            res.status(201).json({ about_admin });
         } catch (err) {
             logger.error(err);
             next(err);
         }
     })
 
-    .patch(aboutTaveUpload.array('images'), async (req, res, next) => {
+    .patch(aboutAdminUpload.array('images'), async (req, res, next) => {
         try {
-            const about_tave_update = await Board.update(
+            const about_admin_update = await Board.update(
                 {
                     title: req.body.title,
                     content: req.body.content,
                 },
-                { where: { category: 'about_tave' } }
-            );
+                { where: { category: 'about_admin' } }
+            ); //about_admin_update는 update된 row의 개수를 값으로 가짐
 
-            const about_tave = await Board.findOne({
-                where: { category: 'about_tave' },
-            });
+            const about_admin = await Board.findOne({
+                where: { category: 'about_admin' },
+            }); //about_admin.id 값을 위한 부분
 
             img_desc_json = JSON.parse(req.body.image_description);
 
             logger.debug(JSON.stringify(req.files));
+            logger.debug('about_admin.id:' + about_admin.id);
 
             await Promise.all(
                 req.files.map(async (file) => {
                     logger.debug(file);
-                    const about_tave_image = await Image.update(
+                    const about_admin_image = await Image.update(
                         {
                             image_key: file.key,
                             image_url: file.location,
                             image_description: img_desc_json[file.originalname],
                         },
-                        { where: { board_id: about_tave.id } }
+                        { where: { board_id: about_admin.id } }
                     );
                 })
             );
-            res.status(201).json({ about_tave_update });
+            res.status(201).json({ about_admin_update });
         } catch (err) {
             logger.error(err);
             next(err);
@@ -110,11 +112,11 @@ router
 
     .delete(async (req, res, next) => {
         try {
-            const about_tave = await Board.destroy({
-                where: { category: 'about_tave' },
+            const about_admin = await Board.destroy({
+                where: { category: 'about_admin' },
             });
             const about_tave_image = await Image.destroy({
-                where: { board_id: about_tave },
+                where: { board_id: about_admin },
             });
             res.status(200).json(true);
         } catch (err) {
@@ -128,22 +130,22 @@ module.exports = router;
 /**
  * @swagger
  * paths:
- *  /api/about/tave:
+ *  /api/about/admin:
  *      get:
- *          tags: [about-tave]
- *          summary: 테이브 소개 조회
- *          description: TAVE 소개 페이지 조회
+ *          tags: [about-admin]
+ *          summary: 운영진 소개 조회
+ *          description: 운영진 소개 페이지 조회
  *          produces:
  *          - application/json
  *          responses:
  *              200:
- *                  description: TAVE 소개 페이지 조회 성공
+ *                  description: 운영진 소개 페이지 조회 성공
  *                  schema:
  *                      $ref: '#/components/schemas/Board'
  *      post:
- *          tags: [about-tave]
- *          summary: 테이브 소개 작성
- *          description: TAVE 소개 페이지 작성
+ *          tags: [about-admin]
+ *          summary: 운영진 소개 작성
+ *          description: 운영진 소개 페이지 작성
  *          consumes:
  *          - multipart/form-data
  *          parameters:
@@ -152,13 +154,13 @@ module.exports = router;
  *            required: true
  *            schema:
  *                type: string
- *                description: 테이브 소개 제목
+ *                description: 운영진 소개 제목
  *          - in: formData
  *            name: "content"
  *            required: true
  *            schema:
  *                type: string
- *                description: 테이브 소개 내용
+ *                description: 운영진 소개 내용
  *          - in: formData
  *            name: "images"
  *            required: true
@@ -173,14 +175,14 @@ module.exports = router;
  *                description: 이미지 설명
  *          responses:
  *              201:
- *                  description: TAVE 소개 페이지 작성 성공
+ *                  description: 운영진 소개 페이지 작성 성공
  *                  schema:
  *                      $ref: '#/components/schemas/Board'
  *
  *      patch:
- *          tags: [about-tave]
- *          summary: 테이브 소개 수정
- *          description: TAVE 소개 페이지 수정
+ *          tags: [about-admin]
+ *          summary: 운영진 소개 수정
+ *          description: 운영진 소개 페이지 수정
  *          consumes:
  *          - multipart/form-data
  *          parameters:
@@ -189,13 +191,13 @@ module.exports = router;
  *            required: true
  *            schema:
  *                type: string
- *                description: 테이브 소개 제목
+ *                description: 운영진 소개 제목
  *          - in: formData
  *            name: "content"
  *            required: true
  *            schema:
  *                type: string
- *                description: 테이브 소개 내용
+ *                description: 운영진 소개 내용
  *          - in: formData
  *            name: "images"
  *            required: true
@@ -210,18 +212,18 @@ module.exports = router;
  *                description: 이미지 설명
  *          responses:
  *              201:
- *                  description: TAVE 소개 페이지 수정 성공
+ *                  description: 운영진 소개 페이지 수정 성공
  *                  schema:
  *                      $ref: '#/components/schemas/Board'
  *      delete:
- *          tags: [about-tave]
- *          summary: 테이브 소개 삭제
- *          description: TAVE 소개 페이지 삭제
+ *          tags: [about-admin]
+ *          summary: 운영진 소개 삭제
+ *          description: 운영진 소개 페이지 삭제
  *          produces:
  *          - application/json
  *          responses:
  *              200:
- *                  description: TAVE 소개 페이지 삭제 성공
+ *                  description: 운영진 소개 페이지 삭제 성공
  *                  schema:
  *                      $ref: '#/components/schemas/Board'
  */

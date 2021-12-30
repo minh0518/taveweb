@@ -182,7 +182,7 @@ module.exports = router;
  * paths:
  *  /api/activity/review:
  *      get:
- *          tags: [activity_review]
+ *          tags: [activity-review]
  *          summary: 활동 후기 페이지 조회
  *          description: 전체 활동 후기 조회
  *          parameters:
@@ -206,7 +206,7 @@ module.exports = router;
  *                  schema:
  *                      $ref: '#/components/schemas/Board'
  *      post:
- *          tags: [activity_review]
+ *          tags: [activity-review]
  *          summary: 활동 후기 작성
  *          description: 활동 후기 작성
  *          consumes:
@@ -243,7 +243,7 @@ module.exports = router;
  *                      $ref: '#/components/schemas/Board'
  *  /api/activity/review/{id}:
  *      get:
- *          tags: [activity_review]
+ *          tags: [activity-review]
  *          summary: 활동 후기 상세 조회
  *          description: 활동 후기 상세 조회
  *          produces:
@@ -260,7 +260,7 @@ module.exports = router;
  *                  schema:
  *                      $ref: '#/components/schemas/Board'
  *      patch:
- *          tags: [activity_review]
+ *          tags: [activity-review]
  *          summary: 활동 후기 수정
  *          description: 활동 후기 수정
  *          consumes:
@@ -301,7 +301,7 @@ module.exports = router;
  *                  schema:
  *                      $ref: '#/components/schemas/Board'
  *      delete:
- *          tags: [activity_review]
+ *          tags: [activity-review]
  *          summary: 활동 후기 삭제
  *          description: 활동 후기 삭제
  *          produces:

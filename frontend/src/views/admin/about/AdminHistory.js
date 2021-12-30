@@ -14,7 +14,7 @@ export default function AdminHistory() {
     const [history, setAbouttave] = useState({ Images: [] });
 
     useEffect(() => {
-        axios.get(`/api/history`).then((response) => {
+        axios.get(`/api/about/history`).then((response) => {
             console.log('response', response);
             console.log('response', response.data);
             setAbouttave(response.data['history']);

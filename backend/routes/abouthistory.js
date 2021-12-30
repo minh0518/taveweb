@@ -70,9 +70,9 @@ router
         }
     })
 
-    .patch(aboutHistoryUpload.single('image_url'), async (req, res, next) => {
+    .patch(aboutHistoryUpload.array('images'), async (req, res, next) => {
         try {
-            const history = await Board.update(
+            const about_history_update = await Board.update(
                 {
                     title: req.body.title,
                     content: req.body.content,
@@ -80,14 +80,28 @@ router
                 { where: { category: 'about_history' } }
             );
 
-            const about_tave_image = await Image.update(
-                {
-                    image_url: req.file.location,
-                    image_description: req.body.image_description,
-                },
-                { where: { board_id: history } }
+            const about_history = await Board.findOne({
+                where: { category: 'about_history' },
+            });
+
+            img_desc_json = JSON.parse(req.body.image_description);
+
+            logger.debug(JSON.stringify(req.files));
+
+            await Promise.all(
+                req.files.map(async (file) => {
+                    logger.debug(file);
+                    const about_history_image = await Image.update(
+                        {
+                            image_key: file.key,
+                            image_url: file.location,
+                            image_description: img_desc_json[file.originalname],
+                        },
+                        { where: { board_id: about_history.id } }
+                    );
+                })
             );
-            res.status(201).json({ history });
+            res.status(201).json({ about_history_update });
         } catch (err) {
             logger.error(err);
             next(err);
