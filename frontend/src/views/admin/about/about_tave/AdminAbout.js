@@ -33,9 +33,12 @@ export default function AdminAbout() {
         axios
             .delete(`/api/about/tave`)
             .then(function (response) {
-                alert('삭제하시겠습니까?');
-                window.location.href = '/admin/about';
-                console.log(response, '삭제 성공');
+                if (window.confirm('삭제하시겠습니까?')) {
+                    window.location.href = '/admin/about';
+                    console.log(response, '삭제 성공');
+                } else {
+                    //window.location.href = '/admin/about';
+                }
             })
             .catch(function (err) {
                 console.log(err);
