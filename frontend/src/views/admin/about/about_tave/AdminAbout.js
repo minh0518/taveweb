@@ -25,7 +25,13 @@ export default function AdminAbout() {
             console.log('response', response.data);
             setAbouttave(response.data['about_tave']);
         });
+        console.log();
     }, []);
+
+    // about_tave.title = 'dd';
+    // about_tave.content = 'dd';
+    // about_tave.images = 'dd';
+    // about_tave.image_description = 'dd';
 
     return (
         <Fragment>
@@ -34,34 +40,45 @@ export default function AdminAbout() {
                     <Grid container justify="flex-end">
                         <Button
                             component={Link}
+                            to={`update`}
+                            variant="contained"
+                            endIcon={<AddIcon />}
+                        >
+                            수정
+                        </Button>
+                        &nbsp;
+                        <Button
+                            component={Link}
                             to={`create`}
                             variant="contained"
                             endIcon={<AddIcon />}
                         >
-                            작성
+                            새로 만들기
                         </Button>
                     </Grid>
 
                     <Typography variant="h5" component="div">
-                        {about_tave.title}
+                        {about_tave != null ? about_tave.title : '제목 없음'}
                     </Typography>
                     <Typography variant="body2">
-                        {about_tave.content}
+                        {about_tave != null ? about_tave.content : '내용 없음'}
                         <br />
-                        {about_tave.Images.map((image) => {
-                            return (
-                                <Fragment>
-                                    <img
-                                        src={`${image.image_url}`}
-                                        alt={image.image_description}
-                                        loading="lazy"
-                                    />
-                                    <br />
-                                    {image.image_description}
-                                    <br />
-                                </Fragment>
-                            );
-                        })}
+                        {about_tave != null
+                            ? about_tave.Images.map((image) => {
+                                  return (
+                                      <Fragment>
+                                          <img
+                                              src={`${image.image_url}`}
+                                              alt={image.image_description}
+                                              loading="lazy"
+                                          />
+                                          <br />
+                                          {image.image_description}
+                                          <br />
+                                      </Fragment>
+                                  );
+                              })
+                            : '이미지 없음'}
                     </Typography>
                 </CardContent>
             </Card>

@@ -50,6 +50,11 @@ router
 
             img_desc_json = JSON.parse(req.body.image_description);
 
+            //logger.debug('req.file:' + req.file);
+            logger.debug(JSON.stringify(req.body));
+            //logger.debug(JSON.stringify(req.data));
+            logger.debug('req.files:' + req.files);
+            //logger.debug('req.images:' + req.images);
             logger.debug(JSON.stringify(req.files));
 
             await Promise.all(
