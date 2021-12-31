@@ -22,7 +22,7 @@ import {
     useSearchParams,
 } from 'react-router-dom';
 
-const AdminCreateAboutTave = () => {
+const AdminUpdateAboutTave = () => {
     const [TitleValue, setTitleValue] = useState({ Images: [] });
     const [ContentValue, setContentValue] = useState({ Images: [] });
     const [ImagesValue, setImagesValue] = useState({ Images: [] });
@@ -65,7 +65,7 @@ const AdminCreateAboutTave = () => {
         Data.append('image_description', image_description);
 
         axios
-            .post(`/api/about/tave`, Data, {
+            .patch(`/api/about/tave`, Data, {
                 body: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -144,4 +144,4 @@ const AdminCreateAboutTave = () => {
     );
 };
 
-export default AdminCreateAboutTave;
+export default AdminUpdateAboutTave;
