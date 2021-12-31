@@ -7,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
 
 import {
@@ -28,10 +29,18 @@ export default function AdminAbout() {
         console.log();
     }, []);
 
-    // about_tave.title = 'dd';
-    // about_tave.content = 'dd';
-    // about_tave.images = 'dd';
-    // about_tave.image_description = 'dd';
+    const onDelete = (event) => {
+        axios
+            .delete(`/api/about/tave`)
+            .then(function (response) {
+                alert('삭제하시겠습니까?');
+                window.location.href = '/admin/about';
+                console.log(response, '삭제 성공');
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    };
 
     return (
         <Fragment>
@@ -54,6 +63,15 @@ export default function AdminAbout() {
                             endIcon={<AddIcon />}
                         >
                             새로 만들기
+                        </Button>
+                        &nbsp;
+                        <Button
+                            //component={Link}
+                            onClick={onDelete}
+                            variant="contained"
+                            endIcon={<DeleteIcon />}
+                        >
+                            삭제하기
                         </Button>
                     </Grid>
 
