@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-const AdminNewNotice = () => {
+const AdminNewNotice =    () => {
     // 스낵바
     return (
         <Card sx={{ minWidth: 275 }}>

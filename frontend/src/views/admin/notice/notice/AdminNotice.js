@@ -39,7 +39,8 @@ export default function AdminNotice() {
 
     useEffect(() => {
         axios
-            .get('/api/notices/count', { params: { search } })
+            .get('/api/notices/count', { params: { search } }) //api백엔드에는 현재7개
+            //의 notices가 있음
             .then((response) => {
                 const pageCount = Math.ceil(response.data['count'] / limit);
 
@@ -49,6 +50,7 @@ export default function AdminNotice() {
 
     useEffect(() => {
         let page = Number(searchParams.get('page'));
+        //쿼리스트링에서 page키값의 value를 가져옴
         page = page ? page : 1; // undefined면 1을 채워 넣음
         console.log(page);
         let skip = (page - 1) * limit;
@@ -65,11 +67,9 @@ export default function AdminNotice() {
     const handlePaginationClick = (e, page) => {
         setCurrentPage(page);
 
-        navigate({
-            search: `?${createSearchParams({
-                page,
-            })}`,
-        });
+        navigate({ search: `?${createSearchParams({ page })}` });
+        //createSearchParams : 쿼리스트링을 만듦
+        //page : 2 들어감
     };
 
     return (
