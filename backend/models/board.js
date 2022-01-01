@@ -23,7 +23,7 @@ module.exports = class Board extends Sequelize.Model {
                 },
                 content: {
                     type: Sequelize.STRING(500),
-                    allowNull: false,
+                    allowNull: true,
                 },
             },
             {
