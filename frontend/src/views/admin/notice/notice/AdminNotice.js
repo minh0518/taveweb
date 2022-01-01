@@ -33,7 +33,7 @@ export default function AdminNotice() {
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState(0);
     const [search, setSearch] = useState('');
-    const [limit, setLimit] = useState(5);
+    const [limit, setLimit] = useState(8);
 
     const navigate = useNavigate();
 
