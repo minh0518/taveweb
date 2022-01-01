@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/material/Grid';
@@ -39,8 +41,13 @@ const AdminNewNotice = () => {
         console.log(imageForms);
     };
 
-    const handleRemove = (id) => {
+    const handleRemove = (id, original_image) => {
         setImageForms(imageForms.filter((imageForm) => imageForm.id !== id));
+        setImages(
+            images.filter(
+                (image) => image.lastModified !== original_image.lastModified
+            )
+        );
     };
 
     // const handleAddImage = (image) => {
@@ -96,10 +103,38 @@ const AdminNewNotice = () => {
     };
 
     const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const data = new FormData();
+
+        data.append('title', title);
+        data.append('content', content);
+        images.map((image) => {
+            console.log(image);
+            console.log(image.name);
+            data.append('images', image, image.name);
+        });
+        data.append('image_description', '{}');
+
         console.log(title);
         console.log(content);
         console.log(images);
         console.log(imageForms);
+
+        axios
+            .post(`/api/notices`, data, {
+                body: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+            .then(function (response) {
+                console.log(response, '성공');
+                alert('작성 완료');
+                // window.location.href = '/notices';
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
     };
 
     return (
