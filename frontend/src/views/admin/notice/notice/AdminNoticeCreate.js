@@ -12,6 +12,7 @@ import CreateImageTile from '../../utils/tiles/CreateImageTile';
 const AdminNewNotice = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [images, setImages] = useState([]);
     const [imageForms, setImageForms] = useState([]);
 
     const nextId = useRef(1);
@@ -26,7 +27,12 @@ const AdminNewNotice = () => {
 
     const handleAddForm = (e) => {
         setImageForms(
-            imageForms.concat({ id: nextId.current, image_description: '' })
+            imageForms.concat({
+                id: nextId.current,
+                image: null,
+                image_name: '',
+                image_description: '',
+            })
         );
         nextId.current += 1;
 
@@ -37,7 +43,46 @@ const AdminNewNotice = () => {
         setImageForms(imageForms.filter((imageForm) => imageForm.id !== id));
     };
 
-    const handleChange = (id, value) => {
+    // const handleAddImage = (image) => {
+    //     console.log(`이미지핸들러: ${image}`);
+    //     setImages(images.concat(image));
+    // };
+
+    // const handleRemoveImage = (image) => {
+    //     console.log(`이미지핸들러: ${image}`);
+    //     setImages(images.concat(image));
+    // };
+
+    const handleChangeImage = (id, image) => {
+        console.log(image);
+        setImages(images.concat(image));
+        // setImageForms(
+        //     imageForms.map((imageForm) =>
+        //         imageForm.id === id
+        //             ? {
+        //                   ...imageForm,
+        //                   image: image,
+        //               }
+        //             : imageForm
+        //     )
+        // );
+    };
+
+    const handleChangeImageName = (id, image_name) => {
+        console.log(image_name);
+        setImageForms(
+            imageForms.map((imageForm) =>
+                imageForm.id === id
+                    ? {
+                          ...imageForm,
+                          image_name: image_name,
+                      }
+                    : imageForm
+            )
+        );
+    };
+
+    const handleChangeImageDesc = (id, value) => {
         setImageForms(
             imageForms.map((imageForm) =>
                 imageForm.id === id
@@ -53,6 +98,7 @@ const AdminNewNotice = () => {
     const handleSubmit = (e) => {
         console.log(title);
         console.log(content);
+        console.log(images);
         console.log(imageForms);
     };
 
@@ -125,7 +171,9 @@ const AdminNewNotice = () => {
                     <Grid key={index} item xs={12}>
                         <CreateImageTile
                             imageForm={imageForm}
-                            onChange={handleChange}
+                            onChangeImage={handleChangeImage}
+                            onChangeImageName={handleChangeImageName}
+                            onChangeImageDesc={handleChangeImageDesc}
                             onRemove={handleRemove}
                         ></CreateImageTile>
                     </Grid>
