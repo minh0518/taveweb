@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -35,14 +34,14 @@ export default function CreateImageTile({
     const [image, setImage] = useState(null);
     const [thumbnail, setThumbnail] = useState('');
 
-    const handleChangeImage = (event) => {
+    const handleChangeImage = (e) => {
         const { id } = imageForm;
-        const { files } = event.target;
+        const { files } = e.target;
 
         console.log(files);
         console.log(files[0].name);
 
-        setImage(files);
+        setImage(files[0]);
         setThumbnail(URL.createObjectURL(files[0]));
         onChangeImage(id, files[0]);
         onChangeImageName(id, files[0].name);
@@ -51,38 +50,6 @@ export default function CreateImageTile({
     const handleDeleteThumbnail = () => {
         URL.revokeObjectURL(thumbnail);
         setThumbnail('');
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        const Data = new FormData();
-
-        const title = 'TitleValue';
-        const content = 'ContentValue';
-        // console.log('asdasd');
-        // console.log('asdasd' + image[0].name);
-
-        // console.log(`title: ${title}`);
-        // console.log(`content:${content}`);
-
-        Data.append('title', title);
-        Data.append('content', content);
-
-        // axios
-        //     .post(`/api/about/tave`, Data, {
-        //         body: {
-        //             'Content-Type': 'multipart/form-data',
-        //         },
-        //     })
-        //     .then(function (response) {
-        //         console.log(response, '성공');
-        //         alert('작성 완료');
-        //         window.location.href = '/admin/about';
-        //     })
-        //     .catch(function (err) {
-        //         console.log(err);
-        //     });
     };
 
     return (
@@ -101,7 +68,7 @@ export default function CreateImageTile({
                     <IconButton
                         aria-label="Example"
                         onClick={() => {
-                            onRemove(imageForm.id);
+                            onRemove(imageForm.id, image);
                         }}
                     >
                         <CloseIcon />
