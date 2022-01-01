@@ -90,7 +90,7 @@ router
                 attributes: ['id', 'title', 'content'],
                 where: { id: req.params.id },
             });
-            res.status(200).json({ news });
+            res.status(200).json({ activity_review });
         } catch (err) {
             logger.error(err);
             next(err);
