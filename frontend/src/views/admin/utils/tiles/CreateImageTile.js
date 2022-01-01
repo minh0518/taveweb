@@ -40,6 +40,7 @@ export default function CreateImageTile({
 
         console.log(files);
         console.log(files[0].name);
+        files[0]['id'] = imageForm.id;
 
         setImage(files[0]);
         setThumbnail(URL.createObjectURL(files[0]));
