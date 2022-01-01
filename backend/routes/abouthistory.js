@@ -23,20 +23,16 @@ router
     .route('/')
     .get(async (req, res, next) => {
         try {
-            const history = await Board.findAll(
-                {
-                    attributes: ['title', 'content'],
-                    include: [
-                        {
-                            model: Image,
-                            attributes: ['image_url', 'image_description'],
-                        },
-                    ],
-                },
-                {
-                    where: { category: { values: 'history' } },
-                }
-            );
+            const history = await Board.findOne({
+                attributes: ['title', 'content'],
+                include: [
+                    {
+                        model: Image,
+                        //attributes: ['image_url', 'image_description'],
+                    },
+                ],
+                where: { category: 'about_history' },
+            });
             res.status(200).json({ history });
         } catch (err) {
             logger.error(err);
@@ -74,25 +70,38 @@ router
         }
     })
 
-    .patch(aboutHistoryUpload.single('image_url'), async (req, res, next) => {
+    .patch(aboutHistoryUpload.array('images'), async (req, res, next) => {
         try {
-            const history = await Board.update(
+            const about_history_update = await Board.update(
                 {
                     title: req.body.title,
                     content: req.body.content,
                 },
-                { where: { category: 'history' } }
+                { where: { category: 'about_history' } }
             );
 
-            const about_tave_image = await Image.update(
-                {
-                    image_url: req.file.location,
-                    image_description: req.body.image_description,
-                },
-                { where: { board_id: history } }
+            const about_history = await Board.findOne({
+                where: { category: 'about_history' },
+            });
 
-            ); 
-            res.status(201).json({ history });
+            img_desc_json = JSON.parse(req.body.image_description);
+
+            logger.debug(JSON.stringify(req.files));
+
+            await Promise.all(
+                req.files.map(async (file) => {
+                    logger.debug(file);
+                    const about_history_image = await Image.update(
+                        {
+                            image_key: file.key,
+                            image_url: file.location,
+                            image_description: img_desc_json[file.originalname],
+                        },
+                        { where: { board_id: about_history.id } }
+                    );
+                })
+            );
+            res.status(201).json({ about_history_update });
         } catch (err) {
             logger.error(err);
             next(err);
@@ -101,9 +110,8 @@ router
 
     .delete(async (req, res, next) => {
         try {
-    
             const history = await Board.destroy({
-                where: { category: 'history' },
+                where: { category: 'about_history' },
             });
             const history_image = await Image.destroy({
                 where: { board_id: history },
@@ -149,12 +157,6 @@ router
  *            schema:
  *                type: string
  *                description: 테이브 연혁 내용
- *          - in: formData
- *            name: "image_key"
- *            required: true
- *            schema:
- *                type: string
- *                description: 이미지 경로
  *          - in: formData
  *            name: "image_url"
  *            required: true

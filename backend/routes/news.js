@@ -103,7 +103,7 @@ router
                     title: req.body.title,
                     content: req.body.content,
                 },
-                { where: { id: req.params.id } }
+                { where: { category: 'news', id: req.params.id } }
             );
 
             img_desc_json = JSON.parse(req.body.image_description);
@@ -164,7 +164,7 @@ router
 
             /* 4. 이미지 삭제가 완료 되면 db 데이터 삭제 */
             const news = await Board.destroy({
-                where: { category: 'news', id: req.params.id},
+                where: { category: 'news', id: req.params.id },
             });
             logger.debug('news 값:' + news);
             const news_image = await Image.destroy({
@@ -185,6 +185,19 @@ router
  *          tags: [news]
  *          summary: Tavy news 페이지 조회
  *          description: Tavy news 전체 조회
+ *          parameters:
+ *          - in: query
+ *            name: "skip"
+ *            required: true
+ *            schema:
+ *                type: int
+ *                description: 시작 위치
+ *          - in: query
+ *            name: "limit"
+ *            required: true
+ *            schema:
+ *                type: int
+ *                description: 조회할 개수
  *          produces:
  *          - application/json
  *          responses:
@@ -235,6 +248,7 @@ router
  *          description: Tavy news 상세 조회
  *          produces:
  *          - application/json
+ *          parameters:
  *          - in: path
  *            name: id
  *            required: true
@@ -270,13 +284,7 @@ router
  *                type: string
  *                description: Tavy news 내용
  *          - in: formData
- *            name: "image_key"
- *            required: true
- *            schema:
- *                type: string
- *                description: 이미지 경로
- *          - in: formData
- *            name: "image_url"
+ *            name: "images"
  *            required: true
  *            schema:
  *                type: string
@@ -298,6 +306,7 @@ router
  *          description: Tavy news 삭제
  *          produces:
  *          - application/json
+ *          parameters:
  *          - in: path
  *            name: id
  *            required: true

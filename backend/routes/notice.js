@@ -205,17 +205,17 @@ router
  * paths:
  *  /api/notices:
  *      get:
- *          tags: [notice]
+ *          tags: [notices]
  *          summary: 공지 페이지 조회
  *          description: 전체 공지사항 조회
  *          parameters:
- *          - in: query string
+ *          - in: query
  *            name: "skip"
  *            required: true
  *            schema:
  *                type: int
  *                description: 시작 위치
- *          - in: query string
+ *          - in: query
  *            name: "limit"
  *            required: true
  *            schema:
@@ -229,7 +229,7 @@ router
  *                  schema:
  *                      $ref: '#/components/schemas/Board'
  *      post:
- *          tags: [notice]
+ *          tags: [notices]
  *          summary: 공지 작성
  *          description: 공지 작성
  *          consumes:
@@ -266,11 +266,12 @@ router
  *                      $ref: '#/components/schemas/Board'
  *  /api/notices/{id}:
  *      get:
- *          tags: [notice]
+ *          tags: [notices]
  *          summary: 공지 상세 조회
  *          description: 공지 상세 조회
  *          produces:
  *          - application/json
+ *          parameters:
  *          - in: path
  *            name: id
  *            required: true
@@ -282,7 +283,7 @@ router
  *                  schema:
  *                      $ref: '#/components/schemas/Board'
  *      patch:
- *          tags: [notice]
+ *          tags: [notices]
  *          summary: 공지 수정
  *          description: 공지 수정
  *          consumes:
@@ -306,13 +307,7 @@ router
  *                type: string
  *                description: 공지 내용
  *          - in: formData
- *            name: "image_key"
- *            required: true
- *            schema:
- *                type: string
- *                description: 이미지 경로
- *          - in: formData
- *            name: "image_url"
+ *            name: "images"
  *            required: true
  *            schema:
  *                type: string
@@ -329,11 +324,12 @@ router
  *                  schema:
  *                      $ref: '#/components/schemas/Board'
  *      delete:
- *          tags: [notice]
+ *          tags: [notices]
  *          summary: 공지 삭제
  *          description: 공지 삭제
  *          produces:
  *          - application/json
+ *          parameters:
  *          - in: path
  *            name: id
  *            required: true

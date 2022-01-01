@@ -1,20 +1,19 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import { useParams, useNavigate } from 'react-router-dom';
+import TitleTile from './TitleTile';
+import ContentTile from './ContentTile';
+import ImageTile from './ImageTile';
+import DatetimeTile from './DatetimeTile';
 
 export default function AdminNotice() {
     const { id } = useParams();
     // const navigate = useNavigate();
 
-    const [notice, setNotice] = useState({ Images: [] });
+    const [notice, setNotice] = useState({});
 
     useEffect(() => {
         axios.get(`/api/notices/${id}`).then((response) => {
@@ -26,46 +25,23 @@ export default function AdminNotice() {
 
     return (
         <Fragment>
-            <Card sx={{ minWidth: 275 }}>
-                <CardContent>
-                    <Typography
-                        sx={{ fontSize: 14 }}
-                        color="text.secondary"
-                        gutterBottom
-                    >
-                        작성: {notice.created_at}
-                        <br />
-                        수정: {notice.updated_at}
-                    </Typography>
-                    <Typography variant="h5" component="div">
-                        {notice.title}
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }}     color="text.secondary">
-                        adjective
-                    </Typography>
-                    <Typography variant="body2">
-                        {notice.content}
-                        <br />
-                        {notice.Images.map((image) => {
-                            return (
-                                <Fragment>
-                                    <img
-                                        src={`${image.image_url}`}
-                                        alt={image.image_description}
-                                        loading="lazy"
-                                    />
-                                    <br />
-                                    {image.image_description}
-                                    <br />
-                                </Fragment>
-                            );
-                        })}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small">Learn More</Button>
-                </CardActions>
-            </Card>
+
+            <DatetimeTile
+                createdAt={notice?.created_at}
+                updatedAt={notice?.updated_at}
+            />
+            <TitleTile title={notice.title} />
+            <ContentTile content={notice.content} />
+            <Typography variant="body2">
+                {notice.Images?.map((image) => {
+                    return (
+                        <ImageTile
+                            url={image.image_url}
+                            description={image.image_description}
+                        />
+                    );
+                })}
+            </Typography>
         </Fragment>
     );
 }
