@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
@@ -12,6 +13,8 @@ import FormControl from '@mui/material/FormControl';
 import CreateImageTile from '../../utils/tiles/CreateImageTile';
 
 const AdminNewNotice = () => {
+    const navigate = useNavigate();
+
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [images, setImages] = useState([]);
@@ -31,7 +34,6 @@ const AdminNewNotice = () => {
         setImageForms(
             imageForms.concat({
                 id: nextId.current,
-                image: null,
                 image_name: '',
                 image_description: '',
             })
@@ -43,11 +45,8 @@ const AdminNewNotice = () => {
 
     const handleRemove = (id, original_image) => {
         setImageForms(imageForms.filter((imageForm) => imageForm.id !== id));
-        setImages(
-            images.filter(
-                (image) => image.lastModified !== original_image.lastModified
-            )
-        );
+        if (original_image !== null)
+            setImages(images.filter((image) => image.id !== original_image.id));
     };
 
     // const handleAddImage = (image) => {
@@ -62,6 +61,7 @@ const AdminNewNotice = () => {
 
     const handleChangeImage = (id, image) => {
         console.log(image);
+        console.log(images);
         setImages(images.concat(image));
         // setImageForms(
         //     imageForms.map((imageForm) =>
@@ -114,12 +114,19 @@ const AdminNewNotice = () => {
             console.log(image.name);
             data.append('images', image, image.name);
         });
-        data.append('image_description', '{}');
 
         console.log(title);
         console.log(content);
         console.log(images);
         console.log(imageForms);
+
+        const image_description = {};
+        imageForms.map((imageForm) => {
+            image_description[`${imageForm.image_name}`] =
+                imageForm.image_description;
+        });
+        console.log(image_description);
+        data.append('image_description', JSON.stringify(image_description));
 
         axios
             .post(`/api/notices`, data, {
@@ -131,6 +138,7 @@ const AdminNewNotice = () => {
                 console.log(response, '성공');
                 alert('작성 완료');
                 // window.location.href = '/notices';
+                navigate(`/admin/notice`);
             })
             .catch(function (err) {
                 console.log(err);
