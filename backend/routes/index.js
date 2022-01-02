@@ -12,6 +12,7 @@ const historyRouter = require('./abouthistory');
 const newsRouter = require('./news');
 const noticeRouter = require('./notice');
 const activityreviewRouter = require('./activityreview');
+const activitypictureRouter = require('./activitypicture');
 const aboutadminRouter = require('./aboutadmin');
 const db = require('../config/db');
 
@@ -30,6 +31,7 @@ router.use('/about/history', historyRouter);
 router.use('/news', newsRouter);
 router.use('/notices', noticeRouter);
 router.use('/activity/review', activityreviewRouter);
+router.use('/activity/picture', activitypictureRouter);
 router.use('/about/admin', aboutadminRouter);
 
 router.get('/', async (req, res, next) => {
