@@ -2,20 +2,25 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../App.css';
 
+import styled from 'styled-components';
+import mainTheme from './MainTheme';
+
+
 function Navbar() {
     return (
         <div className="navbar">
-            <ul>
-                <li>
-                    <Link to="/" class="menuLink">
+            <Nav>
+            <GnbLists>
+                <GnbItem>
+                    <NavLink to="/" activeClassName="menuLink">
                         Home
-                    </Link>
-                </li>
+                    </NavLink>
+                </GnbItem>
 
-                <li class="menuhover">
-                    <Link to="/about" class="menuLink">
+                <GnbItem class="menuhover">
+                    <NavLink to="/about" class="menuLink">
                         TAVE
-                    </Link>
+                    </NavLink>
 
                     <div class="submenu">
                         <Link to="/about">TAVE 소개</Link>
@@ -25,56 +30,58 @@ function Navbar() {
                             유튜브
                         </a>
                     </div>
-                </li>
+                </GnbItem>
 
-                <li class="menuhover">
-                    <Link to="/notice" class="menuLink">
+                <GnbItem class="menuhover">
+                    <NavLink to="/notice" class="menuLink">
                         Notice
-                    </Link>
+                    </NavLink>
 
                     <div class="submenu">
                         <Link to="/notice">공지사항</Link>
                         <Link to="/news">Tavy News</Link>
                     </div>
-                </li>
+                </GnbItem>
 
-                <li class="menuhover">
-                    <Link to="/board" class="menuLink">
+                <GnbItem class="menuhover">
+                    <NavLink to="/board" class="menuLink">
                         TAVY
-                    </Link>
+                    </NavLink>
 
                     <div class="submenu">
                         <Link to="/board">활동 후기</Link>
                         <Link to="/photo">활동 사진</Link>
                     </div>
-                </li>
+                </GnbItem>
 
-                <li class="menuhover">
-                    <Link to="/qna" class="menuLink">
+                <GnbItem class="menuhover">
+                    <NavLink to="/qna" class="menuLink">
                         Q&A
-                    </Link>
+                    </NavLink>
 
                     <div class="submenu">
                         <Link to="/faq">FAQ</Link>
                         <Link to="/qna">Q&A</Link>
                     </div>
-                </li>
+                </GnbItem>
 
-                <li class="menuhover">
-                    <Link to="/apply" class="menuLink">
+                <GnbItem class="menuhover">
+                    <NavLink to="/apply" class="menuLink">
                         Recruit
-                    </Link>
+                    </NavLink>
 
                     <div class="submenu">
                         <Link to="/apply">지원하기</Link>
                         <Link to="/apply/check">지원 확인</Link>
                         <Link to="/apply/result">합격 확인</Link>
                     </div>
-                </li>
-            </ul>
+                </GnbItem>
+            </GnbLists>
 
             <br />
             <br />
+
+            </Nav>
         </div>
     );
 }
