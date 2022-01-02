@@ -6,6 +6,41 @@ import styled from 'styled-components';
 import mainTheme from './MainTheme';
 
 
+const Nav = styled.nav`
+  height: 60px;
+  width: 100%;
+  text-align: center;
+`;
+
+const GnbLists = styled.ul`
+  list-style: none;
+  height: 60px;
+  margin: auto;
+  padding: 0;
+`;
+
+const GnbItem = styled.li`
+  display: inline-block;
+  height: 60px;
+  a {
+    font-family: ${mainTheme.mainFont};
+    display: block;
+    position: relative;
+    height: 60px;
+    line-height: 65px;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0 0px;
+    margin: 0 16px;
+    text-decoration: none;
+    color: ${mainTheme.mainTextColor};
+  }
+  .menuLink {
+    border-bottom: solid 3px ${mainTheme.mainOrangeColor};
+  }
+`;
+
+
 function Navbar() {
     return (
         <div className="navbar">
