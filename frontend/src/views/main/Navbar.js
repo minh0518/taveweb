@@ -12,6 +12,7 @@ const List = styled.li`
     margin: 0;
     list-style-type: none;
     float: left;
+    border-bottom: 1px solid rgba(44, 44, 44, 0.233);
     &:hover ${SubMenu} {
         display: block;
     }
@@ -20,12 +21,14 @@ const List = styled.li`
 const MenuLink = styled(Link)`
     color: black;
     text-decoration: none;
-    display: block;
+    transition: 850ms;
+    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: bold;
+    font-size: 20px;
     width: 200px;
-    padding-left: 1px;
-    padding-right: 1px;
-    font-size: 15px;
-    font-family: '돋움';
+    font-family: '"' Noto Sans KR ', sans-serif"';
     &:hover {
         color: white;
         background-color: navy;
@@ -35,16 +38,15 @@ const MenuLink = styled(Link)`
 `;
 
 const SubMenuLinks = styled(Link)`
-    display: block;
+    display: flex;
     text-decoration: none;
     width: 200px;
     padding-left: 1px;
     padding-right: 1px;
-    font-size: 13px;
-    font-family: '돋움';
+    font-size: 15px;
+    font-family: '"' Noto Sans KR ', sans-serif"';
     color: black;
     &:hover {
-        background-color: white;
         color: navy;
         border: 1px solid navy;
         border-radius: 4px;
@@ -52,16 +54,15 @@ const SubMenuLinks = styled(Link)`
 `;
 
 const Anchor = styled.a`
-    display: block;
+    display: flex;
     text-decoration: none;
     width: 200px;
     padding-left: 1px;
     padding-right: 1px;
-    font-size: 13px;
-    font-family: '돋움';
+    font-size: 15px;
+    font-family: '"' Noto Sans KR ', sans-serif"';
     color: black;
     &:hover {
-        background-color: white;
         color: navy;
         border: 1px solid navy;
         border-radius: 4px;
@@ -89,7 +90,7 @@ function Navbar() {
                             운영진 소개
                         </SubMenuLinks>
                         <Anchor href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ">
-                            유튜브
+                            YouTube
                         </Anchor>
                     </SubMenu>
                 </List>
