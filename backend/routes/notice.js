@@ -63,7 +63,7 @@ router
 
             await Promise.all(
                 req.files.map(async (file) => {
-                    logger.debug(file);
+                    logger.debug(JSON.stringify(file));
                     const notice_image = await Image.create({
                         image_key: file.key,
                         image_url: file.location,
