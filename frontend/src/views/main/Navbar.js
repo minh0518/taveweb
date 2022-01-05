@@ -1,122 +1,145 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../../App.css';
-
 import styled from 'styled-components';
-import mainTheme from './MainTheme';
 
-
-const Nav = styled.nav`
-  height: 60px;
-  width: 100%;
-  text-align: center;
+const UnList = styled.ul`
+    float: right;
+`;
+const SubMenu = styled.div`
+    display: none;
+`;
+const List = styled.li`
+    margin: 0;
+    list-style-type: none;
+    float: left;
+    &:hover ${SubMenu} {
+        display: block;
+    }
 `;
 
-const GnbLists = styled.ul`
-  list-style: none;
-  height: 60px;
-  margin: auto;
-  padding: 0;
-`;
-
-const GnbItem = styled.li`
-  display: inline-block;
-  height: 60px;
-  a {
-    font-family: ${mainTheme.mainFont};
-    display: block;
-    position: relative;
-    height: 60px;
-    line-height: 65px;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 0 0px;
-    margin: 0 16px;
+const MenuLink = styled(Link)`
+    color: black;
     text-decoration: none;
-    color: ${mainTheme.mainTextColor};
-  }
-  .menuLink {
-    border-bottom: solid 3px ${mainTheme.mainOrangeColor};
-  }
+    display: block;
+    width: 200px;
+    padding-left: 1px;
+    padding-right: 1px;
+    font-size: 15px;
+    font-family: '돋움';
+    &:hover {
+        color: white;
+        background-color: navy;
+        border: 1px solid navy;
+        border-radius: 4px;
+    }
 `;
 
+const SubMenuLinks = styled(Link)`
+    display: block;
+    text-decoration: none;
+    width: 200px;
+    padding-left: 1px;
+    padding-right: 1px;
+    font-size: 13px;
+    font-family: '돋움';
+    color: black;
+    &:hover {
+        background-color: white;
+        color: navy;
+        border: 1px solid navy;
+        border-radius: 4px;
+    }
+`;
+
+const Anchor = styled.a`
+    display: block;
+    text-decoration: none;
+    width: 200px;
+    padding-left: 1px;
+    padding-right: 1px;
+    font-size: 13px;
+    font-family: '돋움';
+    color: black;
+    &:hover {
+        background-color: white;
+        color: navy;
+        border: 1px solid navy;
+        border-radius: 4px;
+    }
+`;
 
 function Navbar() {
     return (
         <div className="navbar">
-            <Nav>
-            <GnbLists>
-                <GnbItem>
-                    <NavLink to="/" activeClassName="menuLink">
+            <UnList>
+                <List>
+                    <MenuLink to="/" class="menuLink">
                         Home
-                    </NavLink>
-                </GnbItem>
+                    </MenuLink>
+                </List>
 
-                <GnbItem class="menuhover">
-                    <NavLink to="/about" class="menuLink">
+                <List class="menuhover">
+                    <MenuLink to="/about" class="menuLink">
                         TAVE
-                    </NavLink>
-
-                    <div class="submenu">
-                        <Link to="/about">TAVE 소개</Link>
-                        <Link to="/about/history">연혁</Link>
-                        <Link to="/about/manager">운영진 소개</Link>
-                        <a href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ">
+                    </MenuLink>
+                    <SubMenu>
+                        <SubMenuLinks to="/about">TAVE 소개</SubMenuLinks>
+                        <SubMenuLinks to="/about/history">연혁</SubMenuLinks>
+                        <SubMenuLinks to="/about/manager">
+                            운영진 소개
+                        </SubMenuLinks>
+                        <Anchor href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ">
                             유튜브
-                        </a>
-                    </div>
-                </GnbItem>
+                        </Anchor>
+                    </SubMenu>
+                </List>
 
-                <GnbItem class="menuhover">
-                    <NavLink to="/notice" class="menuLink">
+                <List class="menuhover">
+                    <MenuLink to="/notice" class="menuLink">
                         Notice
-                    </NavLink>
+                    </MenuLink>
+                    <SubMenu>
+                        <SubMenuLinks to="/notice">공지사항</SubMenuLinks>
+                        <SubMenuLinks to="/news">Tavy News</SubMenuLinks>
+                    </SubMenu>
+                </List>
 
-                    <div class="submenu">
-                        <Link to="/notice">공지사항</Link>
-                        <Link to="/news">Tavy News</Link>
-                    </div>
-                </GnbItem>
-
-                <GnbItem class="menuhover">
-                    <NavLink to="/board" class="menuLink">
+                <List class="menuhover">
+                    <MenuLink to="/board" class="menuLink">
                         TAVY
-                    </NavLink>
+                    </MenuLink>
+                    <SubMenu>
+                        <SubMenuLinks to="/board">활동 후기</SubMenuLinks>
+                        <SubMenuLinks to="/photo">활동 사진</SubMenuLinks>
+                    </SubMenu>
+                </List>
 
-                    <div class="submenu">
-                        <Link to="/board">활동 후기</Link>
-                        <Link to="/photo">활동 사진</Link>
-                    </div>
-                </GnbItem>
-
-                <GnbItem class="menuhover">
-                    <NavLink to="/qna" class="menuLink">
+                <List class="menuhover">
+                    <MenuLink to="/qna" class="menuLink">
                         Q&A
-                    </NavLink>
+                    </MenuLink>
+                    <SubMenu>
+                        <SubMenuLinks to="/faq">FAQ</SubMenuLinks>
+                        <SubMenuLinks to="/qna">Q&A</SubMenuLinks>
+                    </SubMenu>
+                </List>
 
-                    <div class="submenu">
-                        <Link to="/faq">FAQ</Link>
-                        <Link to="/qna">Q&A</Link>
-                    </div>
-                </GnbItem>
-
-                <GnbItem class="menuhover">
-                    <NavLink to="/apply" class="menuLink">
+                <List class="menuhover">
+                    <MenuLink to="/apply" class="menuLink">
                         Recruit
-                    </NavLink>
-
-                    <div class="submenu">
-                        <Link to="/apply">지원하기</Link>
-                        <Link to="/apply/check">지원 확인</Link>
-                        <Link to="/apply/result">합격 확인</Link>
-                    </div>
-                </GnbItem>
-            </GnbLists>
+                    </MenuLink>
+                    <SubMenu>
+                        <SubMenuLinks to="/apply">지원하기</SubMenuLinks>
+                        <SubMenuLinks to="/apply/check">지원 확인</SubMenuLinks>
+                        <SubMenuLinks to="/apply/result">
+                            합격 확인
+                        </SubMenuLinks>
+                    </SubMenu>
+                </List>
+            </UnList>
 
             <br />
             <br />
-
-            </Nav>
         </div>
     );
 }
