@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const UnList = styled.ul`
-    float: right;
-    position : relative;
+    position : absolute;
     top 30px;
     
 `;
@@ -14,10 +13,9 @@ const SubMenu = styled.div`
 const List = styled.li`
     margin: 0;
     list-style-type: none;
-    float: left;
     border-bottom: 1px solid rgba(44, 44, 44, 0.233);
     &:hover ${SubMenu} {
-        display: block;
+        flex-direction: column;
     }
 `;
 
@@ -25,7 +23,7 @@ const MenuLink = styled(Link)`
     color: black;
     text-decoration: none;
     transition: 850ms;
-    display: flex;
+
     padding-left: 10px;
     padding-right: 10px;
     font-weight: bold;
@@ -41,9 +39,8 @@ const MenuLink = styled(Link)`
 `;
 
 const SubMenuLinks = styled(Link)`
-    display: flex;
     text-decoration: none;
-    width: 200px;
+    width: 100px;
     padding-left: 1px;
     padding-right: 1px;
     font-size: 15px;
