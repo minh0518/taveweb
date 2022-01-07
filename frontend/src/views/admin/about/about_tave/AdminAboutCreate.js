@@ -1,5 +1,6 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import CreateImageTile from '../../utils/tiles/CreateImageTile';
 import {
     Box,
     Card,
@@ -14,7 +15,9 @@ import {
     Input,
     Grid,
     FormControl,
+    Paper,
 } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import {
     Link,
     useNavigate,
@@ -23,49 +26,98 @@ import {
 } from 'react-router-dom';
 
 const AdminCreateAboutTave = () => {
-    const [TitleValue, setTitleValue] = useState({ Images: [] });
-    const [ContentValue, setContentValue] = useState({ Images: [] });
-    const [ImagesValue, setImagesValue] = useState({ Images: [] });
-    const [ImageDescriptionValue, setImageDescriptionValue] = useState({
-        Images: [],
-    });
-    const onTitleChange = (event) => {
-        setTitleValue(event.currentTarget.value);
-    };
-    const onContentChange = (event) => {
-        setContentValue(event.currentTarget.value);
-    };
-    const onImagesChange = (event) => {
-        //console.log('event.target.value:' + event.target.value);
-        //console.log('event.target.files:' + event.target.files);
-        //console.log('event.target.files[0]:' + event.target.files[0]);
-        setImagesValue(event.target.files);
-    };
-    const onImageDescriptionChange = (event) => {
-        setImageDescriptionValue(event.target.value);
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [images, setImages] = useState([]);
+    const [imageForms, setImageForms] = useState([]);
+    const navigate = useNavigate();
+
+    const nextId = useRef(1);
+
+    const handleChangeTitle = (e) => {
+        setTitle(e.target.value);
     };
 
-    const onSubmit = (event) => {
-        event.preventDefault();
+    const handleChangeContent = (e) => {
+        setContent(e.target.value);
+    };
 
-        const Data = new FormData();
+    const handleAddForm = (e) => {
+        setImageForms(
+            imageForms.concat({
+                id: nextId.current,
+                image: null,
+                image_name: '',
+                image_description: '',
+            })
+        );
+        nextId.current += 1;
 
-        const title = TitleValue;
-        const content = ContentValue;
-        const images = ImagesValue;
-        const image_description = ImageDescriptionValue;
-        console.log('images:' + images);
-        console.log('image_des:' + image_description);
+        console.log(imageForms);
+    };
 
-        Data.append('title', title);
-        Data.append('content', content);
-        for (let image of images) {
-            Data.append('images', image);
-        }
-        Data.append('image_description', image_description);
+    const handleRemove = (id, original_image) => {
+        setImageForms(imageForms.filter((imageForm) => imageForm.id !== id));
+        setImages(
+            images.filter(
+                (image) => image.lastModified !== original_image.lastModified
+            )
+        );
+    };
+
+    const handleChangeImage = (id, image) => {
+        console.log(image);
+        setImages(images.concat(image));
+    };
+
+    const handleChangeImageName = (id, image_name) => {
+        console.log(image_name);
+        setImageForms(
+            imageForms.map((imageForm) =>
+                imageForm.id === id
+                    ? {
+                          ...imageForm,
+                          image_name: image_name,
+                      }
+                    : imageForm
+            )
+        );
+    };
+
+    const handleChangeImageDesc = (id, value) => {
+        setImageForms(
+            imageForms.map((imageForm) =>
+                imageForm.id === id
+                    ? {
+                          ...imageForm,
+                          image_description: value,
+                      }
+                    : imageForm
+            )
+        );
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const data = new FormData();
+
+        data.append('title', title);
+        data.append('content', content);
+        images.map((image) => {
+            // console.log(image);
+            // console.log(image.name);
+            data.append('images', image, image.name);
+        });
+        data.append('image_description', '{}');
+
+        console.log(title);
+        console.log(content);
+        console.log(images);
+        console.log(imageForms);
 
         axios
-            .post(`/api/about/tave`, Data, {
+            .post(`/api/about/tave`, data, {
                 body: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -73,74 +125,90 @@ const AdminCreateAboutTave = () => {
             .then(function (response) {
                 console.log(response, '성공');
                 alert('작성 완료');
-                window.location.href = '/admin/about';
+                navigate('/admin/about');
             })
             .catch(function (err) {
                 console.log(err);
             });
     };
-
     return (
-        <Fragment>
-            <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 3 }}>
-                <List
-                    component="nav"
-                    aria-label="mailbox folders"
-                    alignment="center"
+        <Grid container spacing={2}>
+            <Grid item xs={12} align={'right'}>
+                <Button
+                    variant="outlined"
+                    endIcon={<AddIcon />}
+                    onClick={handleAddForm}
                 >
-                    <Typography component="h1" variant="h5">
-                        TAVE 소개 작성
-                    </Typography>
-                    <Divider />
-                    <ListItem>
-                        제목: &nbsp;
-                        <TextField
-                            id="title"
-                            //label="제목"
-                            variant="outlined"
-                            value={TitleValue.title}
-                            onChange={onTitleChange}
-                        />
-                    </ListItem>
-                    <Divider />
-                    <ListItem>
-                        내용: &nbsp;
-                        <TextField
-                            fullWidth
-                            id="content"
-                            //label="내용"
-                            variant="outlined"
-                            value={ContentValue.content}
-                            onChange={onContentChange}
-                        />
-                    </ListItem>
-                    <Divider light />
-                    <ListItem>
-                        <Button
-                            variant="contained"
-                            component="label"
-                            onChange={onImagesChange}
-                        >
-                            <input multiple type="file" name="images" hidden />
-                            Upload
-                        </Button>
-                    </ListItem>
-                    <ListItem>
-                        이미지 설명: &nbsp;
-                        <TextField
-                            fullWidth
-                            id="image_description"
-                            variant="outlined"
-                            value={ImageDescriptionValue.image_description}
-                            onChange={onImageDescriptionChange}
-                        />
-                    </ListItem>
-                </List>
-                <Button type="submit" variant="contained">
-                    저장하기
+                    이미지 폼 추가
+                </Button>{' '}
+                <Button
+                    variant="contained"
+                    endIcon={<AddIcon />}
+                    onClick={handleSubmit}
+                >
+                    저장
                 </Button>
-            </Box>
-        </Fragment>
+            </Grid>
+            <Grid item xs={12}>
+                <Paper elevation={3} sx={{ minWidth: 275 }}>
+                    <Grid item xs={12} align={'left'} sx={{ p: 1 }}>
+                        <Typography
+                            sx={{ fontSize: 16, mb: 2 }}
+                            color="text.secondary"
+                            gutterBottom
+                        >
+                            제목
+                        </Typography>
+                        <FormControl fullWidth>
+                            <TextField
+                                id="outlined-basic"
+                                label="제목을 입력하세요."
+                                variant="outlined"
+                                value={title}
+                                onChange={handleChangeTitle}
+                            />
+                        </FormControl>
+                    </Grid>
+                </Paper>
+            </Grid>
+            <Grid item xs={12}>
+                <Paper elevation={3} sx={{ minWidth: 275 }}>
+                    <Grid item xs={12} align={'left'} sx={{ p: 1 }}>
+                        <Typography
+                            sx={{ fontSize: 16, mb: 2 }}
+                            color="text.secondary"
+                            gutterBottom
+                        >
+                            내용
+                        </Typography>
+                        <FormControl fullWidth>
+                            <TextField
+                                id="outlined-basic"
+                                label="내용을 입력하세요."
+                                variant="outlined"
+                                multiline
+                                rows={5}
+                                value={content}
+                                onChange={handleChangeContent}
+                            />
+                        </FormControl>
+                    </Grid>
+                </Paper>
+            </Grid>
+            {imageForms?.map((imageForm, index) => {
+                return (
+                    <Grid key={index} item xs={12}>
+                        <CreateImageTile
+                            imageForm={imageForm}
+                            onChangeImage={handleChangeImage}
+                            onChangeImageName={handleChangeImageName}
+                            onChangeImageDesc={handleChangeImageDesc}
+                            onRemove={handleRemove}
+                        ></CreateImageTile>
+                    </Grid>
+                );
+            })}
+        </Grid>
     );
 };
 
