@@ -2,33 +2,39 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const UnList = styled.ul`
-    position : absolute;
-    top 30px;
-    
-`;
+const Nav=styled.nav`
+position : relative;
+top 20px;
+`
+
 const SubMenu = styled.div`
     display: none;
 `;
-const List = styled.li`
-    margin: 0;
-    list-style-type: none;
-    border-bottom: 1px solid rgba(44, 44, 44, 0.233);
-    &:hover ${SubMenu} {
-        flex-direction: column;
-    }
-`;
+
+
+const UnList=styled.ul`
+display:flex;
+flex-direction: row;
+justify-content: space-around;
+`
+
+
+const List=styled.li`
+display:flex;
+flex-direction: column;
+margin:20px;
+&:hover ${SubMenu} {
+    display:flex;
+    flex-direction: column;
+}
+`
 
 const MenuLink = styled(Link)`
     color: black;
     text-decoration: none;
     transition: 850ms;
-
-    padding-left: 10px;
-    padding-right: 10px;
     font-weight: bold;
     font-size: 20px;
-    width: 200px;
     font-family: '"' Noto Sans KR ', sans-serif"';
     &:hover {
         color: white;
@@ -40,9 +46,6 @@ const MenuLink = styled(Link)`
 
 const SubMenuLinks = styled(Link)`
     text-decoration: none;
-    width: 100px;
-    padding-left: 1px;
-    padding-right: 1px;
     font-size: 15px;
     font-family: '"' Noto Sans KR ', sans-serif"';
     color: black;
@@ -53,25 +56,10 @@ const SubMenuLinks = styled(Link)`
     }
 `;
 
-const Anchor = styled.a`
-    display: flex;
-    text-decoration: none;
-    width: 200px;
-    padding-left: 1px;
-    padding-right: 1px;
-    font-size: 15px;
-    font-family: '"' Noto Sans KR ', sans-serif"';
-    color: black;
-    &:hover {
-        color: navy;
-        border: 1px solid navy;
-        border-radius: 4px;
-    }
-`;
 
 function Navbar() {
     return (
-        <div className="navbar">
+        <Nav>
             <UnList>
                 <List>
                     <MenuLink to="/" class="menuLink">
@@ -89,9 +77,9 @@ function Navbar() {
                         <SubMenuLinks to="/about/manager">
                             운영진 소개
                         </SubMenuLinks>
-                        <Anchor href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ">
+                        <a href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ">
                             YouTube
-                        </Anchor>
+                        </a>
                     </SubMenu>
                 </List>
 
@@ -141,7 +129,7 @@ function Navbar() {
 
             <br />
             <br />
-        </div>
+        </Nav>
     );
 }
 
