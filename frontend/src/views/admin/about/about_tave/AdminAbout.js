@@ -10,6 +10,10 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
 
+import TitleTile from '../../utils/tiles/TitleTile';
+import ContentTile from '../../utils/tiles/ContentTile';
+import ImageTile from '../../utils/tiles/ImageTile';
+
 import {
     Link,
     useNavigate,
@@ -19,6 +23,8 @@ import {
 
 export default function AdminAbout() {
     const [about_tave, setAbouttave] = useState({ Images: [] });
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`/api/about/tave`).then((response) => {
@@ -34,10 +40,9 @@ export default function AdminAbout() {
             .delete(`/api/about/tave`)
             .then(function (response) {
                 if (window.confirm('삭제하시겠습니까?')) {
-                    window.location.href = '/admin/about';
                     console.log(response, '삭제 성공');
-                } else {
-                    //window.location.href = '/admin/about';
+                    window.location.reload();
+                    //navigate('/admin/about');
                 }
             })
             .catch(function (err) {
@@ -47,62 +52,48 @@ export default function AdminAbout() {
 
     return (
         <Fragment>
-            <Card sx={{ minWidth: 275 }}>
-                <CardContent>
-                    <Grid container justify="flex-end">
-                        <Button
-                            component={Link}
-                            to={`update`}
-                            variant="contained"
-                            endIcon={<AddIcon />}
-                        >
-                            수정
-                        </Button>
-                        &nbsp;
-                        <Button
-                            component={Link}
-                            to={`create`}
-                            variant="contained"
-                            endIcon={<AddIcon />}
-                        >
-                            새로 만들기
-                        </Button>
-                        &nbsp;
-                        <Button
-                            //component={Link}
-                            onClick={onDelete}
-                            variant="contained"
-                            endIcon={<DeleteIcon />}
-                        >
-                            삭제하기
-                        </Button>
-                    </Grid>
-
-                    <Typography variant="h5" component="div">
-                        {about_tave != null ? about_tave.title : '제목 없음'}
-                    </Typography>
-                    <Typography variant="body2">
-                        {about_tave != null ? about_tave.content : '내용 없음'}
-                        <br />
-                        {about_tave != null
-                            ? about_tave.Images.map((image) => {
-                                  return (
-                                      <Fragment>
-                                          <img
-                                              src={`${image.image_url}`}
-                                              alt={image.image_description}
-                                              loading="lazy"
-                                          />
-                                          <br />
-                                          {image.image_description}
-                                          <br />
-                                      </Fragment>
-                                  );
-                              })
-                            : '이미지 없음'}
-                    </Typography>
-                </CardContent>
-            </Card>
+            <Grid container justify="flex-end">
+                <Button
+                    component={Link}
+                    to={`update`}
+                    variant="contained"
+                    endIcon={<AddIcon />}
+                >
+                    수정
+                </Button>
+                &nbsp;
+                <Button
+                    component={Link}
+                    to={`create`}
+                    variant="contained"
+                    endIcon={<AddIcon />}
+                >
+                    새로 만들기
+                </Button>
+                &nbsp;
+                <Button
+                    //component={Link}
+                    onClick={onDelete}
+                    variant="contained"
+                    endIcon={<DeleteIcon />}
+                >
+                    삭제하기
+                </Button>
+            </Grid>
+            <br />
+            <TitleTile title={about_tave?.title} />
+            <ContentTile content={about_tave?.content} />
+            <br />
+            <Typography variant="body2">
+                {about_tave?.Images.map((image) => {
+                    return (
+                        <ImageTile
+                            url={image.image_url}
+                            description={image.image_description}
+                        />
+                    );
+                })}
+            </Typography>
         </Fragment>
     );
 }
