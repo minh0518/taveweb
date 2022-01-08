@@ -230,44 +230,48 @@ router
                 where: { id: req.params.id },
             });
 
-            res.status(201).json({ success });
+            res.status(200).json(payload);
+        } catch (err) {
+            logger.error(err);
+            next(err);
+        }
+    })
+    .delete(async (req, res, next) => {
+        try {
+            /* 1. 불러오기 */
+            const image = await Image.findOne({
+                attributes: ['image_key'],
+                where: { id: req.params.id },
+            });
+
+            /* 2. 삭제 폼 작성 */
+            let Objects = [];
+            Objects.push({ Key: image['image_key'] });
+
+            var params = {
+                Bucket: 'tave-bucket',
+                Delete: { Objects },
+            };
+
+            /* 3. 삭제 요청 */
+            if (Objects.length !== 0) {
+                // 빈 배열이 아닐때만
+                s3.deleteObjects(params, function (err, data) {
+                    if (err) console.log(err, err.stack);
+                    else console.log(data);
+                });
+            }
+
+            const success = await Image.destroy({
+                where: { id: req.params.id },
+            });
+
+            res.status(200).json({ success });
         } catch (err) {
             logger.error(err);
             next(err);
         }
     });
-
-// router.route('/:id/title').post(async (req, res, next) => {
-//     try {
-//         const notice = await Board.update(
-//             {
-//                 title: req.body.title,
-//             },
-//             { where: { id: req.params.id } }
-//         );
-
-//         res.status(201).json({ notice });
-//     } catch (err) {
-//         logger.error(err);
-//         next(err);
-//     }
-// });
-
-// router.route('/:id/content').post(async (req, res, next) => {
-//     try {
-//         const notice = await Board.update(
-//             {
-//                 title: req.body.title,
-//             },
-//             { where: { id: req.params.id } }
-//         );
-
-//         res.status(201).json({ notice });
-//     } catch (err) {
-//         logger.error(err);
-//         next(err);
-//     }
-// });
 
 /**
  * @swagger
