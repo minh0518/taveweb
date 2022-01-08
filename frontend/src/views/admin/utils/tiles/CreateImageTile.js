@@ -15,7 +15,7 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
-import Dropzone from 'react-dropzone';
+// import Dropzone from 'react-dropzone';
 import ImageListItem from '@mui/material/ImageListItem';
 import Box from '@mui/material/Box';
 

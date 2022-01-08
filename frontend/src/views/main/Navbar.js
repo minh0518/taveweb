@@ -1,15 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import LogoSrc from './tave_logo.png';
 
 const Nav = styled.nav`
-    background: linear-gradient(to bottom, #d2d2d2, white);
+    background: linear-gradient(to bottom, #C4D4E0, white);
     position: relative;
-    top: 40px;
     height: 150px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+`;
+
+const Logo = styled.img`
+    width: 200px;
+    height: 80px;
+    position: relative;
+    margin-top : 10px;
+    margin-left: 10%;
+    margin-right: 10%;
 `;
 
 const SubMenu = styled.div`
@@ -48,6 +57,7 @@ const MenuLink = styled(Link)`
     color: black;
     text-decoration: none;
     transition: 850ms;
+    font-weight: bold;
     font-size: 20px;
     font-family: '"' Noto Sans KR ', sans-serif"';
     &:hover {
@@ -73,7 +83,7 @@ const SubMenuLinks = styled(Link)`
 function Navbar() {
     return (
         <Nav>
-            <Title>(TAVE)</Title>
+            <Logo src={LogoSrc} />
             <UnList>
                 <List>
                     <MenuLink to="/" class="menuLink">
