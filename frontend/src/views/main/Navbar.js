@@ -1,28 +1,39 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import LogoSrc from './tave_logo.png';
 
 const Nav=styled.nav`
-position : relative;
-top 20px;
+position : fixed;
+left 20%;
+right 20%;
+height 100%;
+background: linear-gradient( to bottom, #C4D4E0, white);
+border-radius: 4px;
+box-shadow: 1px 2px 1px rgba(0,0,0,0.25);
 `
+
+const Logo = styled.img`
+    width: 100px;
+    height: 50px;
+`;
 
 const SubMenu = styled.div`
     display: none;
 `;
 
-
 const UnList=styled.ul`
 display:flex;
 flex-direction: row;
 justify-content: space-around;
+height:30px;
 `
 
 
 const List=styled.li`
 display:flex;
 flex-direction: column;
-margin:20px;
+margin:0px;
 &:hover ${SubMenu} {
     display:flex;
     flex-direction: column;
@@ -34,8 +45,10 @@ const MenuLink = styled(Link)`
     text-decoration: none;
     transition: 850ms;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 15px;   
     font-family: '"' Noto Sans KR ', sans-serif"';
+    float: right;
+    
     &:hover {
         color: white;
         background-color: navy;
@@ -57,27 +70,35 @@ const SubMenuLinks = styled(Link)`
 `;
 
 
+
+
+
 function Navbar() {
     return (
-        <Nav>
-            <UnList>
-                <List>
+        <Nav>            
+            <UnList>  
+                <List>               
+                    <MenuLink to="/" class="menuLink">          
+                        <Logo src={LogoSrc} /> 
+                    </MenuLink>
+                </List> 
+                <List>               
                     <MenuLink to="/" class="menuLink">
-                        Home
+                        HOME
                     </MenuLink>
                 </List>
-
                 <List class="menuhover">
                     <MenuLink to="/about" class="menuLink">
                         TAVE
                     </MenuLink>
+                    
                     <SubMenu>
                         <SubMenuLinks to="/about">TAVE 소개</SubMenuLinks>
                         <SubMenuLinks to="/about/history">연혁</SubMenuLinks>
                         <SubMenuLinks to="/about/manager">
                             운영진 소개
                         </SubMenuLinks>
-                        <a href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ">
+                        <a href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ" style={{textDecoration:'none'}}>
                             YouTube
                         </a>
                     </SubMenu>
@@ -125,8 +146,7 @@ function Navbar() {
                         </SubMenuLinks>
                     </SubMenu>
                 </List>
-            </UnList>
-
+            </UnList>   
             <br />
             <br />
         </Nav>
