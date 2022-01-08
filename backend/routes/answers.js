@@ -2,6 +2,7 @@ const express = require('express');
 const logger = require('../config/winston');
 
 const Answer = require('../models/answer');
+const Op = require('sequelize');
 
 const router = express.Router();
 
@@ -31,6 +32,22 @@ router
             next(err);
         }
     });
+
+router.route('/count').get(async (req, res, next) => {
+    logger.debug(req.query.search);
+    const title = req.query.search ? req.query.search : '';
+    try {
+        const count = await Answer.count({
+            where: {
+                title: { [Op.like]: `%${title}%` },
+            },
+        });
+        res.status(200).json({ count });
+    } catch (err) {
+        logger.error(err);
+        next(err);
+    }
+});
 
 router
     .route('/:id')

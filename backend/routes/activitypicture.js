@@ -9,6 +9,7 @@ const url = require('url');
 const Board = require('../models/board');
 const { json } = require('body-parser');
 const Image = require('../models/image');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router
     .get(async (req, res, next) => {
         try {
             const activity_picture = await Board.findAll({
-                attributes: ['id', 'title', 'content'],
+                attributes: ['id', 'title', 'content', 'created_at'],
                 include: [
                     {
                         model: Image,
@@ -76,6 +77,23 @@ router
         }
     });
 
+router.route('/count').get(async (req, res, next) => {
+    logger.debug(req.query.search);
+    const title = req.query.search ? req.query.search : '';
+    try {
+        const count = await Board.count({
+            where: {
+                category: 'activity_picture',
+                title: { [Op.like]: `%${title}%` },
+            },
+        });
+        res.status(200).json({ count });
+    } catch (err) {
+        logger.error(err);
+        next(err);
+    }
+});
+
 router
     .route('/:id')
     .get(async (req, res, next) => {
@@ -87,7 +105,7 @@ router
                         model: Image,
                     },
                 ],
-                attributes: ['id', 'title', 'content'],
+                attributes: ['id', 'title', 'content', 'created_at'],
                 where: { id: req.params.id },
             });
             res.status(200).json({ activity_picture });

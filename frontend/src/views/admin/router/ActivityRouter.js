@@ -50,7 +50,7 @@ const ActivityRouter = ({ toggleDrawer }) => {
                     <List component="div" disablePadding>
                         <ListItemButton
                             component={Link}
-                            to="photo"
+                            to="pictures"
                             sx={{ pl: 4 }}
                             onClick={toggleDrawer(false)}
                             onKeyDown={toggleDrawer(false)}
