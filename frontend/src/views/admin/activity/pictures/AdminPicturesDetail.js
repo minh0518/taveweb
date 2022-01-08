@@ -7,10 +7,10 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-import TitleTile from '../../utils/tiles/TitleTile';
-import ContentTile from '../../utils/tiles/ContentTile';
-import ImageTile from '../../utils/tiles/ImageTile';
-import DatetimeTile from '../../utils/tiles/DatetimeTile';
+import TitleTile from '../../utils/newTiles/TitleTile';
+import ContentTile from '../../utils/newTiles/ContentTile';
+import ImageTile from '../../utils/newTiles/ImageTile';
+import DatetimeTile from '../../utils/newTiles/DatetimeTile';
 import { useConfirm } from '../../utils/alert/confirm';
 
 export default function AdminPicturesDetail() {
@@ -26,6 +26,29 @@ export default function AdminPicturesDetail() {
             setPicture(response.data['activity_picture']);
         });
     }, [id]);
+
+    const handleTitle = async (newTitle) => {
+        const response = await axios.patch(`/api/activity/picture/${id}`, {
+            title: newTitle,
+        });
+
+        setPicture({
+            ...picture,
+            title: response.data['title'],
+        });
+        // alert('수정 완료');
+        // window.location.reload();
+    };
+    const handleContent = async (newContent) => {
+        const response = await axios.patch(`/api/activity/picture/${id}`, {
+            content: newContent,
+        });
+
+        setPicture({
+            ...picture,
+            content: response.data['content'],
+        });
+    };
 
     const deleteConfirm = async () => {
         console.log('삭제했습니다.');
@@ -63,8 +86,11 @@ export default function AdminPicturesDetail() {
                 createdAt={picture?.created_at}
                 updatedAt={picture?.updated_at}
             />
-            <TitleTile title={picture.title} />
-            <ContentTile content={picture.content} />
+            <TitleTile title={picture.title} handleTitle={handleTitle} />
+            <ContentTile
+                content={picture.content}
+                handleContent={handleContent}
+            />
             <Typography variant="body2">
                 {picture.Images?.map((image) => {
                     return (

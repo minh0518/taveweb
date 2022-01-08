@@ -7,10 +7,10 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-import TitleTile from './TitleTile';
-import ContentTile from './ContentTile';
-import ImageTile from './ImageTile';
-import DatetimeTile from './DatetimeTile';
+import TitleTile from '../../utils/newTiles/TitleTile';
+import ContentTile from '../../utils/newTiles/ContentTile';
+import ImageTile from '../../utils/newTiles/ImageTile';
+import DatetimeTile from '../../utils/newTiles/DatetimeTile';
 import { useConfirm } from '../../utils/alert/confirm';
 
 export default function AdminNotice() {

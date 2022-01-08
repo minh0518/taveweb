@@ -10,9 +10,9 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
 
-import TitleTile from '../../utils/tiles/TitleTile';
-import ContentTile from '../../utils/tiles/ContentTile';
-import ImageTile from '../../utils/tiles/ImageTile';
+import TitleTile from '../../utils/newTiles/TitleTile';
+import ContentTile from '../../utils/newTiles/ContentTile';
+import ImageTile from '../../utils/newTiles/ImageTile';
 
 import {
     Link,
@@ -22,7 +22,7 @@ import {
 } from 'react-router-dom';
 
 export default function AdminAboutManager() {
-    const [about_admin, setAbouttave] = useState({ Images: [] });
+    const [about_admin, setAboutadmin] = useState({ Images: [] });
 
     const navigate = useNavigate();
 
@@ -30,9 +30,30 @@ export default function AdminAboutManager() {
         axios.get(`/api/about/admin`).then((response) => {
             console.log('response', response);
             console.log('response', response.data);
-            setAbouttave(response.data['about_admin']);
+            setAboutadmin(response.data['about_admin']);
         });
     }, []);
+
+    const handleTitle = async (newTitle) => {
+        const response = await axios.patch(`/api/about/admin`, {
+            title: newTitle,
+        });
+
+        setAboutadmin({
+            ...about_admin,
+            title: response.data['title'],
+        });
+    };
+    const handleContent = async (newContent) => {
+        const response = await axios.patch(`/api/about/admin`, {
+            content: newContent,
+        });
+
+        setAboutadmin({
+            ...about_admin,
+            content: response.data['content'],
+        });
+    };
 
     const onDelete = (event) => {
         axios
@@ -54,15 +75,6 @@ export default function AdminAboutManager() {
             <Grid container justify="flex-end">
                 <Button
                     component={Link}
-                    to={`update`}
-                    variant="contained"
-                    endIcon={<AddIcon />}
-                >
-                    수정
-                </Button>
-                &nbsp;
-                <Button
-                    component={Link}
                     to={`create`}
                     variant="contained"
                     endIcon={<AddIcon />}
@@ -79,8 +91,11 @@ export default function AdminAboutManager() {
                 </Button>
             </Grid>
             <br />
-            <TitleTile title={about_admin?.title} />
-            <ContentTile content={about_admin?.content} />
+            <TitleTile title={about_admin?.title} handleTitle={handleTitle} />
+            <ContentTile
+                content={about_admin?.content}
+                handleContent={handleContent}
+            />
             <br />
             <Typography variant="body2">
                 {about_admin?.Images.map((image) => {

@@ -41,7 +41,6 @@ import AdminHome from './views/admin/home/AdminHome';
 // About_Tave
 import AdminAbout from './views/admin/about/about_tave/AdminAbout';
 import AdminAboutCreate from './views/admin/about/about_tave/AdminAboutCreate';
-import AdminAboutUpdate from './views/admin/about/about_tave/AdminAboutUpdate';
 // About_Admin
 import AdminAboutManager from './views/admin/about/about_admin/AdminAboutManager';
 import AdminAboutManagerCreate from './views/admin/about/about_admin/AdminAboutManagerCreate';
@@ -85,10 +84,7 @@ function App() {
                             path="about/create"
                             element={<AdminAboutCreate />}
                         />
-                        <Route
-                            path="about/update"
-                            element={<AdminAboutUpdate />}
-                        />
+
                         <Route
                             path="about/history"
                             element={<AdminHistory />}

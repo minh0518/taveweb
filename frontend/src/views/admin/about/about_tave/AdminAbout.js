@@ -10,9 +10,9 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
 
-import TitleTile from '../../utils/tiles/TitleTile';
-import ContentTile from '../../utils/tiles/ContentTile';
-import ImageTile from '../../utils/tiles/ImageTile';
+import TitleTile from '../../utils/newTiles/TitleTile';
+import ContentTile from '../../utils/newTiles/ContentTile';
+import ImageTile from '../../utils/newTiles/ImageTile';
 
 import {
     Link,
@@ -35,6 +35,27 @@ export default function AdminAbout() {
         console.log();
     }, []);
 
+    const handleTitle = async (newTitle) => {
+        const response = await axios.patch(`/api/about/tave`, {
+            title: newTitle,
+        });
+
+        setAbouttave({
+            ...about_tave,
+            title: response.data['title'],
+        });
+    };
+    const handleContent = async (newContent) => {
+        const response = await axios.patch(`/api/about/tave`, {
+            content: newContent,
+        });
+
+        setAbouttave({
+            ...about_tave,
+            content: response.data['content'],
+        });
+    };
+
     const onDelete = (event) => {
         axios
             .delete(`/api/about/tave`)
@@ -55,15 +76,6 @@ export default function AdminAbout() {
             <Grid container justify="flex-end">
                 <Button
                     component={Link}
-                    to={`update`}
-                    variant="contained"
-                    endIcon={<AddIcon />}
-                >
-                    수정
-                </Button>
-                &nbsp;
-                <Button
-                    component={Link}
                     to={`create`}
                     variant="contained"
                     endIcon={<AddIcon />}
@@ -81,8 +93,11 @@ export default function AdminAbout() {
                 </Button>
             </Grid>
             <br />
-            <TitleTile title={about_tave?.title} />
-            <ContentTile content={about_tave?.content} />
+            <TitleTile title={about_tave?.title} handleTitle={handleTitle} />
+            <ContentTile
+                content={about_tave?.content}
+                handleContent={handleContent}
+            />
             <br />
             <Typography variant="body2">
                 {about_tave?.Images.map((image) => {

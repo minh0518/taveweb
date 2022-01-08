@@ -7,10 +7,8 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-import TitleTile from '../../utils/tiles/TitleTile';
-import ContentTile from '../../utils/tiles/ContentTile';
-import ImageTile from '../../utils/tiles/ImageTile';
-import DatetimeTile from '../../utils/tiles/DatetimeTile';
+import TitleTile from '../../utils/newTiles/TitleTile';
+import DatetimeTile from '../../utils/newTiles/DatetimeTile';
 import { useConfirm } from '../../utils/alert/confirm';
 import QuestionTile from '../../utils/tiles/QuestionTile';
 import FAQAnswerTile from '../../utils/tiles/FAQAnswerTile';
@@ -27,6 +25,38 @@ export default function AdminFaqDetail() {
             setFaq(response.data['faq']);
         });
     }, [id]);
+
+    const handleTitle = async (newTitle) => {
+        const response = await axios.patch(`/api/faqs/${id}`, {
+            title: newTitle,
+        });
+
+        setFaq({
+            ...faq,
+            title: response.data['title'],
+        });
+    };
+    const handleQuestion = async (newQuestion) => {
+        const response = await axios.patch(`/api/faqs/${id}`, {
+            question: newQuestion,
+        });
+
+        setFaq({
+            ...faq,
+            content: response.data['question'],
+        });
+    };
+
+    const handleAnswer = async (newAnswer) => {
+        const response = await axios.patch(`/api/faqs/${id}`, {
+            answer: newAnswer,
+        });
+
+        setFaq({
+            ...faq,
+            content: response.data['answer'],
+        });
+    };
 
     const deleteConfirm = async () => {
         console.log('삭제했습니다.');
@@ -64,9 +94,12 @@ export default function AdminFaqDetail() {
                 createdAt={faq?.created_at}
                 updatedAt={faq?.updated_at}
             />
-            <TitleTile title={faq.title} />
-            <QuestionTile question={faq.question} />
-            <FAQAnswerTile answer={faq.answer} />
+            <TitleTile title={faq.title} handleTitle={handleTitle} />
+            <QuestionTile
+                question={faq.question}
+                handleQuestion={handleQuestion}
+            />
+            <FAQAnswerTile answer={faq.answer} handleAnswer={handleAnswer} />
         </Fragment>
     );
 }

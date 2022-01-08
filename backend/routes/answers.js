@@ -6,32 +6,30 @@ const Op = require('sequelize');
 
 const router = express.Router();
 
-router
-    .route('/')
-    .get(async (req, res, next) => {
-        try {
-            const answers = await Answer.findAll({
-                attributes: ['id', 'content', 'question_id'],
-            });
-            res.status(200).json({ answers });
-        } catch (err) {
-            logger.error(err);
-            next(err);
-        }
-    })
-    .post(async (req, res, next) => {
-        try {
-            logger.debug(req.body.question_id);
-            const answer = await Answer.create({
-                content: req.body.content,
-                question_id: req.body.question_id,
-            });
-            res.status(201).json(answer);
-        } catch (err) {
-            logger.error(err);
-            next(err);
-        }
-    });
+router.route('/').get(async (req, res, next) => {
+    try {
+        const answers = await Answer.findAll({
+            attributes: ['id', 'content', 'question_id'],
+        });
+        res.status(200).json({ answers });
+    } catch (err) {
+        logger.error(err);
+        next(err);
+    }
+});
+// .post(async (req, res, next) => {
+//     try {
+//         logger.debug(req.body.question_id);
+//         const answer = await Answer.create({
+//             content: req.body.content,
+//             question_id: req.body.question_id,
+//         });
+//         res.status(201).json(answer);
+//     } catch (err) {
+//         logger.error(err);
+//         next(err);
+//     }
+// });
 
 router.route('/count').get(async (req, res, next) => {
     logger.debug(req.query.search);
@@ -51,6 +49,19 @@ router.route('/count').get(async (req, res, next) => {
 
 router
     .route('/:id')
+    .post(async (req, res, next) => {
+        try {
+            logger.debug(req.body.question_id);
+            const answer = await Answer.create({
+                content: req.body.content,
+                question_id: req.body.question_id,
+            });
+            res.status(201).json(answer);
+        } catch (err) {
+            logger.error(err);
+            next(err);
+        }
+    })
     .patch(async (req, res, next) => {
         try {
             const answer = await Answer.update(

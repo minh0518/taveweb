@@ -7,10 +7,10 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-import TitleTile from '../../utils/tiles//TitleTile';
-import ContentTile from '../../utils/tiles//ContentTile';
-import ImageTile from '../../utils/tiles//ImageTile';
-import DatetimeTile from '../../utils/tiles//DatetimeTile';
+import TitleTile from '../../utils/newTiles/TitleTile';
+import ContentTile from '../../utils/newTiles/ContentTile';
+import ImageTile from '../../utils/newTiles/ImageTile';
+import DatetimeTile from '../../utils/newTiles/DatetimeTile';
 import { useConfirm } from '../../utils/alert/confirm';
 
 export default function AdminNewsDetail() {
@@ -26,6 +26,27 @@ export default function AdminNewsDetail() {
             setNews(response.data['news']);
         });
     }, [id]);
+
+    const handleTitle = async (newTitle) => {
+        const response = await axios.patch(`/api/news/${id}`, {
+            title: newTitle,
+        });
+
+        setNews({
+            ...news,
+            title: response.data['title'],
+        });
+    };
+    const handleContent = async (newContent) => {
+        const response = await axios.patch(`/api/news/${id}`, {
+            content: newContent,
+        });
+
+        setNews({
+            ...news,
+            content: response.data['content'],
+        });
+    };
 
     const deleteConfirm = async () => {
         console.log('삭제했습니다.');
@@ -63,8 +84,8 @@ export default function AdminNewsDetail() {
                 createdAt={news?.created_at}
                 updatedAt={news?.updated_at}
             />
-            <TitleTile title={news.title} />
-            <ContentTile content={news.content} />
+            <TitleTile title={news.title} handleTitle={handleTitle} />
+            <ContentTile content={news.content} handleContent={handleContent} />
             <Typography variant="body2">
                 {news.Images?.map((image) => {
                     return (

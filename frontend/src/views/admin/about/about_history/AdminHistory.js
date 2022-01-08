@@ -10,9 +10,9 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
 
-import TitleTile from '../../utils/tiles/TitleTile';
-import ContentTile from '../../utils/tiles/ContentTile';
-import ImageTile from '../../utils/tiles/ImageTile';
+import TitleTile from '../../utils/newTiles/TitleTile';
+import ContentTile from '../../utils/newTiles/ContentTile';
+import ImageTile from '../../utils/newTiles/ImageTile';
 
 import {
     Link,
@@ -22,7 +22,7 @@ import {
 } from 'react-router-dom';
 
 export default function AdminHistory() {
-    const [history, setAbouttave] = useState({ Images: [] });
+    const [history, setHistory] = useState({ Images: [] });
 
     const navigate = useNavigate();
 
@@ -30,9 +30,30 @@ export default function AdminHistory() {
         axios.get(`/api/about/history`).then((response) => {
             console.log('response', response);
             console.log('response', response.data);
-            setAbouttave(response.data['history']);
+            setHistory(response.data['history']);
         });
     }, []);
+
+    const handleTitle = async (newTitle) => {
+        const response = await axios.patch(`/api/about/history`, {
+            title: newTitle,
+        });
+
+        setHistory({
+            ...history,
+            title: response.data['title'],
+        });
+    };
+    const handleContent = async (newContent) => {
+        const response = await axios.patch(`/api/about/history`, {
+            content: newContent,
+        });
+
+        setHistory({
+            ...history,
+            content: response.data['content'],
+        });
+    };
 
     const onDelete = (event) => {
         axios
@@ -54,15 +75,6 @@ export default function AdminHistory() {
             <Grid container justify="flex-end">
                 <Button
                     component={Link}
-                    to={`update`}
-                    variant="contained"
-                    endIcon={<AddIcon />}
-                >
-                    수정
-                </Button>
-                &nbsp;
-                <Button
-                    component={Link}
                     to={`create`}
                     variant="contained"
                     endIcon={<AddIcon />}
@@ -79,8 +91,11 @@ export default function AdminHistory() {
                 </Button>
             </Grid>
             <br />
-            <TitleTile title={history?.title} />
-            <ContentTile content={history?.content} />
+            <TitleTile title={history?.title} handleTitle={handleTitle} />
+            <ContentTile
+                content={history?.content}
+                handleContent={handleContent}
+            />
             <br />
             <Typography variant="body2">
                 {history?.Images.map((image) => {
