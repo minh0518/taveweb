@@ -9,16 +9,22 @@ import About from './views/main/about/About';
 import AboutManager from './views/main/about/AboutManager';
 import History from './views/main/about/History';
 import Notice from './views/main/notice/Notice';
-import Notices from './views/main/notice/NoticeDetail';
+import NoticeDetail from './views/main/notice/NoticeDetail';
 import News from './views/main/notice/News';
-import Board from './views/main/tavy/Board';
-import Photos from './views/main/tavy/Photos';
+import NewsDetail from './views/main/notice/NewsDetail';
+import Review from './views/main/tavy/Review';
+import ReviewDetail from './views/main/tavy/ReviewDetail';
+import Picture from './views/main/tavy/Pictures';
+import PictureDetail from './views/main/tavy/PicturesDetail';
 import Apply from './views/main/apply/Apply';
 import ApplyForm from './views/main/apply/ApplyForm';
 import ApplyCheck from './views/main/apply/ApplyCheck';
 import ApplyResult from './views/main/apply/ApplyResult';
 import QnA from './views/main/qna/QnA';
+import QnADetail from './views/main/qna/QnADetail';
+import QuestionCreate from './views/main/qna/QuestionCreate';
 import FAQ from './views/main/qna/FAQ';
+import FaqDetail from './views/main/qna/FaqDetail';
 import DisplayAnswers from './views/main/qna/Display';
 
 /* Admin */
@@ -134,7 +140,6 @@ function App() {
                             path="pictures/:id"
                             element={<AdminPicturesDetail />}
                         />
-                        <Route path="photo" element={<Photos />} />
                         {/* Apply */}
                         <Route path="apply" element={<AdminApply />} />
                         <Route path="apply/form" element={<AdminApplyForm />} />
@@ -177,13 +182,36 @@ function App() {
                         <Route exact path="/notice" element={<Notice />} />
                         <Route
                             exact
-                            path="/notice/:noticeID"
-                            element={<Notices />}
+                            path="/notice/:id"
+                            element={<NoticeDetail />}
                         />
 
                         <Route exact path="/news" element={<News />} />
-                        <Route exact path="/board" element={<Board />} />
-                        <Route exact path="/photo" element={<Photos />} />
+                        <Route
+                            exact
+                            path="/news/:id"
+                            element={<NewsDetail />}
+                        />
+                        <Route
+                            exact
+                            path="/activity/review"
+                            element={<Review />}
+                        />
+                        <Route
+                            exact
+                            path="/activity/review/:id"
+                            element={<ReviewDetail />}
+                        />
+                        <Route
+                            exact
+                            path="/activity/picture"
+                            element={<Picture />}
+                        />
+                        <Route
+                            exact
+                            path="/activity/picture/:id"
+                            element={<PictureDetail />}
+                        />
                         <Route exact path="/apply" element={<Apply />} />
                         <Route
                             exact
@@ -203,13 +231,14 @@ function App() {
 
                         {/* QnA목록,답변들 */}
                         <Route exact path="/qna" element={<QnA />} />
+                        <Route exact path="/qna/:id" element={<QnADetail />} />
                         <Route
                             exact
-                            path="/qna/:questionID"
-                            element={<DisplayAnswers />}
+                            path="/qna/create"
+                            element={<QuestionCreate />}
                         />
-
                         <Route exact path="/faq" element={<FAQ />} />
+                        <Route exact path="/faq/:id" element={<FaqDetail />} />
                     </Route>
                 </Routes>
             </div>

@@ -26,10 +26,10 @@ import {
     useSearchParams,
 } from 'react-router-dom';
 
-export default function News() {
+export default function Review() {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [news, setNews] = useState([]);
+    const [reviews, setReviews] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState(0);
     const [search, setSearch] = useState('');
@@ -39,7 +39,7 @@ export default function News() {
 
     useEffect(() => {
         axios
-            .get('/api/news/count', { params: { search } }) //api백엔드에는 현재7개
+            .get('/api/activity/review/count', { params: { search } }) //api백엔드에는 현재7개
             //의 notices가 있음
             .then((response) => {
                 const pageCount = Math.ceil(response.data['count'] / limit);
@@ -57,9 +57,12 @@ export default function News() {
 
         setCurrentPage(page);
 
-        axios.get('/api/news', { params: { skip, limit } }).then((response) => {
-            setNews(response.data['news']);
-        });
+        axios
+            .get('/api/activity/review', { params: { skip, limit } })
+            .then((response) => {
+                console.log(response.data);
+                setReviews(response.data['activity_review']);
+            });
     }, [searchParams]);
 
     const handlePaginationClick = (e, page) => {
@@ -81,7 +84,7 @@ export default function News() {
                                 variant="h5"
                                 component="div"
                             >
-                                테이비 뉴스
+                                활동 후기 게시판
                                 <Typography
                                     sx={{ fontSize: 14 }}
                                     color="text.secondary"
@@ -103,11 +106,11 @@ export default function News() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {news.map((news) => (
+                            {reviews.map((review) => (
                                 <TableRow
                                     component={Link}
-                                    to={`${news.id}`}
-                                    key={news.id}
+                                    to={`${review.id}`}
+                                    key={review.id}
                                     sx={{
                                         '&:last-child td, &:last-child th': {
                                             border: 0,
@@ -117,14 +120,14 @@ export default function News() {
                                     }}
                                 >
                                     <TableCell component="th" scope="row">
-                                        {news.id}
+                                        {review.id}
                                     </TableCell>
                                     <TableCell align="right">
-                                        {news.title}
+                                        {review.title}
                                     </TableCell>
                                     <TableCell align="right">
                                         {new Date(
-                                            Date.parse(news?.created_at)
+                                            Date.parse(review?.created_at)
                                         ).toLocaleString()}
                                     </TableCell>
                                 </TableRow>

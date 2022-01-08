@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import LogoSrc from './tave_logo.png';
 
 const Nav = styled.nav`
-    background: linear-gradient(to bottom, #C4D4E0, white);
+    background: linear-gradient(to bottom, #c4d4e0, white);
     position: relative;
     height: 150px;
     display: flex;
@@ -16,7 +16,7 @@ const Logo = styled.img`
     width: 200px;
     height: 80px;
     position: relative;
-    margin-top : 10px;
+    margin-top: 10px;
     margin-left: 10%;
     margin-right: 10%;
 `;
@@ -102,11 +102,11 @@ function Navbar() {
                 </List>
 
                 <List class="menuhover">
-                    <MenuLink to="/about" class="menuLink">
+                    <MenuLink to="/about/tave" class="menuLink">
                         TAVE
                     </MenuLink>
                     <SubMenu>
-                        <SubMenuLinks to="/about">TAVE 소개</SubMenuLinks>
+                        <SubMenuLinks to="/about/tave">TAVE 소개</SubMenuLinks>
                         <SubMenuLinks to="/about/history">연혁</SubMenuLinks>
                         <SubMenuLinks to="/about/manager">
                             운영진 소개
@@ -116,14 +116,18 @@ function Navbar() {
                         </a>
                     </SubMenu>
                 </List>
-                
+
                 <List class="menuhover">
-                    <MenuLink to="/board" class="menuLink">
+                    <MenuLink to="/activity/review" class="menuLink">
                         TAVY
                     </MenuLink>
                     <SubMenu>
-                        <SubMenuLinks to="/board">활동 후기</SubMenuLinks>
-                        <SubMenuLinks to="/photo">활동 사진</SubMenuLinks>
+                        <SubMenuLinks to="/activity/review">
+                            활동 후기
+                        </SubMenuLinks>
+                        <SubMenuLinks to="/activity/picture">
+                            활동 사진
+                        </SubMenuLinks>
                     </SubMenu>
                 </List>
 
