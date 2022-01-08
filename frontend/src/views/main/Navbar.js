@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Nav = styled.nav`
-background-color:#6482B9;
-    position : relative;
-    top : 40px;
-    height:150px;
+    background: linear-gradient(to bottom, #d2d2d2, white);
+    position: relative;
+    top: 40px;
+    height: 150px;
     display: flex;
-    align-items:flex-start;
+    align-items: flex-start;
     justify-content: space-between;
 `;
 
@@ -16,23 +16,24 @@ const SubMenu = styled.div`
     display: none;
 `;
 
-const Title=styled.span`
-font-weight: bold;
-font-size: 45px;
-position : relative;
-margin-left:10%;
-margin-right:10%;
-`
+const Title = styled.span`
+    font-weight: bold;
+    font-size: 45px;
+    position: relative;
+    margin-left: 10%;
+    margin-right: 10%;
+`;
 
 const UnList = styled.ul`
     display: flex;
     flex-direction: row;
     justify-content: center;
     height: 120px;
-    margin-right:20%;
+    margin-right: 20%;
 `;
 
 const List = styled.li`
+    font-family: sans-serif;
     display: flex;
     flex-direction: column;
     width: 100px;
@@ -47,7 +48,6 @@ const MenuLink = styled(Link)`
     color: black;
     text-decoration: none;
     transition: 850ms;
-    font-weight: bold;
     font-size: 20px;
     font-family: '"' Noto Sans KR ', sans-serif"';
     &:hover {
@@ -73,14 +73,22 @@ const SubMenuLinks = styled(Link)`
 function Navbar() {
     return (
         <Nav>
-            <Title>
-                TAVE
-            </Title>
+            <Title>(TAVE)</Title>
             <UnList>
                 <List>
                     <MenuLink to="/" class="menuLink">
                         Home
                     </MenuLink>
+                </List>
+
+                <List class="menuhover">
+                    <MenuLink to="/notice" class="menuLink">
+                        Notice
+                    </MenuLink>
+                    <SubMenu>
+                        <SubMenuLinks to="/notice">공지사항</SubMenuLinks>
+                        <SubMenuLinks to="/news">Tavy News</SubMenuLinks>
+                    </SubMenu>
                 </List>
 
                 <List class="menuhover">
@@ -98,17 +106,7 @@ function Navbar() {
                         </a>
                     </SubMenu>
                 </List>
-
-                <List class="menuhover">
-                    <MenuLink to="/notice" class="menuLink">
-                        Notice
-                    </MenuLink>
-                    <SubMenu>
-                        <SubMenuLinks to="/notice">공지사항</SubMenuLinks>
-                        <SubMenuLinks to="/news">Tavy News</SubMenuLinks>
-                    </SubMenu>
-                </List>
-
+                
                 <List class="menuhover">
                     <MenuLink to="/board" class="menuLink">
                         TAVY
