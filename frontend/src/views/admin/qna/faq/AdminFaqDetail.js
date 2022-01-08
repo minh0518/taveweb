@@ -13,7 +13,7 @@ import ImageTile from '../../utils/tiles/ImageTile';
 import DatetimeTile from '../../utils/tiles/DatetimeTile';
 import { useConfirm } from '../../utils/alert/confirm';
 import QuestionTile from '../../utils/tiles/QuestionTile';
-import AnswerTile from '../../utils/tiles/AnswerTile';
+import FAQAnswerTile from '../../utils/tiles/FAQAnswerTile';
 
 export default function AdminFaqDetail() {
     const { id } = useParams();
@@ -66,7 +66,7 @@ export default function AdminFaqDetail() {
             />
             <TitleTile title={faq.title} />
             <QuestionTile question={faq.question} />
-            <AnswerTile answer={faq.answer} />
+            <FAQAnswerTile answer={faq.answer} />
         </Fragment>
     );
 }

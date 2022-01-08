@@ -26,10 +26,10 @@ import {
     useSearchParams,
 } from 'react-router-dom';
 
-export default function News() {
+export default function Pictures() {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [news, setNews] = useState([]);
+    const [pictures, setPictures] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState(0);
     const [search, setSearch] = useState('');
@@ -39,7 +39,7 @@ export default function News() {
 
     useEffect(() => {
         axios
-            .get('/api/news/count', { params: { search } }) //api백엔드에는 현재7개
+            .get('/api/activity/picture/count', { params: { search } }) //api백엔드에는 현재7개
             //의 notices가 있음
             .then((response) => {
                 const pageCount = Math.ceil(response.data['count'] / limit);
@@ -57,9 +57,12 @@ export default function News() {
 
         setCurrentPage(page);
 
-        axios.get('/api/news', { params: { skip, limit } }).then((response) => {
-            setNews(response.data['news']);
-        });
+        axios
+            .get('/api/activity/picture', { params: { skip, limit } })
+            .then((response) => {
+                console.log(response.data);
+                setPictures(response.data['activity_picture']);
+            });
     }, [searchParams]);
 
     const handlePaginationClick = (e, page) => {
@@ -81,7 +84,7 @@ export default function News() {
                                 variant="h5"
                                 component="div"
                             >
-                                테이비 뉴스
+                                활동 사진
                                 <Typography
                                     sx={{ fontSize: 14 }}
                                     color="text.secondary"
@@ -103,11 +106,11 @@ export default function News() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {news.map((news) => (
+                            {pictures.map((picture) => (
                                 <TableRow
                                     component={Link}
-                                    to={`${news.id}`}
-                                    key={news.id}
+                                    to={`${picture.id}`}
+                                    key={picture.id}
                                     sx={{
                                         '&:last-child td, &:last-child th': {
                                             border: 0,
@@ -117,14 +120,14 @@ export default function News() {
                                     }}
                                 >
                                     <TableCell component="th" scope="row">
-                                        {news.id}
+                                        {picture.id}
                                     </TableCell>
                                     <TableCell align="right">
-                                        {news.title}
+                                        {picture.title}
                                     </TableCell>
                                     <TableCell align="right">
                                         {new Date(
-                                            Date.parse(news?.created_at)
+                                            Date.parse(picture?.created_at)
                                         ).toLocaleString()}
                                     </TableCell>
                                 </TableRow>

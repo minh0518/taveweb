@@ -8,28 +8,27 @@ import Button from '@mui/material/Button';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ImageListItem from '@mui/material/ImageListItem';
 
-export default function NoticeDetail() {
+export default function PicturesDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [notice, setNotice] = useState({});
+    const [picture, setPicture] = useState({});
 
     useEffect(() => {
-        axios.get(`/api/notices/${id}`).then((response) => {
-            console.log('response', response);
+        axios.get(`/api/activity/picture/${id}`).then((response) => {
+            //console.log('response', response);
             console.log('response', response.data);
-            setNotice(response.data['notice']);
-            console.log(response.data['notice']);
+            setPicture(response.data['activity_picture']);
         });
     }, [id]);
 
     return (
         <Fragment>
-            <div>{notice?.title}</div>
-            <div>{notice?.content}</div>
+            <div>{picture?.title}</div>
+            <div>{picture?.content}</div>
             <br />
             <Typography variant="body2">
-                {notice?.Images?.map((image) => {
+                {picture.Images?.map((image) => {
                     return (
                         <ImageListItem>
                             <img

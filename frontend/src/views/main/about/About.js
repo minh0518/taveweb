@@ -9,6 +9,13 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
+import Paper from '@mui/material/Paper';
+import ImageListItem from '@mui/material/ImageListItem';
 
 import {
     Link,
@@ -33,16 +40,19 @@ export default function AdminAbout() {
 
     return (
         <Fragment>
-            <div>title={about_tave?.title}</div>
-            <div>content={about_tave?.content}</div>
+            <div>{about_tave?.title}</div>
+            <div>{about_tave?.content}</div>
             <br />
             <Typography variant="body2">
                 {about_tave?.Images.map((image) => {
                     return (
-                        <div>
-                            url={image.image_url}
-                            description={image.image_description}
-                        </div>
+                        <ImageListItem>
+                            <img
+                                src={image.image_url}
+                                alt={image.image_description}
+                                loading="lazy"
+                            />
+                        </ImageListItem>
                     );
                 })}
             </Typography>
