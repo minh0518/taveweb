@@ -111,7 +111,7 @@ function Navbar() {
                         <SubMenuLinks to="/about/manager">
                             운영진 소개
                         </SubMenuLinks>
-                        <a href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ">
+                        <a href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ" style={{ textDecoration: 'none' }} >
                             YouTube
                         </a>
                     </SubMenu>
