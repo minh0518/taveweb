@@ -1,36 +1,24 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import CreateImageTile from '../../utils/tiles/CreateImageTile';
-import {
-    Box,
-    Card,
-    Button,
-    Typography,
-    List,
-    ListItem,
-    ListItemText,
-    Divider,
-    TextField,
-    ImageList,
-    Input,
-    Grid,
-    FormControl,
-    Paper,
-} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import {
-    Link,
-    useNavigate,
-    createSearchParams,
-    useSearchParams,
-} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const AdminCreateHistory = () => {
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+
+import CreateImageTile from '../../utils/tiles/CreateImageTile';
+
+const AdminReviewCreate = () => {
+    const navigate = useNavigate();
+
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [images, setImages] = useState([]);
     const [imageForms, setImageForms] = useState([]);
-    const navigate = useNavigate();
 
     const nextId = useRef(1);
 
@@ -46,7 +34,6 @@ const AdminCreateHistory = () => {
         setImageForms(
             imageForms.concat({
                 id: nextId.current,
-                image: null,
                 image_name: '',
                 image_description: '',
             })
@@ -58,16 +45,34 @@ const AdminCreateHistory = () => {
 
     const handleRemove = (id, original_image) => {
         setImageForms(imageForms.filter((imageForm) => imageForm.id !== id));
-        setImages(
-            images.filter(
-                (image) => image.lastModified !== original_image.lastModified
-            )
-        );
+        if (original_image !== null)
+            setImages(images.filter((image) => image.id !== original_image.id));
     };
+
+    // const handleAddImage = (image) => {
+    //     console.log(`이미지핸들러: ${image}`);
+    //     setImages(images.concat(image));
+    // };
+
+    // const handleRemoveImage = (image) => {
+    //     console.log(`이미지핸들러: ${image}`);
+    //     setImages(images.concat(image));
+    // };
 
     const handleChangeImage = (id, image) => {
         console.log(image);
+        console.log(images);
         setImages(images.concat(image));
+        // setImageForms(
+        //     imageForms.map((imageForm) =>
+        //         imageForm.id === id
+        //             ? {
+        //                   ...imageForm,
+        //                   image: image,
+        //               }
+        //             : imageForm
+        //     )
+        // );
     };
 
     const handleChangeImageName = (id, image_name) => {
@@ -105,19 +110,26 @@ const AdminCreateHistory = () => {
         data.append('title', title);
         data.append('content', content);
         images.map((image) => {
-            // console.log(image);
-            // console.log(image.name);
+            console.log(image);
+            console.log(image.name);
             data.append('images', image, image.name);
         });
-        data.append('image_description', '{}');
 
         console.log(title);
         console.log(content);
         console.log(images);
         console.log(imageForms);
 
+        const image_description = {};
+        imageForms.map((imageForm) => {
+            image_description[`${imageForm.image_name}`] =
+                imageForm.image_description;
+        });
+        console.log(image_description);
+        data.append('image_description', JSON.stringify(image_description));
+
         axios
-            .post(`/api/about/history`, data, {
+            .post(`/api/activity/review`, data, {
                 body: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -125,12 +137,14 @@ const AdminCreateHistory = () => {
             .then(function (response) {
                 console.log(response, '성공');
                 alert('작성 완료');
-                navigate('/admin/about/history');
+                // window.location.href = '/notices';
+                navigate(`/admin/review`);
             })
             .catch(function (err) {
                 console.log(err);
             });
     };
+
     return (
         <Grid container spacing={2}>
             <Grid item xs={12} align={'right'}>
@@ -212,4 +226,4 @@ const AdminCreateHistory = () => {
     );
 };
 
-export default AdminCreateHistory;
+export default AdminReviewCreate;

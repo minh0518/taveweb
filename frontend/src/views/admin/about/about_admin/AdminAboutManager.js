@@ -7,7 +7,12 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
+
+import TitleTile from '../../utils/tiles/TitleTile';
+import ContentTile from '../../utils/tiles/ContentTile';
+import ImageTile from '../../utils/tiles/ImageTile';
 
 import {
     Link,
@@ -19,6 +24,8 @@ import {
 export default function AdminAboutManager() {
     const [about_admin, setAbouttave] = useState({ Images: [] });
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         axios.get(`/api/about/admin`).then((response) => {
             console.log('response', response);
@@ -27,48 +34,64 @@ export default function AdminAboutManager() {
         });
     }, []);
 
+    const onDelete = (event) => {
+        axios
+            .delete(`/api/about/admin`)
+            .then(function (response) {
+                if (window.confirm('삭제하시겠습니까?')) {
+                    console.log(response, '삭제 성공');
+                    window.location.reload();
+                    //navigate(`/admin/about/admin`);
+                }
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    };
+
     return (
         <Fragment>
-            <Card sx={{ minWidth: 275 }}>
-                <CardContent>
-                    <Typography
-                        sx={{ fontSize: 14 }}
-                        color="text.secondary"
-                        gutterBottom
-                    ></Typography>
-                    <Grid item xs={4} align={'right'}>
-                        <Button
-                            component={Link}
-                            to={`create`}
-                            variant="contained"
-                            endIcon={<AddIcon />}
-                        >
-                            작성
-                        </Button>
-                    </Grid>
-                    <Typography variant="h5" component="div">
-                        {about_admin.title}
-                    </Typography>
-                    <Typography variant="body2">
-                        {about_admin.content}
-                        <br />
-                        {about_admin.Images.map((image) => {
-                            return (
-                                <Fragment>
-                                    <img
-                                        src={`${image.image_url}`}
-                                        alt={image.image_description}
-                                        loading="lazy"
-                                    />
-                                    <br />
-                                    {image.image_description}
-                                    <br />
-                                </Fragment>
-                            );
-                        })}
-                    </Typography>
-                </CardContent>
-            </Card>
+            <Grid container justify="flex-end">
+                <Button
+                    component={Link}
+                    to={`update`}
+                    variant="contained"
+                    endIcon={<AddIcon />}
+                >
+                    수정
+                </Button>
+                &nbsp;
+                <Button
+                    component={Link}
+                    to={`create`}
+                    variant="contained"
+                    endIcon={<AddIcon />}
+                >
+                    새로 만들기
+                </Button>
+                &nbsp;
+                <Button
+                    onClick={onDelete}
+                    variant="contained"
+                    endIcon={<DeleteIcon />}
+                >
+                    삭제하기
+                </Button>
+            </Grid>
+            <br />
+            <TitleTile title={about_admin?.title} />
+            <ContentTile content={about_admin?.content} />
+            <br />
+            <Typography variant="body2">
+                {about_admin?.Images.map((image) => {
+                    return (
+                        <ImageTile
+                            url={image.image_url}
+                            description={image.image_description}
+                        />
+                    );
+                })}
+            </Typography>
         </Fragment>
     );
 }

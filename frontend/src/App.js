@@ -9,7 +9,7 @@ import About from './views/main/about/About';
 import AboutManager from './views/main/about/AboutManager';
 import History from './views/main/about/History';
 import Notice from './views/main/notice/Notice';
-import Notices from './views/main/notice/NoticeDetail'
+import Notices from './views/main/notice/NoticeDetail';
 import News from './views/main/notice/News';
 import Board from './views/main/tavy/Board';
 import Photos from './views/main/tavy/Photos';
@@ -20,7 +20,6 @@ import ApplyResult from './views/main/apply/ApplyResult';
 import QnA from './views/main/qna/QnA';
 import FAQ from './views/main/qna/FAQ';
 import DisplayAnswers from './views/main/qna/Display';
-
 
 /* Admin */
 import AdminLayout from './views/admin/AdminLayout';
@@ -40,6 +39,10 @@ import AdminAboutManagerCreate from './views/admin/about/about_admin/AdminAboutM
 //About_History
 import AdminHistory from './views/admin/about/about_history/AdminHistory';
 import AdminHistoryCreate from './views/admin/about/about_history/AdminHistoryCreate';
+//ActivityReview
+import AdminReview from './views/admin/activity/review/AdminReview';
+import AdminReviewCreate from './views/admin/activity/review/AdminReviewCreate';
+import AdminReviewDetail from './views/admin/activity/review/AdminReviewDetail';
 
 import AdminApply from './views/admin/apply/AdminApply';
 import AdminApplyCheck from './views/admin/apply/AdminApplyCheck';
@@ -93,7 +96,15 @@ function App() {
                         />
                         <Route path="news" element={<AdminNews />} />
                         {/* Activity */}
-                        <Route path="board" element={<Board />} />
+                        <Route path="review" element={<AdminReview />} />
+                        <Route
+                            path="review/create"
+                            element={<AdminReviewCreate />}
+                        />
+                        <Route
+                            path="review/:id"
+                            element={<AdminReviewDetail />}
+                        />
                         <Route path="photo" element={<Photos />} />
                         {/* Apply */}
                         <Route path="apply" element={<AdminApply />} />
@@ -126,15 +137,13 @@ function App() {
                             element={<History />}
                         />
 
-
                         {/* 공지사항목록, 세부내용 */}
                         <Route exact path="/notice" element={<Notice />} />
-                        <Route exact 
-                               path="/notice/:noticeID" 
-                               element={<Notices/>}
+                        <Route
+                            exact
+                            path="/notice/:noticeID"
+                            element={<Notices />}
                         />
-
-
 
                         <Route exact path="/news" element={<News />} />
                         <Route exact path="/board" element={<Board />} />
@@ -155,7 +164,7 @@ function App() {
                             path="/apply/result"
                             element={<ApplyResult />}
                         />
-                        
+
                         {/* QnA목록,답변들 */}
                         <Route exact path="/qna" element={<QnA />} />
                         <Route
