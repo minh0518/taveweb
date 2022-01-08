@@ -26,10 +26,10 @@ import {
     useSearchParams,
 } from 'react-router-dom';
 
-export default function AdminNews() {
+export default function AdminQna() {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [news, setNews] = useState([]);
+    const [questions, setQuestions] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState(0);
     const [search, setSearch] = useState('');
@@ -38,14 +38,11 @@ export default function AdminNews() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios
-            .get('/api/news/count', { params: { search } }) //api백엔드에는 현재7개
-            //의 notices가 있음
-            .then((response) => {
-                const pageCount = Math.ceil(response.data['count'] / limit);
+        axios.get('/api/questions', { params: { search } }).then((response) => {
+            const pageCount = Math.ceil(response.data['count'] / limit);
 
-                setCount(pageCount);
-            });
+            setCount(pageCount);
+        });
     }, [limit]);
 
     useEffect(() => {
@@ -57,9 +54,12 @@ export default function AdminNews() {
 
         setCurrentPage(page);
 
-        axios.get('/api/news', { params: { skip, limit } }).then((response) => {
-            setNews(response.data['news']);
-        });
+        axios
+            .get('/api/questions', { params: { skip, limit } })
+            .then((response) => {
+                console.log(response.data);
+                setQuestions(response.data['questions']);
+            });
     }, [searchParams]);
 
     const handlePaginationClick = (e, page) => {
@@ -81,7 +81,7 @@ export default function AdminNews() {
                                 variant="h5"
                                 component="div"
                             >
-                                테이비 뉴스
+                                Q&A
                                 <Typography
                                     sx={{ fontSize: 14 }}
                                     color="text.secondary"
@@ -91,7 +91,7 @@ export default function AdminNews() {
                                 </Typography>
                             </Typography>
                         </Grid>
-                        <Grid item xs={4} align={'right'}>
+                        {/* <Grid item xs={4} align={'right'}>
                             <Button
                                 component={Link}
                                 to={`create`}
@@ -100,7 +100,7 @@ export default function AdminNews() {
                             >
                                 작성
                             </Button>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </CardContent>
                 <TableContainer component={Paper} elevation={0}>
@@ -113,11 +113,11 @@ export default function AdminNews() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {news.map((news) => (
+                            {questions?.map((question) => (
                                 <TableRow
                                     component={Link}
-                                    to={`${news.id}`}
-                                    key={news.id}
+                                    to={`${question.id}`}
+                                    key={question.id}
                                     sx={{
                                         '&:last-child td, &:last-child th': {
                                             border: 0,
@@ -127,14 +127,14 @@ export default function AdminNews() {
                                     }}
                                 >
                                     <TableCell component="th" scope="row">
-                                        {news.id}
+                                        {question.id}
                                     </TableCell>
                                     <TableCell align="right">
-                                        {news.title}
+                                        {question.title}
                                     </TableCell>
                                     <TableCell align="right">
                                         {new Date(
-                                            Date.parse(news?.created_at)
+                                            Date.parse(question?.created_at)
                                         ).toLocaleString()}
                                     </TableCell>
                                 </TableRow>

@@ -27,23 +27,38 @@ import AdminLayout from './views/admin/AdminLayout';
 import AdminNotice from './views/admin/notice/notice/AdminNotice';
 import AdminNoticeDetail from './views/admin/notice/notice/AdminNoticeDetail';
 import AdminNoticeCreate from './views/admin/notice/notice/AdminNoticeCreate';
+// News
 import AdminNews from './views/admin/notice/news/AdminNews';
+import AdminNewsCreate from './views/admin/notice/news/AdminNewsCreate';
+import AdminNewsDetail from './views/admin/notice/news/AdminNewsDetail';
 import AdminHome from './views/admin/home/AdminHome';
-//About_Tave
+// About_Tave
 import AdminAbout from './views/admin/about/about_tave/AdminAbout';
 import AdminAboutCreate from './views/admin/about/about_tave/AdminAboutCreate';
 import AdminAboutUpdate from './views/admin/about/about_tave/AdminAboutUpdate';
-//About_Admin
+// About_Admin
 import AdminAboutManager from './views/admin/about/about_admin/AdminAboutManager';
 import AdminAboutManagerCreate from './views/admin/about/about_admin/AdminAboutManagerCreate';
-//About_History
+// About_History
 import AdminHistory from './views/admin/about/about_history/AdminHistory';
 import AdminHistoryCreate from './views/admin/about/about_history/AdminHistoryCreate';
-//ActivityReview
+// ActivityReview
 import AdminReview from './views/admin/activity/review/AdminReview';
 import AdminReviewCreate from './views/admin/activity/review/AdminReviewCreate';
 import AdminReviewDetail from './views/admin/activity/review/AdminReviewDetail';
-
+// ActivityPictures
+import AdminPictures from './views/admin/activity/pictures/AdminPictures';
+import AdminPicturesCreate from './views/admin/activity/pictures/AdminPicturesCreate';
+import AdminPicturesDetail from './views/admin/activity/pictures/AdminPicturesDetail';
+// Faq
+import AdminFaq from './views/admin/qna/faq/AdminFaq';
+import AdminFaqCreate from './views/admin/qna/faq/AdminFaqCreate';
+import AdminFaqDetail from './views/admin/qna/faq/AdminFaqDetail';
+// Qna
+import AdminQna from './views/admin/qna/qna/AdminQna';
+import AdminQnaCreate from './views/admin/qna/qna/AdminQnaCreate';
+import AdminQnaDetail from './views/admin/qna/qna/AdminQnaDetail';
+// Apply
 import AdminApply from './views/admin/apply/AdminApply';
 import AdminApplyCheck from './views/admin/apply/AdminApplyCheck';
 import AdminApplyForm from './views/admin/apply/AdminApplyForm';
@@ -95,6 +110,11 @@ function App() {
                             element={<AdminNoticeCreate />}
                         />
                         <Route path="news" element={<AdminNews />} />
+                        <Route
+                            path="news/create"
+                            element={<AdminNewsCreate />}
+                        />
+                        <Route path="news/:id" element={<AdminNewsDetail />} />
                         {/* Activity */}
                         <Route path="review" element={<AdminReview />} />
                         <Route
@@ -104,6 +124,15 @@ function App() {
                         <Route
                             path="review/:id"
                             element={<AdminReviewDetail />}
+                        />
+                        <Route path="pictures" element={<AdminPictures />} />
+                        <Route
+                            path="pictures/create"
+                            element={<AdminPicturesCreate />}
+                        />
+                        <Route
+                            path="pictures/:id"
+                            element={<AdminPicturesDetail />}
                         />
                         <Route path="photo" element={<Photos />} />
                         {/* Apply */}
@@ -118,14 +147,21 @@ function App() {
                             element={<AdminApplyResult />}
                         />
                         {/* qna */}
-                        <Route path="qna" element={<QnA />} />
-                        <Route path="faq" element={<FAQ />} />
+                        <Route path="qna" element={<AdminQna />} />
+                        <Route
+                            path="qna/:id/create"
+                            element={<AdminQnaCreate />}
+                        />
+                        <Route path="qna/:id" element={<AdminQnaDetail />} />
+                        <Route path="faq" element={<AdminFaq />} />
+                        <Route path="faq/create" element={<AdminFaqCreate />} />
+                        <Route path="faq/:id" element={<AdminFaqDetail />} />
                     </Route>
 
                     {/* Main */}
                     <Route path="/" element={<AppLayout />}>
                         <Route exact path="/" element={<Home />} />
-                        <Route exact path="/about" element={<About />} />
+                        <Route exact path="/about/tave" element={<About />} />
                         <Route
                             exact
                             path="/about/manager"
