@@ -38,6 +38,7 @@ export default function AdminNotice() {
             title: response.data['title'],
         });
     };
+
     const handleContent = async (newContent) => {
         const response = await axios.patch(`/api/notices/${id}`, {
             content: newContent,
@@ -48,18 +49,57 @@ export default function AdminNotice() {
             content: response.data['content'],
         });
     };
-    const onUpdateImageInfo = async (id, image, description) => {
-        // const response = await axios.patch(`/api/notices/${id}`, {
-        //     content: newContent,
-        // });
 
-        // setNotice({
-        //     ...notice,
-        //     content: response.data['content'],
-        // });
-        console.log(id);
-        console.log(image);
-        console.log(description);
+    const handleUpdateImage = async (id, image, description) => {
+        // console.log(id);
+        // console.log(image);
+        // console.log(image.name);
+        // console.log(description);
+
+        const data = new FormData();
+
+        data.append('image', image);
+        data.append('image_description', description);
+
+        const response = await axios.patch(`/api/notices/image/${id}`, data, {
+            body: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        console.log(response.data);
+
+        if (response.status === 200) {
+            setNotice({
+                ...notice,
+                Images: notice.Images?.map((image) =>
+                    image.id === id
+                        ? {
+                              ...image,
+                              image_url: response.data['image_url'],
+                              image_description:
+                                  response.data['image_description'],
+                          }
+                        : image
+                ),
+            });
+        }
+    };
+
+    const handleRemoveImage = async (id) => {
+        // console.log(id);
+
+        const response = await axios.delete(`/api/notices/image/${id}`);
+
+        console.log(response.data);
+
+        if (response.status === 200) {
+            // setNotice(imageForms.filter((imageForm) => imageForm.id !== id));
+            setNotice({
+                ...notice,
+                Images: notice.Images?.filter((image) => image.id !== id),
+            });
+        }
     };
 
     const deleteConfirm = async () => {
@@ -110,6 +150,8 @@ export default function AdminNotice() {
                             id={image.id}
                             url={image.image_url}
                             description={image.image_description}
+                            onUpdateImage={handleUpdateImage}
+                            onRemoveImage={handleRemoveImage}
                         />
                     );
                 })}
