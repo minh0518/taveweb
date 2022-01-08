@@ -12,7 +12,13 @@ router
     .get(async (req, res, next) => {
         try {
             const questions = await Question.findAll({
-                attributes: ['id', 'title', 'content', 'created_at'],
+                attributes: [
+                    'id',
+                    'title',
+                    'content',
+                    'created_at',
+                    'password',
+                ],
             });
             res.json({ questions });
         } catch (err) {

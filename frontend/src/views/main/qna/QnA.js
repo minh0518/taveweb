@@ -19,11 +19,14 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/material/Grid';
 
+import { useConfirm } from '../../admin/utils/alert/confirm';
+
 import {
     Link,
     useNavigate,
     createSearchParams,
     useSearchParams,
+    withRouter,
 } from 'react-router-dom';
 
 export default function QnA() {
@@ -34,8 +37,10 @@ export default function QnA() {
     const [count, setCount] = useState(0);
     const [search, setSearch] = useState('');
     const [limit, setLimit] = useState(8);
+    const [password, setPassword] = useState({});
 
     const navigate = useNavigate();
+    //const history = useHistory();
 
     useEffect(() => {
         axios.get('/api/questions', { params: { search } }).then((response) => {
@@ -118,6 +123,18 @@ export default function QnA() {
                                     component={Link}
                                     to={`${question.id}`}
                                     key={question.id}
+                                    onClick={(e) => {
+                                        const password_check = prompt(
+                                            '비밀번호를 입력하세요'
+                                        );
+                                        console.log('aa:' + question.password);
+                                        if (
+                                            password_check != question.password
+                                        ) {
+                                            alert('비밀번호가 틀렸습니다.');
+                                            e.preventDefault();
+                                        }
+                                    }}
                                     sx={{
                                         '&:last-child td, &:last-child th': {
                                             border: 0,

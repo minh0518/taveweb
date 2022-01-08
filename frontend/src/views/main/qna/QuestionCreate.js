@@ -113,6 +113,29 @@ const QuestionCreate = () => {
                     </Grid>
                 </Paper>
             </Grid>
+            <Grid item xs={12}>
+                <Paper elevation={3} sx={{ minWidth: 275 }}>
+                    <Grid item xs={12} align={'left'} sx={{ p: 1 }}>
+                        <Typography
+                            sx={{ fontSize: 16, mb: 2 }}
+                            color="text.secondary"
+                            gutterBottom
+                        >
+                            비밀번호
+                        </Typography>
+                        <FormControl>
+                            <input
+                                type="password"
+                                id="outlined-basic"
+                                label="비밀번호를 입력하세요."
+                                variant="outlined"
+                                value={password}
+                                onChange={handleChangePassword}
+                            />
+                        </FormControl>
+                    </Grid>
+                </Paper>
+            </Grid>
         </Grid>
     );
 };
