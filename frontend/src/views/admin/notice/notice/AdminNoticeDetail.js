@@ -24,8 +24,43 @@ export default function AdminNotice() {
             console.log('response', response);
             console.log('response', response.data);
             setNotice(response.data['notice']);
+            console.log(response.data['notice']);
         });
     }, [id]);
+
+    const handleTitle = async (newTitle) => {
+        const response = await axios.patch(`/api/notices/${id}`, {
+            title: newTitle,
+        });
+
+        setNotice({
+            ...notice,
+            title: response.data['title'],
+        });
+    };
+    const handleContent = async (newContent) => {
+        const response = await axios.patch(`/api/notices/${id}`, {
+            content: newContent,
+        });
+
+        setNotice({
+            ...notice,
+            content: response.data['content'],
+        });
+    };
+    const onUpdateImageInfo = async (id, image, description) => {
+        // const response = await axios.patch(`/api/notices/${id}`, {
+        //     content: newContent,
+        // });
+
+        // setNotice({
+        //     ...notice,
+        //     content: response.data['content'],
+        // });
+        console.log(id);
+        console.log(image);
+        console.log(description);
+    };
 
     const deleteConfirm = async () => {
         console.log('삭제했습니다.');
@@ -63,12 +98,16 @@ export default function AdminNotice() {
                 createdAt={notice?.created_at}
                 updatedAt={notice?.updated_at}
             />
-            <TitleTile title={notice.title} />
-            <ContentTile content={notice.content} />
+            <TitleTile title={notice.title} handleTitle={handleTitle} />
+            <ContentTile
+                content={notice.content}
+                handleContent={handleContent}
+            />
             <Typography variant="body2">
                 {notice.Images?.map((image) => {
                     return (
                         <ImageTile
+                            id={image.id}
                             url={image.image_url}
                             description={image.image_description}
                         />
