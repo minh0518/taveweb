@@ -2,32 +2,46 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Nav=styled.nav`
-position : relative;
-top 20px;
-`
+const Nav = styled.nav`
+background-color:#6482B9;
+    position : relative;
+    top : 40px;
+    height:150px;
+    display: flex;
+    align-items:flex-start;
+    justify-content: space-between;
+`;
 
 const SubMenu = styled.div`
     display: none;
 `;
 
-
-const UnList=styled.ul`
-display:flex;
-flex-direction: row;
-justify-content: space-around;
+const Title=styled.span`
+font-weight: bold;
+font-size: 45px;
+position : relative;
+margin-left:10%;
+margin-right:10%;
 `
 
+const UnList = styled.ul`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 120px;
+    margin-right:20%;
+`;
 
-const List=styled.li`
-display:flex;
-flex-direction: column;
-margin:20px;
-&:hover ${SubMenu} {
-    display:flex;
+const List = styled.li`
+    display: flex;
     flex-direction: column;
-}
-`
+    width: 100px;
+    margin: 10px;
+    &:hover ${SubMenu} {
+        display: flex;
+        flex-direction: column;
+    }
+`;
 
 const MenuLink = styled(Link)`
     color: black;
@@ -56,10 +70,12 @@ const SubMenuLinks = styled(Link)`
     }
 `;
 
-
 function Navbar() {
     return (
         <Nav>
+            <Title>
+                TAVE
+            </Title>
             <UnList>
                 <List>
                     <MenuLink to="/" class="menuLink">
