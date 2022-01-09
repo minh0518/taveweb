@@ -75,7 +75,6 @@ export default function QnA() {
     const Nav = styled.nav`
     margin:auto;
     width:70%;
-    padding-bottom:20px;
 `;
     return (
         <Nav>
@@ -92,7 +91,8 @@ export default function QnA() {
                             >
                                 Q&A
                                 <Typography
-                                    sx={{ fontSize: 14 }}
+                              
+                              sx={{ fontSize: 14 }}
                                     color="text.secondary"
                                     gutterBottom
                                 >

@@ -25,7 +25,6 @@ import QnADetail from './views/main/qna/QnADetail';
 import QuestionCreate from './views/main/qna/QuestionCreate';
 import FAQ from './views/main/qna/FAQ';
 import FaqDetail from './views/main/qna/FaqDetail';
-import DisplayAnswers from './views/main/qna/Display';
 
 /* Admin */
 import AdminLayout from './views/admin/AdminLayout';
@@ -160,7 +159,7 @@ function App() {
                     </Route>
 
                     {/* Main */}
-                    <Route path="/" element={<AppLayout />}>
+                    <Route path="/" element={<AppLayout />} >
                         <Route exact path="/" element={<Home />} />
                         <Route exact path="/about/tave" element={<About />} />
                         <Route

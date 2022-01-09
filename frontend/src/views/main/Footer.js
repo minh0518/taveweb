@@ -5,24 +5,40 @@ const Info = styled.div`
     background: linear-gradient(to top, #c4d4e0, white);
     display: flex;
     flex-direction: row;
-    padding-top:20%;
 `;
 
 const UnderLine = styled.hr`
     width: 80%;
     margin-left: 0px;
 `;
-const Section = styled.div``;
+const Section = styled.div``
+
+const Title=styled.p`
+font-size:xx-large;
+letter-spacing:30px;
+`
+
+const Contact=styled.p`
+font-size:xx-large;
+letter-spacing:25px;
+`
 
 const Text = styled.p`
     margin-right: 10%;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-right:10px;
+    font-size:small;
+    line-height:1.7;
+    color:#828282;
 `;
+
 
 function Footer() {
     return (
         <Info>
             <Section>
-                <h1>TAVE</h1>
+                <Title>TAVE</Title>
                 <UnderLine />
                 <Text>
                     TAVE는 2018년도 초에 창설된 국내 최초 4차
@@ -31,7 +47,7 @@ function Footer() {
                 </Text>
             </Section>
             <Section>
-                <h1>TAVE</h1>
+                <Title>TAVE</Title>
                 <UnderLine />
                 <Text>
                     TAVE는 2018년도 초에 창설된 국내 최초 4차
@@ -40,7 +56,7 @@ function Footer() {
                 </Text>
             </Section>
             <Section>
-                <h1>TAVE</h1>
+                <Contact>CONTACT</Contact>
                 <UnderLine />
                 <Text>
                     TAVE는 2018년도 초에 창설된 국내 최초 4차
