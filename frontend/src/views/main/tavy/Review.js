@@ -78,6 +78,7 @@ export default function Review() {
     const Nav = styled.nav`
     margin:auto;
     width:70%;
+    padding-bottom:20px;
 `;
 
     return (

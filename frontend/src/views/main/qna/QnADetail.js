@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -22,11 +23,11 @@ export default function QnADetail() {
             setQuestion(response.data['question']);
         });
     }, [id]);
-
+    
     return (
         <Fragment>
-            <div>제목: {question?.title}</div>
-            <div>질문: {question?.content}</div>
+            <div>제목: {question?.title}</div> 
+            <div>질문: {question?.content}</div> 
             <div>
                 답변:
                 {question.Answers?.map((answer) => (
