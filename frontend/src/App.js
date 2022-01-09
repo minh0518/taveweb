@@ -29,6 +29,8 @@ import DisplayAnswers from './views/main/qna/Display';
 
 /* Admin */
 import AdminLayout from './views/admin/AdminLayout';
+import AdminHome from './views/admin/home/AdminHome';
+import AdminLogin from './views/admin/home/AdminLogin';
 // Notice
 import AdminNotice from './views/admin/notice/notice/AdminNotice';
 import AdminNoticeDetail from './views/admin/notice/notice/AdminNoticeDetail';
@@ -37,7 +39,6 @@ import AdminNoticeCreate from './views/admin/notice/notice/AdminNoticeCreate';
 import AdminNews from './views/admin/notice/news/AdminNews';
 import AdminNewsCreate from './views/admin/notice/news/AdminNewsCreate';
 import AdminNewsDetail from './views/admin/notice/news/AdminNewsDetail';
-import AdminHome from './views/admin/home/AdminHome';
 // About_Tave
 import AdminAbout from './views/admin/about/about_tave/AdminAbout';
 import AdminAboutCreate from './views/admin/about/about_tave/AdminAboutCreate';
@@ -68,6 +69,10 @@ import AdminApply from './views/admin/apply/AdminApply';
 import AdminApplyCheck from './views/admin/apply/AdminApplyCheck';
 import AdminApplyForm from './views/admin/apply/AdminApplyForm';
 import AdminApplyResult from './views/admin/apply/AdminApplyResult';
+//User
+import AdminUsers from './views/admin/users/AdminUsers';
+import AdminUsersDetail from './views/admin/users/AdminUsersDetail';
+import AdminUsersCreate from './views/admin/users/AdminUsersCreate';
 
 function App() {
     return (
@@ -157,6 +162,16 @@ function App() {
                         <Route path="faq" element={<AdminFaq />} />
                         <Route path="faq/create" element={<AdminFaqCreate />} />
                         <Route path="faq/:id" element={<AdminFaqDetail />} />
+                        {/* users */}
+                        <Route path="users" element={<AdminUsers />} />
+                        <Route
+                            path="users/:id"
+                            element={<AdminUsersDetail />}
+                        />
+                        <Route
+                            path="users/create"
+                            element={<AdminUsersCreate />}
+                        />
                     </Route>
 
                     {/* Main */}

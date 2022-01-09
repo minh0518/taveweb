@@ -18,10 +18,6 @@ module.exports = class Users extends (
                     type: Sequelize.STRING(20),
                     allowNull: false,
                 },
-                profile: {
-                    type: Sequelize.STRING(500),
-                    allowNull: true,
-                },
                 role: {
                     type: Sequelize.ENUM,
                     values: [
@@ -53,15 +49,15 @@ module.exports = class Users extends (
     static associate(db) {
         db.User.hasMany(db.Board, {
             foreignKey: 'user_id',
-            sourceKey: 'id',
+            targetKey: 'id',
         });
         db.User.hasMany(db.FaQ, {
             foreignKey: 'user_id',
-            sourceKey: 'id',
+            targetKey: 'id',
         });
         db.User.hasMany(db.Recruit, {
             foreignKey: 'user_id',
-            sourceKey: 'id',
+            targetKey: 'id',
         });
     }
 };
