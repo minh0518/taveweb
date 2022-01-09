@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 
+import styled from 'styled-components';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -73,7 +75,13 @@ export default function Review() {
         //page : 2 들어감
     };
 
+    const Nav = styled.nav`
+    margin:auto;
+    width:70%;
+`;
+
     return (
+        <Nav>
         <Fragment>
             <Card elevation={3} sx={{ minWidth: 275 }}>
                 <CardContent>
@@ -83,6 +91,7 @@ export default function Review() {
                                 align="left"
                                 variant="h5"
                                 component="div"
+                                color="primary"
                             >
                                 활동 후기 게시판
                                 <Typography
@@ -147,5 +156,6 @@ export default function Review() {
                 </CardActions>
             </Card>
         </Fragment>
+        </Nav>
     );
 }

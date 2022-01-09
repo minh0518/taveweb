@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 
+import styled from 'styled-components';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -70,8 +72,12 @@ export default function QnA() {
         //createSearchParams : 쿼리스트링을 만듦
         //page : 2 들어감
     };
-
+    const Nav = styled.nav`
+    margin:auto;
+    width:70%;
+`;
     return (
+        <Nav>
         <Fragment>
             <Card elevation={3} sx={{ minWidth: 275 }}>
                 <CardContent>
@@ -81,6 +87,7 @@ export default function QnA() {
                                 align="left"
                                 variant="h5"
                                 component="div"
+                                color="primary"
                             >
                                 Q&A
                                 <Typography
@@ -166,5 +173,6 @@ export default function QnA() {
                 </CardActions>
             </Card>
         </Fragment>
+        </Nav>
     );
 }
