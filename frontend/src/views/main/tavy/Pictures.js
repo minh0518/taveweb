@@ -28,10 +28,10 @@ import {
     useSearchParams,
 } from 'react-router-dom';
 
-export default function Notices() {
+export default function Pictures() {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [notices, setNotices] = useState([]);
+    const [pictures, setPictures] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState(0);
     const [search, setSearch] = useState('');
@@ -41,7 +41,7 @@ export default function Notices() {
 
     useEffect(() => {
         axios
-            .get('/api/notices/count', { params: { search } }) //api백엔드에는 현재7개
+            .get('/api/activity/picture/count', { params: { search } }) //api백엔드에는 현재7개
             //의 notices가 있음
             .then((response) => {
                 const pageCount = Math.ceil(response.data['count'] / limit);
@@ -60,9 +60,10 @@ export default function Notices() {
         setCurrentPage(page);
 
         axios
-            .get('/api/notices', { params: { skip, limit } })
+            .get('/api/activity/picture', { params: { skip, limit } })
             .then((response) => {
-                setNotices(response.data['notices']);
+                console.log(response.data);
+                setPictures(response.data['activity_picture']);
             });
     }, [searchParams]);
 
@@ -73,11 +74,13 @@ export default function Notices() {
         //createSearchParams : 쿼리스트링을 만듦
         //page : 2 들어감
     };
+
     const Nav = styled.nav`
     margin:auto;
-    padding-bottom:20px;
     width:70%;
-    `;
+    padding-bottom:20px;
+`;
+
     return (
         <Nav>
         <Fragment>
@@ -91,7 +94,7 @@ export default function Notices() {
                                 component="div"
                                 color="primary"
                             >
-                                공지 사항
+                                활동 사진
                                 <Typography
                                     sx={{ fontSize: 14 }}
                                     color="text.secondary"
@@ -105,7 +108,6 @@ export default function Notices() {
                 </CardContent>
                 <TableContainer component={Paper} elevation={0}>
                     <Table sx={{ minWidth: 275 }} aria-label="simple table">
-                        
                         <TableHead>
                             <TableRow>
                                 <TableCell>ID</TableCell>
@@ -113,13 +115,12 @@ export default function Notices() {
                                 <TableCell align="right">작성일자</TableCell>
                             </TableRow>
                         </TableHead>
-                        
                         <TableBody>
-                            {notices.map((notice) => (
+                            {pictures.map((picture) => (
                                 <TableRow
                                     component={Link}
-                                    to={`${notice.id}`}
-                                    key={notice.id}
+                                    to={`${picture.id}`}
+                                    key={picture.id}
                                     sx={{
                                         '&:last-child td, &:last-child th': {
                                             border: 0,
@@ -129,14 +130,14 @@ export default function Notices() {
                                     }}
                                 >
                                     <TableCell component="th" scope="row">
-                                        {notice.id}
+                                        {picture.id}
                                     </TableCell>
                                     <TableCell align="right">
-                                        {notice.title}
+                                        {picture.title}
                                     </TableCell>
                                     <TableCell align="right">
                                         {new Date(
-                                            Date.parse(notice?.created_at)
+                                            Date.parse(picture?.created_at)
                                         ).toLocaleString()}
                                     </TableCell>
                                 </TableRow>

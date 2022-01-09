@@ -4,33 +4,22 @@ import styled from 'styled-components';
 import LogoSrc from './tave_logo.png';
 
 const Nav = styled.nav`
-    background: linear-gradient(to bottom, #C4D4E0, white);
+    background: linear-gradient(to bottom, #c4d4e0, white);
     position: relative;
-    height: 150px;
+    height: 220px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
 `;
 
 const Logo = styled.img`
-    width: 200px;
-    height: 80px;
-    position: relative;
-    margin-top : 10px;
-    margin-left: 10%;
-    margin-right: 10%;
+    width: 15%;
+    height: 50%;
+    margin: 1% 1% 1% 5%;
 `;
 
 const SubMenu = styled.div`
     display: none;
-`;
-
-const Title = styled.span`
-    font-weight: bold;
-    font-size: 45px;
-    position: relative;
-    margin-left: 10%;
-    margin-right: 10%;
 `;
 
 const UnList = styled.ul`
@@ -56,9 +45,9 @@ const List = styled.li`
 const MenuLink = styled(Link)`
     color: black;
     text-decoration: none;
-    transition: 850ms;
-    font-weight: bold;
+    transition: 550ms;
     font-size: 20px;
+    font-weight: bold;
     font-family: '"' Noto Sans KR ', sans-serif"';
     &:hover {
         color: white;
@@ -102,28 +91,35 @@ function Navbar() {
                 </List>
 
                 <List class="menuhover">
-                    <MenuLink to="/about" class="menuLink">
+                    <MenuLink to="/about/tave" class="menuLink">
                         TAVE
                     </MenuLink>
                     <SubMenu>
-                        <SubMenuLinks to="/about">TAVE 소개</SubMenuLinks>
+                        <SubMenuLinks to="/about/tave">TAVE 소개</SubMenuLinks>
                         <SubMenuLinks to="/about/history">연혁</SubMenuLinks>
                         <SubMenuLinks to="/about/manager">
                             운영진 소개
                         </SubMenuLinks>
-                        <a href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ">
+                        <a
+                            href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ"
+                            style={{ textDecoration: 'none' }}
+                        >
                             YouTube
                         </a>
                     </SubMenu>
                 </List>
-                
+
                 <List class="menuhover">
-                    <MenuLink to="/board" class="menuLink">
+                    <MenuLink to="/activity/review" class="menuLink">
                         TAVY
                     </MenuLink>
                     <SubMenu>
-                        <SubMenuLinks to="/board">활동 후기</SubMenuLinks>
-                        <SubMenuLinks to="/photo">활동 사진</SubMenuLinks>
+                        <SubMenuLinks to="/activity/review">
+                            활동 후기
+                        </SubMenuLinks>
+                        <SubMenuLinks to="/activity/picture">
+                            활동 사진
+                        </SubMenuLinks>
                     </SubMenu>
                 </List>
 

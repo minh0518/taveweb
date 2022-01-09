@@ -11,13 +11,13 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 
-export default function ContentTile({ content, handleContent }) {
+export default function AnswerTile({ answer, handleAnswer }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
     const [edit, setEdit] = useState(false);
 
-    const [newContent, setNewContent] = useState(content);
+    const [newAnswer, setNewAnswer] = useState(answer);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -34,13 +34,13 @@ export default function ContentTile({ content, handleContent }) {
     };
 
     const handleChange = (e) => {
-        setNewContent(e.target.value);
+        setNewAnswer(e.target.value);
     };
 
     const handleSubmit = () => {
         setEdit(!edit);
 
-        handleContent(newContent);
+        handleAnswer(newAnswer);
     };
 
     const handleCancel = () => {
@@ -51,23 +51,22 @@ export default function ContentTile({ content, handleContent }) {
         <Paper elevation={3} sx={{ minWidth: 275, mb: 1 }}>
             <Grid container>
                 <Grid item xs={10} align={'left'} sx={{ p: 1 }}>
-                    {/* 공지사항 */}
                     <Typography
                         sx={{ fontSize: 14, pb: 1 }}
                         color="text.secondary"
                         gutterBottom
                     >
-                        내용
+                        답변
                     </Typography>
                     {edit ? (
                         <>
                             <Grid item xs={12} sx={{ mb: 1 }}>
                                 <FormControl fullWidth>
                                     <TextField
-                                        label="수정할 제목을 입력하세요."
+                                        label="수정할 답변을 입력하세요."
                                         multiline
                                         rows={4}
-                                        defaultValue={content}
+                                        defaultValue={answer}
                                         onChange={handleChange}
                                     />
                                 </FormControl>
@@ -92,7 +91,7 @@ export default function ContentTile({ content, handleContent }) {
                         </>
                     ) : (
                         <Typography variant="h6" component="div">
-                            {content}
+                            {answer}
                         </Typography>
                     )}
                 </Grid>

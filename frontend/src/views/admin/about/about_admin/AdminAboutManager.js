@@ -10,9 +10,9 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
 
-import TitleTile from '../../utils/tiles/TitleTile';
-import ContentTile from '../../utils/tiles/ContentTile';
-import ImageTile from '../../utils/tiles/ImageTile';
+import TitleTile from '../../utils/newTiles/TitleTile';
+import ContentTile from '../../utils/newTiles/ContentTile';
+import ImageTile from '../../utils/newTiles/ImageTile';
 
 import {
     Link,
@@ -22,7 +22,8 @@ import {
 } from 'react-router-dom';
 
 export default function AdminAboutManager() {
-    const [about_admin, setAbouttave] = useState({ Images: [] });
+    const [about_admin, setAboutadmin] = useState({ Images: [] });
+    const [visible, setVisible] = useState({});
 
     const navigate = useNavigate();
 
@@ -30,9 +31,83 @@ export default function AdminAboutManager() {
         axios.get(`/api/about/admin`).then((response) => {
             console.log('response', response);
             console.log('response', response.data);
-            setAbouttave(response.data['about_admin']);
+            if (response.data['about_admin'] == null) {
+                setVisible(true);
+            } else {
+                setVisible(false);
+            }
+            setAboutadmin(response.data['about_admin']);
         });
     }, []);
+
+    const handleTitle = async (newTitle) => {
+        const response = await axios.patch(`/api/about/admin`, {
+            title: newTitle,
+        });
+
+        setAboutadmin({
+            ...about_admin,
+            title: response.data['title'],
+        });
+    };
+    const handleContent = async (newContent) => {
+        const response = await axios.patch(`/api/about/admin`, {
+            content: newContent,
+        });
+
+        setAboutadmin({
+            ...about_admin,
+            content: response.data['content'],
+        });
+    };
+
+    const handleUpdateImage = async (id, image, description) => {
+        const data = new FormData();
+
+        data.append('image', image);
+        data.append('image_description', description);
+
+        const response = await axios.patch(
+            `/api/about/admin/image/${id}`,
+            data,
+            {
+                body: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }
+        );
+
+        console.log(response.data);
+
+        if (response.status === 200) {
+            setAboutadmin({
+                ...about_admin,
+                Images: about_admin.Images?.map((image) =>
+                    image.id === id
+                        ? {
+                              ...image,
+                              image_url: response.data['image_url'],
+                              image_description:
+                                  response.data['image_description'],
+                          }
+                        : image
+                ),
+            });
+        }
+    };
+
+    const handleRemoveImage = async (id) => {
+        const response = await axios.delete(`/api/about/admin/${id}`);
+
+        console.log(response.data);
+
+        if (response.status === 200) {
+            setAboutadmin({
+                ...about_admin,
+                Images: about_admin.Images?.filter((image) => image.id !== id),
+            });
+        }
+    };
 
     const onDelete = (event) => {
         axios
@@ -52,42 +127,43 @@ export default function AdminAboutManager() {
     return (
         <Fragment>
             <Grid container justify="flex-end">
-                <Button
-                    component={Link}
-                    to={`update`}
-                    variant="contained"
-                    endIcon={<AddIcon />}
-                >
-                    수정
-                </Button>
+                {visible && (
+                    <Button
+                        component={Link}
+                        to={`create`}
+                        variant="contained"
+                        endIcon={<AddIcon />}
+                    >
+                        새로 만들기
+                    </Button>
+                )}
                 &nbsp;
-                <Button
-                    component={Link}
-                    to={`create`}
-                    variant="contained"
-                    endIcon={<AddIcon />}
-                >
-                    새로 만들기
-                </Button>
-                &nbsp;
-                <Button
-                    onClick={onDelete}
-                    variant="contained"
-                    endIcon={<DeleteIcon />}
-                >
-                    삭제하기
-                </Button>
+                {!visible && (
+                    <Button
+                        onClick={onDelete}
+                        variant="contained"
+                        endIcon={<DeleteIcon />}
+                    >
+                        삭제하기
+                    </Button>
+                )}
             </Grid>
             <br />
-            <TitleTile title={about_admin?.title} />
-            <ContentTile content={about_admin?.content} />
+            <TitleTile title={about_admin?.title} handleTitle={handleTitle} />
+            <ContentTile
+                content={about_admin?.content}
+                handleContent={handleContent}
+            />
             <br />
             <Typography variant="body2">
                 {about_admin?.Images.map((image) => {
                     return (
                         <ImageTile
+                            id={image.id}
                             url={image.image_url}
                             description={image.image_description}
+                            onUpdateImage={handleUpdateImage}
+                            onRemoveImage={handleRemoveImage}
                         />
                     );
                 })}

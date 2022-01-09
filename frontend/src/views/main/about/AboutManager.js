@@ -18,8 +18,6 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Paper from '@mui/material/Paper';
 import ImageListItem from '@mui/material/ImageListItem';
 
-import ImageTile from '../../admin/utils/tiles/ImageTile';
-
 import {
     Link,
     useNavigate,
@@ -28,7 +26,7 @@ import {
 } from 'react-router-dom';
 
 export default function AdminAboutManager() {
-    const [about_admin, setAbouttave] = useState({ Images: [] });
+    const [about_admin, setAboutadmin] = useState({ Images: [] });
 
     const navigate = useNavigate();
 
@@ -36,7 +34,7 @@ export default function AdminAboutManager() {
         axios.get(`/api/about/admin`).then((response) => {
             console.log('response', response);
             console.log('response', response.data);
-            setAbouttave(response.data['about_admin']);
+            setAboutadmin(response.data['about_admin']);
         });
     }, []);
 

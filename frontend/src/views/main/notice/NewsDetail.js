@@ -10,24 +10,23 @@ import Button from '@mui/material/Button';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ImageListItem from '@mui/material/ImageListItem';
 
-export default function NoticeDetail() {
+export default function NewsDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [notice, setNotice] = useState({});
+    const [news, setNews] = useState({});
 
     useEffect(() => {
-        axios.get(`/api/notices/${id}`).then((response) => {
+        axios.get(`/api/news/${id}`).then((response) => {
             console.log('response', response);
             console.log('response', response.data);
-            setNotice(response.data['notice']);
-            console.log(response.data['notice']);
+            setNews(response.data['news']);
         });
     }, [id]);
-    const Nav = styled.nav`
+
+const Nav = styled.nav`
     margin:auto;
     width:70%;
-    height:300px;
 `;
 const Info = styled.div`
 `;
@@ -39,26 +38,24 @@ const Section = styled.div``;
 
     return (
         <Nav>
-        <Fragment>           
-            <Info>
+        <Fragment>
+        <Info>
             <Section>
-                <div><h1>
-                {notice?.title}</h1>
-                </div>               
-                <UnderLine />              
+                <div><h1>{news?.title}</h1></div>
+                <UnderLine />  
             </Section>
-            </Info>          
+            </Info>
             <br />
-            <div>{notice?.content}</div>
+            <div>{news?.content}</div>
             <br />
             <Typography variant="body2">
-                {notice?.Images?.map((image) => {
+                {news.Images?.map((image) => {
                     return (
                         <ImageListItem>
                             <img
                                 src={image.image_url}
                                 alt={image.image_description}
-                                loading="lazy"                             
+                                loading="lazy"
                             />
                         </ImageListItem>
                     );

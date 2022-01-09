@@ -1,10 +1,60 @@
 import React from 'react';
+import styled from 'styled-components';
+import LogoSrc from './tave.png';
+import LogoSrc1 from './tave_activity.jpg';
+
+const Info = styled.div`
+    margin:auto;
+    padding-bottom:20px;
+    width:100%;
+`;
+
+const Section = styled.div``;
+
+const Logo = styled.img`
+    width: 28%;
+    height: 20%;
+    margin-left:15%;
+    display: inline-block;
+`;
+const Logo1 = styled.img`
+    width: 28%;
+    height: 20%;
+    margin-left:10%;
+    display: inline-block;
+`;
+const Text = styled.p`
+    margin-left:10%;
+    margin-right:10%;
+    display: inline-block;
+`;
+
 
 const Home = ()=>{
     return (
-        <div>
-            <p>첫 화면</p>
-        </div>
+        <Info>       
+            <Section>    
+                <Logo src={LogoSrc} /> 
+                <Logo1 src={LogoSrc1} />
+                <Text>
+                <h1>TAVE - Technology WAVE</h1>
+                국내 최초 4차 산업혁명 연합 동아리 TAVE입니다 
+                <br/><br/>
+                <h2>💎 활동 내용 </h2> 
+                정규 커리큘럼 공통 관심사 스터디 및 프로젝트 진행<br/>
+                [머신러닝/딥러닝, R, Python, C++, Java 알고리즘, 크롤링, 아두이노, 블록체인 등]<br/>
+                TAVE 컨퍼런스 개최<br/>
+                친목 Network 형성<br/>
+                [다양한 뒷풀이, 번개, Tave의 날 (OB와의 만남)]<br/><br/>
+
+                <h2> 💎 문의 </h2> 
+                ❗ 문의는 인스타 DM을 이용해주세요.<br/>
+                ❗ 인스타그램 ID: tave_wave<br/>
+                ❗ 블로그 https://m.blog.naver.com/t-ave<br/>
+                </Text>
+                <br/> 
+            </Section>
+        </Info>
     );
 };
 
