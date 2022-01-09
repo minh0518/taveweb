@@ -25,8 +25,8 @@ export default function PicturesDetail() {
     }, [id]);
 
     const Nav = styled.nav`
-    margin:auto;
-    width:70%;
+        margin:auto;
+        width:70%;
     `;
     const Info = styled.div`
     `;
@@ -44,7 +44,7 @@ export default function PicturesDetail() {
             <div><h1>{picture?.title}</h1></div>
             </Section>
             </Info>
-            <div>{picture?.content}</div>
+            <div style={{ whiteSpace: 'pre-line' }}>{picture?.content}</div>
             <br />
             <Typography variant="body2">
                 {picture.Images?.map((image) => {

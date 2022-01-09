@@ -25,8 +25,8 @@ export default function ReviewDetail() {
     }, [id]);
 
     const Nav = styled.nav`
-    margin:auto;
-    width:70%;
+        margin:auto;
+        width:70%;
     `;
     const Info = styled.div`
     `;
@@ -44,7 +44,7 @@ export default function ReviewDetail() {
             <div><h1>{review?.title}</h1></div>
             </Section>
             </Info>
-            <div>{review?.content}</div>
+            <div style={{ whiteSpace: 'pre-line' }}>{review?.content}</div>
             <br />
             <Typography variant="body2">
                 {review.Images?.map((image) => {

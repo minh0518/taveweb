@@ -24,17 +24,17 @@ export default function NewsDetail() {
         });
     }, [id]);
 
-const Nav = styled.nav`
+    const Nav = styled.nav`
     margin:auto;
     width:70%;
-`;
-const Info = styled.div`
-`;
-const UnderLine = styled.hr`
-    width: 80%;
-    margin-left: 0px;
-`;
-const Section = styled.div``;
+    `;
+    const Info = styled.div`
+    `;
+    const UnderLine = styled.hr`
+        width: 80%;
+        margin-left: 0px;
+    `;
+    const Section = styled.div``;
 
     return (
         <Nav>
@@ -46,7 +46,7 @@ const Section = styled.div``;
             </Section>
             </Info>
             <br />
-            <div>{news?.content}</div>
+            <div style={{ whiteSpace: 'pre-line' }}> {news?.content}</div>
             <br />
             <Typography variant="body2">
                 {news.Images?.map((image) => {

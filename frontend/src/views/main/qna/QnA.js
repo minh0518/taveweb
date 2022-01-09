@@ -73,8 +73,9 @@ export default function QnA() {
         //page : 2 들어감
     };
     const Nav = styled.nav`
-    margin:auto;
-    width:70%;
+        margin:auto;
+        width:70%;
+        padding-bottom:20px;
 `;
     return (
         <Nav>

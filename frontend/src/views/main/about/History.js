@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 
+import styled from 'styled-components';
+
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -37,10 +39,20 @@ export default function AdminAboutHistory() {
         });
     }, []);
 
+    const Nav = styled.nav`
+    text-align: center;
+    width: 70%;
+    margin: auto;
+    padding: 20px;
+    border: 5px solid #C4D4E0;
+    font-family: '"' Noto Sans KR ', sans-serif"';
+    `;
+
     return (
+        <Nav>
         <Fragment>
             <div>{history?.title}</div>
-            <div>{history?.content}</div>
+            <div style={{ whiteSpace: 'pre-line' }}>{history?.content}</div>
             <br />
             <Typography variant="body2">
                 {history?.Images.map((image) => {
@@ -56,5 +68,6 @@ export default function AdminAboutHistory() {
                 })}
             </Typography>
         </Fragment>
+        </Nav>
     );
 }

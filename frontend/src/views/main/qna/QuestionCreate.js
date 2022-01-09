@@ -57,9 +57,11 @@ const QuestionCreate = () => {
                 console.log(err);
             });
     };
+
     const Nav = styled.nav`
-    margin:auto;
-    width:70%;
+        margin:auto;
+        width:70%;
+        padding-bottom:20px;
     `;
 
     return (
