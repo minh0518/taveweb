@@ -13,10 +13,9 @@ const Nav = styled.nav`
 `;
 
 const Logo = styled.img`
-    width: 200px;
-    height: 80px;
-    position: relative;
-    margin-top: 10px;
+    width: 100%;
+    height: 50%;
+    margin-top: 1%;
     margin-left: 10%;
     margin-right: 10%;
 `;
@@ -49,8 +48,8 @@ const MenuLink = styled(Link)`
     color: black;
     text-decoration: none;
     transition: 550ms;
-    font-weight: bold;
     font-size: 20px;
+    font-weight: bold;
     font-family: '"' Noto Sans KR ', sans-serif"';
     &:hover {
         color: white;
@@ -103,7 +102,10 @@ function Navbar() {
                         <SubMenuLinks to="/about/manager">
                             운영진 소개
                         </SubMenuLinks>
-                        <a href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ" style={{ textDecoration: 'none' }} >
+                        <a
+                            href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ"
+                            style={{ textDecoration: 'none' }}
+                        >
                             YouTube
                         </a>
                     </SubMenu>
