@@ -23,6 +23,7 @@ import {
 
 export default function AdminHistory() {
     const [history, setHistory] = useState({ Images: [] });
+    const [visible, setVisible] = useState({});
 
     const navigate = useNavigate();
 
@@ -30,6 +31,11 @@ export default function AdminHistory() {
         axios.get(`/api/about/history`).then((response) => {
             console.log('response', response);
             console.log('response', response.data);
+            if (response.data['history'] == null) {
+                setVisible(true);
+            } else {
+                setVisible(false);
+            }
             setHistory(response.data['history']);
         });
     }, []);
@@ -55,6 +61,54 @@ export default function AdminHistory() {
         });
     };
 
+    const handleUpdateImage = async (id, image, description) => {
+        const data = new FormData();
+
+        data.append('image', image);
+        data.append('image_description', description);
+
+        const response = await axios.patch(
+            `/api/about/history/image/${id}`,
+            data,
+            {
+                body: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }
+        );
+
+        console.log(response.data);
+
+        if (response.status === 200) {
+            setHistory({
+                ...history,
+                Images: history.Images?.map((image) =>
+                    image.id === id
+                        ? {
+                              ...image,
+                              image_url: response.data['image_url'],
+                              image_description:
+                                  response.data['image_description'],
+                          }
+                        : image
+                ),
+            });
+        }
+    };
+
+    const handleRemoveImage = async (id) => {
+        const response = await axios.delete(`/api/about/history/image/${id}`);
+
+        console.log(response.data);
+
+        if (response.status === 200) {
+            setHistory({
+                ...history,
+                Images: history.Images?.filter((image) => image.id !== id),
+            });
+        }
+    };
+
     const onDelete = (event) => {
         axios
             .delete(`/api/about/history`)
@@ -73,22 +127,26 @@ export default function AdminHistory() {
     return (
         <Fragment>
             <Grid container justify="flex-end">
-                <Button
-                    component={Link}
-                    to={`create`}
-                    variant="contained"
-                    endIcon={<AddIcon />}
-                >
-                    새로 만들기
-                </Button>
+                {visible && (
+                    <Button
+                        component={Link}
+                        to={`create`}
+                        variant="contained"
+                        endIcon={<AddIcon />}
+                    >
+                        새로 만들기
+                    </Button>
+                )}
                 &nbsp;
-                <Button
-                    onClick={onDelete}
-                    variant="contained"
-                    endIcon={<DeleteIcon />}
-                >
-                    삭제하기
-                </Button>
+                {!visible && (
+                    <Button
+                        onClick={onDelete}
+                        variant="contained"
+                        endIcon={<DeleteIcon />}
+                    >
+                        삭제하기
+                    </Button>
+                )}
             </Grid>
             <br />
             <TitleTile title={history?.title} handleTitle={handleTitle} />
@@ -101,8 +159,11 @@ export default function AdminHistory() {
                 {history?.Images.map((image) => {
                     return (
                         <ImageTile
+                            id={image.id}
                             url={image.image_url}
                             description={image.image_description}
+                            onUpdateImage={handleUpdateImage}
+                            onRemoveImage={handleRemoveImage}
                         />
                     );
                 })}

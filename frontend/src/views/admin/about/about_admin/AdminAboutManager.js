@@ -23,6 +23,7 @@ import {
 
 export default function AdminAboutManager() {
     const [about_admin, setAboutadmin] = useState({ Images: [] });
+    const [visible, setVisible] = useState({});
 
     const navigate = useNavigate();
 
@@ -30,6 +31,11 @@ export default function AdminAboutManager() {
         axios.get(`/api/about/admin`).then((response) => {
             console.log('response', response);
             console.log('response', response.data);
+            if (response.data['about_admin'] == null) {
+                setVisible(true);
+            } else {
+                setVisible(false);
+            }
             setAboutadmin(response.data['about_admin']);
         });
     }, []);
@@ -55,6 +61,54 @@ export default function AdminAboutManager() {
         });
     };
 
+    const handleUpdateImage = async (id, image, description) => {
+        const data = new FormData();
+
+        data.append('image', image);
+        data.append('image_description', description);
+
+        const response = await axios.patch(
+            `/api/about/admin/image/${id}`,
+            data,
+            {
+                body: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }
+        );
+
+        console.log(response.data);
+
+        if (response.status === 200) {
+            setAboutadmin({
+                ...about_admin,
+                Images: about_admin.Images?.map((image) =>
+                    image.id === id
+                        ? {
+                              ...image,
+                              image_url: response.data['image_url'],
+                              image_description:
+                                  response.data['image_description'],
+                          }
+                        : image
+                ),
+            });
+        }
+    };
+
+    const handleRemoveImage = async (id) => {
+        const response = await axios.delete(`/api/about/admin/${id}`);
+
+        console.log(response.data);
+
+        if (response.status === 200) {
+            setAboutadmin({
+                ...about_admin,
+                Images: about_admin.Images?.filter((image) => image.id !== id),
+            });
+        }
+    };
+
     const onDelete = (event) => {
         axios
             .delete(`/api/about/admin`)
@@ -73,22 +127,26 @@ export default function AdminAboutManager() {
     return (
         <Fragment>
             <Grid container justify="flex-end">
-                <Button
-                    component={Link}
-                    to={`create`}
-                    variant="contained"
-                    endIcon={<AddIcon />}
-                >
-                    새로 만들기
-                </Button>
+                {visible && (
+                    <Button
+                        component={Link}
+                        to={`create`}
+                        variant="contained"
+                        endIcon={<AddIcon />}
+                    >
+                        새로 만들기
+                    </Button>
+                )}
                 &nbsp;
-                <Button
-                    onClick={onDelete}
-                    variant="contained"
-                    endIcon={<DeleteIcon />}
-                >
-                    삭제하기
-                </Button>
+                {!visible && (
+                    <Button
+                        onClick={onDelete}
+                        variant="contained"
+                        endIcon={<DeleteIcon />}
+                    >
+                        삭제하기
+                    </Button>
+                )}
             </Grid>
             <br />
             <TitleTile title={about_admin?.title} handleTitle={handleTitle} />
@@ -101,8 +159,11 @@ export default function AdminAboutManager() {
                 {about_admin?.Images.map((image) => {
                     return (
                         <ImageTile
+                            id={image.id}
                             url={image.image_url}
                             description={image.image_description}
+                            onUpdateImage={handleUpdateImage}
+                            onRemoveImage={handleRemoveImage}
                         />
                     );
                 })}

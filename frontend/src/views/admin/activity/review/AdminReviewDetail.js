@@ -50,6 +50,54 @@ export default function AdminReviewDetail() {
         });
     };
 
+    const handleUpdateImage = async (id, image, description) => {
+        const data = new FormData();
+
+        data.append('image', image);
+        data.append('image_description', description);
+
+        const response = await axios.patch(
+            `/api/activity/review/image/${id}`,
+            data,
+            {
+                body: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }
+        );
+
+        console.log(response.data);
+
+        if (response.status === 200) {
+            setReview({
+                ...review,
+                Images: review.Images?.map((image) =>
+                    image.id === id
+                        ? {
+                              ...image,
+                              image_url: response.data['image_url'],
+                              image_description:
+                                  response.data['image_description'],
+                          }
+                        : image
+                ),
+            });
+        }
+    };
+
+    const handleRemoveImage = async (id) => {
+        const response = await axios.delete(`/api/activity/review/image/${id}`);
+
+        console.log(response.data);
+
+        if (response.status === 200) {
+            setReview({
+                ...review,
+                Images: review.Images?.filter((image) => image.id !== id),
+            });
+        }
+    };
+
     const deleteConfirm = async () => {
         console.log('삭제했습니다.');
         try {
@@ -95,8 +143,11 @@ export default function AdminReviewDetail() {
                 {review.Images?.map((image) => {
                     return (
                         <ImageTile
+                            id={image.id}
                             url={image.image_url}
                             description={image.image_description}
+                            onUpdateImage={handleUpdateImage}
+                            onRemoveImage={handleRemoveImage}
                         />
                     );
                 })}
