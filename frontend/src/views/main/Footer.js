@@ -7,11 +7,15 @@ const Info = styled.div`
     flex-direction: row;
 `;
 
+const Section = styled.div`
+    margin-left: 3%;
+`;
+
 const UnderLine = styled.hr`
     width: 80%;
     margin-left: 0px;
 `;
-const Section = styled.div``;
+
 
 const Title = styled.p`
     font-size: xx-large;

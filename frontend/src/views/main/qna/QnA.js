@@ -80,6 +80,7 @@ export default function QnA() {
         //createSearchParams : 쿼리스트링을 만듦
         //page : 2 들어감
     };
+
     return (
         <Nav>
             <Fragment>

@@ -11,17 +11,14 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ImageListItem from '@mui/material/ImageListItem';
 
 const Nav = styled.nav`
-    position: relative;
-    text-align: center;
-    width: 850px;
     margin: auto;
-    padding: 20px;
-    border: 5px solid #c4d4e0;
+    width: 70%;
 `;
-const container = styled.div`
-    position: relative;
-    text-align: center;
-    font-family: '"' Noto Sans KR ', sans-serif"';
+const Info = styled.div``;
+const Section = styled.div``;
+const UnderLine = styled.hr`
+    width: 80%;
+    margin-left: 0px;
 `;
 
 export default function QnADetail() {
@@ -40,17 +37,24 @@ export default function QnADetail() {
     }, [id]);
 
     return (
-        <Fragment>
-            <Nav>
-                <div class="container">{question?.title}</div>
-                <div class="container">질문: {question?.content}</div>
-                <div class="container">
-                    답변:
-                    {question.Answers?.map((answer) => (
-                        <div>{answer.content}</div>
-                    ))}
-                </div>
-            </Nav>
-        </Fragment>
+        <Nav>
+            <Fragment>
+                <Info>
+                    <Section>
+                        <div>
+                            <h1>제목: {question?.title}</h1>
+                        </div>{' '}
+                        <UnderLine /> <br />
+                        <div>질문: {question?.content}</div> <br />
+                        <div style={{ whiteSpace: 'pre-line' }}>
+                            답변: <br />
+                            {question.Answers?.map((answer) => (
+                                <div>{answer.content}</div>
+                            ))}
+                        </div>
+                    </Section>
+                </Info>
+            </Fragment>
+        </Nav>
     );
 }

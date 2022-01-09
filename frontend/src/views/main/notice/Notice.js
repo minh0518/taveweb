@@ -74,9 +74,9 @@ export default function Notices() {
         //page : 2 들어감
     };
     const Nav = styled.nav`
-    margin:auto;
-    padding-bottom:20px;
-    width:70%;
+        margin:auto;
+        padding-bottom:20px;
+        width:70%;
     `;
     return (
         <Nav>

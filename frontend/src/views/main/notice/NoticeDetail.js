@@ -25,17 +25,16 @@ export default function NoticeDetail() {
         });
     }, [id]);
     const Nav = styled.nav`
-    margin:auto;
-    width:70%;
-    height:300px;
-`;
-const Info = styled.div`
-`;
-const UnderLine = styled.hr`
-    width: 80%;
-    margin-left: 0px;
-`;
-const Section = styled.div``;
+        margin:auto;
+        width:70%;
+    `;
+    const Info = styled.div`
+    `;
+    const UnderLine = styled.hr`
+        width: 80%;
+        margin-left: 0px;
+    `;
+    const Section = styled.div``;
 
     return (
         <Nav>
@@ -49,7 +48,7 @@ const Section = styled.div``;
             </Section>
             </Info>          
             <br />
-            <div>{notice?.content}</div>
+            <div style={{ whiteSpace: 'pre-line' }}>{notice?.content}</div>
             <br />
             <Typography variant="body2">
                 {notice?.Images?.map((image) => {
