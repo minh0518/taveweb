@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 
+import styled from 'styled-components';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -71,8 +73,12 @@ export default function Notices() {
         //createSearchParams : 쿼리스트링을 만듦
         //page : 2 들어감
     };
-
+    const Nav = styled.nav`
+    margin:auto;
+    width:70%;
+`;
     return (
+        <Nav>
         <Fragment>
             <Card elevation={3} sx={{ minWidth: 275 }}>
                 <CardContent>
@@ -82,6 +88,7 @@ export default function Notices() {
                                 align="left"
                                 variant="h5"
                                 component="div"
+                                color="primary"
                             >
                                 공지 사항
                                 <Typography
@@ -97,6 +104,7 @@ export default function Notices() {
                 </CardContent>
                 <TableContainer component={Paper} elevation={0}>
                     <Table sx={{ minWidth: 275 }} aria-label="simple table">
+                        
                         <TableHead>
                             <TableRow>
                                 <TableCell>ID</TableCell>
@@ -104,6 +112,7 @@ export default function Notices() {
                                 <TableCell align="right">작성일자</TableCell>
                             </TableRow>
                         </TableHead>
+                        
                         <TableBody>
                             {notices.map((notice) => (
                                 <TableRow
@@ -146,5 +155,6 @@ export default function Notices() {
                 </CardActions>
             </Card>
         </Fragment>
+        </Nav>
     );
 }
