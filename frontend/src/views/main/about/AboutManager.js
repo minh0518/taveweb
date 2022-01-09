@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -39,25 +40,57 @@ export default function AdminAboutManager() {
         });
     }, []);
 
+    const Nav = styled.nav`
+    position: relative;
+    text-align: center;
+    width: 850px;
+    margin: auto;
+    padding: 20px;
+    border: 5px solid #C4D4E0;
+`;
+    const container = styled.div`
+    position: relative;
+    text-align: center;
+    font-family: '"' Noto Sans KR ', sans-serif"';
+    `;
+
+    const ImageWrap = styled.div`
+    width : 25%
+    `
+    const image= styled.div`
+    max-width : 50%
+    height: auto;
+    `;
     return (
         <Fragment>
-            <div>{about_admin?.title} </div>
-            <div>{about_admin?.content} </div>
+            <Nav>
+            <div class="container">{about_admin?.title}</div>
             <br />
-
+            <div class="container">{about_admin?.content}</div>
+            <br /><br />
+            <div class="container">
             <Typography variant="body2">
                 {about_admin?.Images.map((image) => {
                     return (
                         <ImageListItem>
+                            <div class="ImageWrap">
+                            <div class="image">
                             <img
                                 src={image.image_url}
                                 alt={image.image_description}
                                 loading="lazy"
+                                width="600"
                             />
+                            </div>
+                            </div>
                         </ImageListItem>
                     );
                 })}
             </Typography>
+            </div>
+            <br />
+            <br />
+            </Nav>
         </Fragment>
     );
 }
