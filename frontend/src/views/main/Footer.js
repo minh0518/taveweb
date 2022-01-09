@@ -12,7 +12,7 @@ const UnderLine = styled.hr`
     margin-left: 0px;
 `;
 const Section = styled.div`
-margin-left:3%;
+    margin-left: 3%;
 `;
 
 const Title = styled.p`
