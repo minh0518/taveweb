@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+
+
+
 const Nav = styled.nav`
     background: linear-gradient(to bottom, #d2d2d2, white);
     position: relative;
-    top: 40px;
     height: 150px;
     display: flex;
     align-items: flex-start;
@@ -47,7 +49,7 @@ const List = styled.li`
 const MenuLink = styled(Link)`
     color: black;
     text-decoration: none;
-    transition: 850ms;
+    transition: 550ms;
     font-size: 20px;
     font-family: '"' Noto Sans KR ', sans-serif"';
     &:hover {
