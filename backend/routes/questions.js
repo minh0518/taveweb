@@ -3,7 +3,7 @@ const logger = require('../config/winston');
 
 const Question = require('../models/question');
 const Answer = require('../models/answer');
-const Op = require('sequelize');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -19,6 +19,8 @@ router
                     'created_at',
                     'password',
                 ],
+                offset: Number(req.query.skip),
+                limit: Number(req.query.limit),
             });
             res.json({ questions });
         } catch (err) {
@@ -46,9 +48,7 @@ router.route('/count').get(async (req, res, next) => {
     const title = req.query.search ? req.query.search : '';
     try {
         const count = await Question.count({
-            where: {
-                title: { [Op.like]: `%${title}%` },
-            },
+            where: { title: { [Op.like]: `%${title}%` } },
         });
         res.status(200).json({ count });
     } catch (err) {

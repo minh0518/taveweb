@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('../config/winston');
 
 const Answer = require('../models/answer');
-const Op = require('sequelize');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -10,6 +10,8 @@ router.route('/').get(async (req, res, next) => {
     try {
         const answers = await Answer.findAll({
             attributes: ['id', 'content', 'question_id'],
+            offset: Number(req.query.skip),
+            limit: Number(req.query.limit),
         });
         res.status(200).json({ answers });
     } catch (err) {

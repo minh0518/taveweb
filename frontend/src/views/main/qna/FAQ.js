@@ -40,11 +40,13 @@ export default function Faqs() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('/api/faqs', { params: { search } }).then((response) => {
-            const pageCount = Math.ceil(response.data['count'] / limit);
+        axios
+            .get('/api/faqs/count', { params: { search } })
+            .then((response) => {
+                const pageCount = Math.ceil(response.data['count'] / limit);
 
-            setCount(pageCount);
-        });
+                setCount(pageCount);
+            });
     }, [limit]);
 
     useEffect(() => {
@@ -70,86 +72,88 @@ export default function Faqs() {
         //page : 2 들어감
     };
     const Nav = styled.nav`
-    margin:auto;
-    width:70%;
-    padding-bottom:20px;
-`;
+        margin: auto;
+        width: 70%;
+        padding-bottom: 20px;
+    `;
     return (
         <Nav>
-        <Fragment>
-            <Card elevation={3} sx={{ minWidth: 275 }}>
-                <CardContent>
-                    <Grid container spacing={2}>
-                        <Grid item xs={8}>
-                            <Typography
-                                align="left"
-                                variant="h5"
-                                component="div"
-                                color="primary"
-                            >
-                                FAQ
+            <Fragment>
+                <Card elevation={3} sx={{ minWidth: 275 }}>
+                    <CardContent>
+                        <Grid container spacing={2}>
+                            <Grid item xs={8}>
                                 <Typography
-                                    sx={{ fontSize: 14 }}
-                                    color="text.secondary"
-                                    gutterBottom
+                                    align="left"
+                                    variant="h5"
+                                    component="div"
+                                    color="primary"
                                 >
-                                    Page: {currentPage}
+                                    FAQ
+                                    <Typography
+                                        sx={{ fontSize: 14 }}
+                                        color="text.secondary"
+                                        gutterBottom
+                                    >
+                                        Page: {currentPage}
+                                    </Typography>
                                 </Typography>
-                            </Typography>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </CardContent>
-                <TableContainer component={Paper} elevation={0}>
-                    <Table sx={{ minWidth: 275 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>ID</TableCell>
-                                <TableCell align="right">제목</TableCell>
-                                <TableCell align="right">작성일자</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {faqs.map((faq) => (
-                                <TableRow
-                                    component={Link}
-                                    to={`${faq.id}`}
-                                    key={faq.id}
-                                    sx={{
-                                        '&:last-child td, &:last-child th': {
-                                            border: 0,
-                                        },
-                                        color: 'inherit',
-                                        textDecoration: 'inherit',
-                                    }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {faq.id}
-                                    </TableCell>
+                    </CardContent>
+                    <TableContainer component={Paper} elevation={0}>
+                        <Table sx={{ minWidth: 275 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>ID</TableCell>
+                                    <TableCell align="right">제목</TableCell>
                                     <TableCell align="right">
-                                        {faq.title}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {new Date(
-                                            Date.parse(faq?.created_at)
-                                        ).toLocaleString()}
+                                        작성일자
                                     </TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <CardActions sx={{ justifyContent: 'center' }}>
-                    <Stack spacing={2}>
-                        <Pagination
-                            count={count}
-                            page={currentPage}
-                            boundaryCount={1}
-                            onChange={handlePaginationClick}
-                        />
-                    </Stack>
-                </CardActions>
-            </Card>
-        </Fragment>
+                            </TableHead>
+                            <TableBody>
+                                {faqs.map((faq) => (
+                                    <TableRow
+                                        component={Link}
+                                        to={`${faq.id}`}
+                                        key={faq.id}
+                                        sx={{
+                                            '&:last-child td, &:last-child th': {
+                                                border: 0,
+                                            },
+                                            color: 'inherit',
+                                            textDecoration: 'inherit',
+                                        }}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            {faq.id}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {faq.title}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {new Date(
+                                                Date.parse(faq?.created_at)
+                                            ).toLocaleString()}
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <CardActions sx={{ justifyContent: 'center' }}>
+                        <Stack spacing={2}>
+                            <Pagination
+                                count={count}
+                                page={currentPage}
+                                boundaryCount={1}
+                                onChange={handlePaginationClick}
+                            />
+                        </Stack>
+                    </CardActions>
+                </Card>
+            </Fragment>
         </Nav>
     );
 }
