@@ -11,28 +11,27 @@ const UnderLine = styled.hr`
     width: 80%;
     margin-left: 0px;
 `;
-const Section = styled.div``
+const Section = styled.div``;
 
-const Title=styled.p`
-font-size:xx-large;
-letter-spacing:30px;
-`
+const Title = styled.p`
+    font-size: xx-large;
+    letter-spacing: 30px;
+`;
 
-const Contact=styled.p`
-font-size:xx-large;
-letter-spacing:25px;
-`
+const Contact = styled.p`
+    font-size: xx-large;
+    letter-spacing: 25px;
+`;
 
 const Text = styled.p`
     margin-right: 10%;
-    padding-top:10px;
-    padding-bottom:10px;
-    padding-right:10px;
-    font-size:small;
-    line-height:1.7;
-    color:#828282;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    font-size: small;
+    line-height: 1.7;
+    color: #828282;
 `;
-
 
 function Footer() {
     return (

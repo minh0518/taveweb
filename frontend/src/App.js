@@ -159,7 +159,7 @@ function App() {
                     </Route>
 
                     {/* Main */}
-                    <Route path="/" element={<AppLayout />} >
+                    <Route path="/" element={<AppLayout />}>
                         <Route exact path="/" element={<Home />} />
                         <Route exact path="/about/tave" element={<About />} />
                         <Route
