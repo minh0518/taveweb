@@ -36,13 +36,11 @@ export default function AdminAboutManager() {
             setAboutadmin(response.data['about_admin']);
         });
     }, []);
-
-    return (
+    return (  
         <Fragment>
             <div>{about_admin?.title} </div>
             <div>{about_admin?.content} </div>
             <br />
-
             <Typography variant="body2">
                 {about_admin?.Images.map((image) => {
                     return (
