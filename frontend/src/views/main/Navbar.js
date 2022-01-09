@@ -25,14 +25,6 @@ const SubMenu = styled.div`
     display: none;
 `;
 
-const Title = styled.span`
-    font-weight: bold;
-    font-size: 45px;
-    position: relative;
-    margin-left: 10%;
-    margin-right: 10%;
-`;
-
 const UnList = styled.ul`
     display: flex;
     flex-direction: row;
