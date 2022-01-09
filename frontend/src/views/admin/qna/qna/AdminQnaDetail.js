@@ -27,8 +27,8 @@ export default function AdminQnaDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [question, setQuestion] = useState({});
-    const [answer, setAnswer] = useState({});
+    const [question, setQuestion] = useState({ Answers: [] });
+    const [answer, setAnswer] = useState([]);
     const [answerid, setAnswerid] = useState({});
 
     useEffect(() => {
