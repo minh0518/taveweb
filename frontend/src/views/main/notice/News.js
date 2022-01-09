@@ -75,7 +75,8 @@ export default function News() {
     const Nav = styled.nav`
     margin:auto;
     width:70%;
-`;
+    padding-bottom:20px;
+    `;
 
     return (
         <Nav>

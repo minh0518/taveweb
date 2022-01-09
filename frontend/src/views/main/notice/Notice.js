@@ -75,8 +75,9 @@ export default function Notices() {
     };
     const Nav = styled.nav`
     margin:auto;
+    padding-bottom:20px;
     width:70%;
-`;
+    `;
     return (
         <Nav>
         <Fragment>

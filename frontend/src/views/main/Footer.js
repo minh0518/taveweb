@@ -3,10 +3,9 @@ import styled from 'styled-components';
 
 const Info = styled.div`
     background: linear-gradient(to top, #c4d4e0, white);
-    position: absolute;
-    bottom: 0px;
     display: flex;
     flex-direction: row;
+    padding-top:20%;
 `;
 
 const UnderLine = styled.hr`

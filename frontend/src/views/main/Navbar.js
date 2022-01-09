@@ -6,16 +6,19 @@ import LogoSrc from './tave_logo.png';
 const Nav = styled.nav`
     background: linear-gradient(to bottom, #c4d4e0, white);
     position: relative;
-    height: 150px;
+    height: 220px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
 `;
 
 const Logo = styled.img`
-    width: 10%;
-    height: 50%;
-    margin : 1% 1% 1% 5%
+    width: 80%;
+    height: 40%;
+    margin-top: 1%;
+    margin-left: 10%;
+    margin-right: 10%;
+
 `;
 
 const SubMenu = styled.div`

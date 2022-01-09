@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import styled from 'styled-components';
+
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/material/Grid';
@@ -55,8 +57,13 @@ const QuestionCreate = () => {
                 console.log(err);
             });
     };
+    const Nav = styled.nav`
+    margin:auto;
+    width:70%;
+    `;
 
     return (
+        <Nav>
         <Grid container spacing={2}>
             <Grid item xs={12} align={'right'}>
                 <Button
@@ -71,11 +78,11 @@ const QuestionCreate = () => {
                 <Paper elevation={3} sx={{ minWidth: 275 }}>
                     <Grid item xs={12} align={'left'} sx={{ p: 1 }}>
                         <Typography
-                            sx={{ fontSize: 16, mb: 2 }}
+                            sx={{ fontSize: 18, mb: 2 }}
                             color="text.secondary"
                             gutterBottom
                         >
-                            제목
+                           제목
                         </Typography>
                         <FormControl fullWidth>
                             <TextField
@@ -93,7 +100,7 @@ const QuestionCreate = () => {
                 <Paper elevation={3} sx={{ minWidth: 275 }}>
                     <Grid item xs={12} align={'left'} sx={{ p: 1 }}>
                         <Typography
-                            sx={{ fontSize: 16, mb: 2 }}
+                            sx={{ fontSize: 18, mb: 2 }}
                             color="text.secondary"
                             gutterBottom
                         >
@@ -117,7 +124,7 @@ const QuestionCreate = () => {
                 <Paper elevation={3} sx={{ minWidth: 275 }}>
                     <Grid item xs={12} align={'left'} sx={{ p: 1 }}>
                         <Typography
-                            sx={{ fontSize: 16, mb: 2 }}
+                            sx={{ fontSize: 18, mb: 2 }}
                             color="text.secondary"
                             gutterBottom
                         >
@@ -137,6 +144,7 @@ const QuestionCreate = () => {
                 </Paper>
             </Grid>
         </Grid>
+        </Nav>
     );
 };
 
