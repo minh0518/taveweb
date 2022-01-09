@@ -13,11 +13,9 @@ const Nav = styled.nav`
 `;
 
 const Logo = styled.img`
-    width: 100%;
+    width: 10%;
     height: 50%;
-    margin-top: 1%;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin : 1% 1% 1% 5%
 `;
 
 const SubMenu = styled.div`
