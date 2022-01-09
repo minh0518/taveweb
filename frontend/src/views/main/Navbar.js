@@ -56,7 +56,7 @@ const List = styled.li`
 const MenuLink = styled(Link)`
     color: black;
     text-decoration: none;
-    transition: 850ms;
+    transition: 550ms;
     font-weight: bold;
     font-size: 20px;
     font-family: '"' Noto Sans KR ', sans-serif"';
