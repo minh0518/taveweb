@@ -9,6 +9,7 @@ const fs = require('fs');
 // const multerS3 = require('multer-s3');
 // const aws = require('aws-sdk');
 const bcrypt = require('bcryptjs');
+const { Op } = require('sequelize');
 
 const User = require('../models/user');
 
@@ -21,24 +22,14 @@ try {
     fs.mkdirSync('uploads');
 }
 
-// const upload = multer({
-//     storage: multer.diskStorage({
-//         destination(req, file, cb) {
-//             cb(null, 'uploads/');
-//         },
-//         filename(req, file, cb) {
-//             const ext = path.extname(file.originalname);
-//             cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
-//         },
-//     }),
-//     limits: { fileSize: 5 * 1024 * 1024 },
-// });
-
 router.route('/').get(async (req, res, next) => {
     try {
         const users = await User.findAll({
-            // attributes: ['id', 'title', 'content'],
+            attributes: ['id', 'name', 'created_at'],
+            offset: Number(req.query.skip),
+            limit: Number(req.query.limit),
         });
+
         res.json({ users });
     } catch (err) {
         logger.error(err);
@@ -46,19 +37,14 @@ router.route('/').get(async (req, res, next) => {
     }
 });
 
-router.post('/', userUpload.single('profile'), async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     try {
-        //logger.debug(req.file.location);
-        // logger.debug(req.body.email);
-        // logger.debug(req.body.password);
-        // logger.debug(req.body.name);
         hashedPassword = await bcrypt.hash(req.body.password, 10);
         const user = await User.create({
             email: req.body.email,
             password: hashedPassword,
             name: req.body.name,
             role: 'normal',
-            profile: req.file.location,
         });
         logger.debug(user);
         res.status(201).json({ user });
@@ -73,16 +59,18 @@ router
     .get(async (req, res, next) => {
         try {
             logger.debug(req.params.id);
-            const question = await Question.findOne({
-                include: [
-                    {
-                        model: Answer,
-                    },
+            const user = await User.findOne({
+                attributes: [
+                    'id',
+                    'name',
+                    'email',
+                    'created_at',
+                    'role',
+                    'password',
                 ],
-                attributes: ['id', 'title', 'content'],
                 where: { id: req.params.id },
             });
-            res.status(200).json({ question });
+            res.status(200).json({ user });
         } catch (err) {
             logger.error(err);
             next(err);
@@ -90,17 +78,21 @@ router
     })
     .patch(async (req, res, next) => {
         try {
-            logger.debug(req.params.id);
-            const result = await Question.update(
-                {
-                    title: req.body.title,
-                    content: req.body.content,
-                },
-                {
-                    where: { id: req.params.id },
-                }
-            );
-            res.json({ result });
+            const payload = {};
+
+            if (req.body.name) payload['name'] = req.body.name;
+            if (req.body.email) payload['email'] = req.body.email;
+            if (req.body.profile) payload['profile'] = req.body.profile;
+            if (req.body.password) payload['password'] = req.body.password;
+            if (req.body.role) payload['role'] = req.body.role;
+
+            logger.debug(JSON.stringify(payload));
+
+            const notice = await User.update(payload, {
+                where: { id: req.params.id },
+            });
+
+            res.status(201).json(payload);
         } catch (err) {
             logger.error(err);
             next(err);
@@ -109,7 +101,7 @@ router
     .delete(async (req, res, next) => {
         try {
             logger.debug(req.params.id);
-            const result = await Question.destroy({
+            const result = await User.destroy({
                 where: { id: req.params.id },
             });
             res.json({ result });
@@ -119,12 +111,14 @@ router
         }
     });
 
-router.route('/:id/password').get(async (req, res, next) => {
+router.route('/count').get(async (req, res, next) => {
+    logger.debug(req.query.search);
+    const name = req.query.search ? req.query.search : '';
     try {
-        const question = await Question.findOne({
-            where: { id: req.params.id, password: req.body.password },
+        const count = await User.count({
+            where: { name: { [Op.like]: `%${name}%` } },
         });
-        res.status(200).json({ check: question !== null });
+        res.status(200).json({ count });
     } catch (err) {
         logger.error(err);
         next(err);
