@@ -1,46 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Link , useParams} from 'react-router-dom';
 
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ImageListItem from '@mui/material/ImageListItem';
 
-const Notices=function(){
-    let getID=useParams()
+export default function NoticeDetail() {
+    const { id } = useParams();
+    const navigate = useNavigate();
 
-    console.log(getID)
-    console.log(getID.noticeID)
+    const [notice, setNotice] = useState({});
 
-    const [notice,setNotice]=useState([])
+    useEffect(() => {
+        axios.get(`/api/notices/${id}`).then((response) => {
+            console.log('response', response);
+            console.log('response', response.data);
+            setNotice(response.data['notice']);
+            console.log(response.data['notice']);
+        });
+    }, [id]);
 
-    useEffect(function(){
-        notices()
-    })
-
-    let skip=0;
-    let limit=3;
-
-
-    async function notices(){
-        const response=await axios.get("api/notices",{params:{skip,limit}})
-        setNotice(response.data.notices)
-    }
-
-    let notice_content={
-        content:"공지사항을 찾을 수 없습니다"
-    }
-
-    for(let i=0; i<notice.length; i++){
-        if(notice[i].id==Number(getID.noticeID)){
-            notice_content.content=notice[i].content
-            break;
-        }
-    }
-
-    return(
-        <>
-            <h2>공지사항 : </h2><p>{notice[getID.noticeID].title}</p>
-            <h3>내용 : </h3><p>{notice_content}</p>
-        </>
-    )
+    return (
+        <Fragment>
+            <div>{notice?.title}</div>
+            <div>{notice?.content}</div>
+            <br />
+            <Typography variant="body2">
+                {notice?.Images?.map((image) => {
+                    return (
+                        <ImageListItem>
+                            <img
+                                src={image.image_url}
+                                alt={image.image_description}
+                                loading="lazy"
+                            />
+                        </ImageListItem>
+                    );
+                })}
+            </Typography>
+        </Fragment>
+    );
 }
-
-export default Notices;

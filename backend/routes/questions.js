@@ -3,6 +3,7 @@ const logger = require('../config/winston');
 
 const Question = require('../models/question');
 const Answer = require('../models/answer');
+const Op = require('sequelize');
 
 const router = express.Router();
 
@@ -11,7 +12,13 @@ router
     .get(async (req, res, next) => {
         try {
             const questions = await Question.findAll({
-                // attributes: ['id', 'title', 'content'],
+                attributes: [
+                    'id',
+                    'title',
+                    'content',
+                    'created_at',
+                    'password',
+                ],
             });
             res.json({ questions });
         } catch (err) {
@@ -34,6 +41,22 @@ router
         }
     });
 
+router.route('/count').get(async (req, res, next) => {
+    logger.debug(req.query.search);
+    const title = req.query.search ? req.query.search : '';
+    try {
+        const count = await Question.count({
+            where: {
+                title: { [Op.like]: `%${title}%` },
+            },
+        });
+        res.status(200).json({ count });
+    } catch (err) {
+        logger.error(err);
+        next(err);
+    }
+});
+
 router
     .route('/:id')
     .get(async (req, res, next) => {
@@ -45,7 +68,7 @@ router
                         model: Answer,
                     },
                 ],
-                attributes: ['id', 'title', 'content'],
+                attributes: ['id', 'title', 'content', 'created_at'],
                 where: { id: req.params.id },
             });
             res.status(200).json({ question });

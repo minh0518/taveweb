@@ -49,30 +49,10 @@ const AdminNewNotice = () => {
             setImages(images.filter((image) => image.id !== original_image.id));
     };
 
-    // const handleAddImage = (image) => {
-    //     console.log(`이미지핸들러: ${image}`);
-    //     setImages(images.concat(image));
-    // };
-
-    // const handleRemoveImage = (image) => {
-    //     console.log(`이미지핸들러: ${image}`);
-    //     setImages(images.concat(image));
-    // };
-
     const handleChangeImage = (id, image) => {
         console.log(image);
         console.log(images);
         setImages(images.concat(image));
-        // setImageForms(
-        //     imageForms.map((imageForm) =>
-        //         imageForm.id === id
-        //             ? {
-        //                   ...imageForm,
-        //                   image: image,
-        //               }
-        //             : imageForm
-        //     )
-        // );
     };
 
     const handleChangeImageName = (id, image_name) => {

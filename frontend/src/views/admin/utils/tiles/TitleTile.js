@@ -34,29 +34,6 @@ export default function TitleTile({ title }) {
                         {title}
                     </Typography>
                 </Grid>
-                <Grid item xs={2} align={'right'}>
-                    <IconButton
-                        aria-label="more"
-                        id="long-button"
-                        aria-controls="long-menu"
-                        aria-expanded={open ? 'true' : undefined}
-                        aria-haspopup="true"
-                        onClick={handleClick}
-                    >
-                        <MoreVertIcon />
-                    </IconButton>
-                    <Menu
-                        id="basic-menu"
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button',
-                        }}
-                    >
-                        <MenuItem onClick={handleClose}>수정</MenuItem>
-                    </Menu>
-                </Grid>
             </Grid>
         </Paper>
     );

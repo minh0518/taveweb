@@ -2,6 +2,7 @@ const express = require('express');
 const logger = require('../config/winston');
 
 const FaQ = require('../models/faq');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ router
     .get(async (req, res, next) => {
         try {
             const faqs = await FaQ.findAll({
-                attributes: ['id', 'title', 'question'],
+                attributes: ['id', 'title', 'question', 'created_at'],
             });
             res.json({ faqs });
         } catch (err) {
@@ -33,13 +34,29 @@ router
         }
     });
 
+router.route('/count').get(async (req, res, next) => {
+    logger.debug(req.query.search);
+    const title = req.query.search ? req.query.search : '';
+    try {
+        const count = await FaQ.count({
+            where: {
+                title: { [Op.like]: `%${title}%` },
+            },
+        });
+        res.status(200).json({ count });
+    } catch (err) {
+        logger.error(err);
+        next(err);
+    }
+});
+
 router
     .route('/:id')
     .get(async (req, res, next) => {
         try {
             logger.debug(req.params.id);
             const faq = await FaQ.findOne({
-                attributes: ['id', 'title', 'question', 'answer'],
+                attributes: ['id', 'title', 'question', 'answer', 'created_at'],
                 where: { id: req.params.id },
             });
             res.status(200).json({ faq });

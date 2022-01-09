@@ -1,17 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import LogoSrc from './tave_logo.png';
 
 
 
 
 const Nav = styled.nav`
-    background: linear-gradient(to bottom, #d2d2d2, white);
+    background: linear-gradient(to bottom, #c4d4e0, white);
     position: relative;
     height: 150px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+`;
+
+const Logo = styled.img`
+    width: 200px;
+    height: 80px;
+    position: relative;
+    margin-top: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
 `;
 
 const SubMenu = styled.div`
@@ -75,7 +85,7 @@ const SubMenuLinks = styled(Link)`
 function Navbar() {
     return (
         <Nav>
-            <Title>(TAVE)</Title>
+            <Logo src={LogoSrc} />
             <UnList>
                 <List>
                     <MenuLink to="/" class="menuLink">
@@ -94,28 +104,32 @@ function Navbar() {
                 </List>
 
                 <List class="menuhover">
-                    <MenuLink to="/about" class="menuLink">
+                    <MenuLink to="/about/tave" class="menuLink">
                         TAVE
                     </MenuLink>
                     <SubMenu>
-                        <SubMenuLinks to="/about">TAVE 소개</SubMenuLinks>
+                        <SubMenuLinks to="/about/tave">TAVE 소개</SubMenuLinks>
                         <SubMenuLinks to="/about/history">연혁</SubMenuLinks>
                         <SubMenuLinks to="/about/manager">
                             운영진 소개
                         </SubMenuLinks>
-                        <a href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ">
+                        <a href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ" style={{ textDecoration: 'none' }} >
                             YouTube
                         </a>
                     </SubMenu>
                 </List>
-                
+
                 <List class="menuhover">
-                    <MenuLink to="/board" class="menuLink">
+                    <MenuLink to="/activity/review" class="menuLink">
                         TAVY
                     </MenuLink>
                     <SubMenu>
-                        <SubMenuLinks to="/board">활동 후기</SubMenuLinks>
-                        <SubMenuLinks to="/photo">활동 사진</SubMenuLinks>
+                        <SubMenuLinks to="/activity/review">
+                            활동 후기
+                        </SubMenuLinks>
+                        <SubMenuLinks to="/activity/picture">
+                            활동 사진
+                        </SubMenuLinks>
                     </SubMenu>
                 </List>
 

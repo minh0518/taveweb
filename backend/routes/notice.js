@@ -121,34 +121,20 @@ router
             next(err);
         }
     })
-    .patch(noticeUpload.array('images'), async (req, res, next) => {
+    .patch(async (req, res, next) => {
         try {
-            const notice = await Board.update(
-                {
-                    title: req.body.title,
-                    content: req.body.content,
-                },
-                { where: { id: req.params.id } }
-            );
+            const payload = {};
 
-            img_desc_json = JSON.parse(req.body.image_description);
+            if (req.body.title) payload['title'] = req.body.title;
+            if (req.body.content) payload['content'] = req.body.content;
 
-            logger.debug(JSON.stringify(req.files));
+            logger.debug(JSON.stringify(payload));
 
-            await Promise.all(
-                req.files.map(async (file) => {
-                    logger.debug(file);
-                    const notice_image = await Image.update(
-                        {
-                            image_key: file.key,
-                            image_url: file.location,
-                            image_description: img_desc_json[file.originalname],
-                        },
-                        { where: { board_id: req.params.id } }
-                    );
-                })
-            );
-            res.status(201).json({ notice });
+            const notice = await Board.update(payload, {
+                where: { id: req.params.id },
+            });
+
+            res.status(201).json(payload);
         } catch (err) {
             logger.error(err);
             next(err);
@@ -194,6 +180,93 @@ router
                 where: { board_id: req.params.id },
             });
             res.status(200).json({ success: true });
+        } catch (err) {
+            logger.error(err);
+            next(err);
+        }
+    });
+
+router
+    .route('/image/:id')
+    .patch(noticeUpload.single('image'), async (req, res, next) => {
+        try {
+            logger.debug(JSON.stringify(req.file));
+
+            const payload = {};
+
+            /* 1. 이미지가 있는지 확인 */
+            if (req.file) {
+                payload['image_key'] = req.file.key;
+                payload['image_url'] = req.file.location;
+
+                const image = await Image.findOne({
+                    attributes: ['image_key'],
+                    where: { id: req.params.id },
+                });
+
+                /* 2. 삭제 폼 작성 */
+                let Objects = [];
+                Objects.push({ Key: image['image_key'] });
+
+                var params = {
+                    Bucket: 'tave-bucket',
+                    Delete: { Objects },
+                };
+
+                /* 3. 삭제 요청 */
+                if (Objects.length !== 0) {
+                    // 빈 배열이 아닐때만
+                    s3.deleteObjects(params, function (err, data) {
+                        if (err) console.log(err, err.stack);
+                        else console.log(data);
+                    });
+                }
+            }
+
+            if (req.body.image_description)
+                payload['image_description'] = req.body.image_description;
+
+            const success = await Image.update(payload, {
+                where: { id: req.params.id },
+            });
+
+            res.status(200).json(payload);
+        } catch (err) {
+            logger.error(err);
+            next(err);
+        }
+    })
+    .delete(async (req, res, next) => {
+        try {
+            /* 1. 불러오기 */
+            const image = await Image.findOne({
+                attributes: ['image_key'],
+                where: { id: req.params.id },
+            });
+
+            /* 2. 삭제 폼 작성 */
+            let Objects = [];
+            Objects.push({ Key: image['image_key'] });
+
+            var params = {
+                Bucket: 'tave-bucket',
+                Delete: { Objects },
+            };
+
+            /* 3. 삭제 요청 */
+            if (Objects.length !== 0) {
+                // 빈 배열이 아닐때만
+                s3.deleteObjects(params, function (err, data) {
+                    if (err) console.log(err, err.stack);
+                    else console.log(data);
+                });
+            }
+
+            const success = await Image.destroy({
+                where: { id: req.params.id },
+            });
+
+            res.status(200).json({ success });
         } catch (err) {
             logger.error(err);
             next(err);
