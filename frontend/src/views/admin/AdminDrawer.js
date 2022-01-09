@@ -15,6 +15,7 @@ import NoticeRouter from './router/NoticeRouter';
 import ActivityRouter from './router/ActivityRouter';
 import QnARouter from './router/QnARouter';
 import ApplyRouter from './router/ApplyRouter';
+import UsersRouter from './router/UsersRouter';
 
 import { Outlet } from 'react-router-dom';
 
@@ -53,6 +54,7 @@ export default function AdminDrawer() {
                 <ActivityRouter toggleDrawer={toggleDrawer} />
                 <QnARouter toggleDrawer={toggleDrawer} />
                 <ApplyRouter toggleDrawer={toggleDrawer} />
+                <UsersRouter toggleDrawer={toggleDrawer} />
             </Fragment>
         );
     };

@@ -12,6 +12,12 @@ import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 
 export default function AnswerTile({ answer, handleAnswer }) {
+    answer?.map((value) => {
+        console.log('value.content:' + value.content);
+    });
+
+    //console.log('answer:' + answer);
+
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -66,9 +72,7 @@ export default function AnswerTile({ answer, handleAnswer }) {
                                         label="수정할 답변을 입력하세요."
                                         multiline
                                         rows={4}
-                                        defaultValue={answer?.map((value) => (
-                                            <div>{value.content}</div>
-                                        ))}
+                                        defaultValue={answer[0]?.content}
                                         onChange={handleChange}
                                     />
                                 </FormControl>
@@ -93,9 +97,7 @@ export default function AnswerTile({ answer, handleAnswer }) {
                         </>
                     ) : (
                         <Typography variant="h6" component="div">
-                            {answer?.map((value) => (
-                                <div>{value.content}</div>
-                            ))}
+                            {answer[0]?.content}
                         </Typography>
                     )}
                 </Grid>
