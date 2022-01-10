@@ -34,6 +34,7 @@ export default function Faqs() {
     const [faqs, setFaqs] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState(0);
+    const [idcount, setIdcount] = useState(0);
     const [search, setSearch] = useState('');
     const [limit, setLimit] = useState(8);
 
@@ -44,8 +45,9 @@ export default function Faqs() {
             .get('/api/faqs/count', { params: { search } })
             .then((response) => {
                 const pageCount = Math.ceil(response.data['count'] / limit);
-
                 setCount(pageCount);
+                console.log('count:' + response.data['count']);
+                setIdcount(response.data['count']);
             });
     }, [limit]);
 
@@ -71,6 +73,16 @@ export default function Faqs() {
         //createSearchParams : 쿼리스트링을 만듦
         //page : 2 들어감
     };
+
+    // const IdCount = () => {
+    //     const Id = [];
+    //     for (let i = 1; i < count; i++) {
+    //         console.log('count-i:' + count - i);
+    //         Id.push(<div>{count - i}</div>);
+    //     }
+    //     return Id;
+    // };
+
     const Nav = styled.nav`
         margin: auto;
         width: 70%;
@@ -87,16 +99,9 @@ export default function Faqs() {
                                     align="left"
                                     variant="h5"
                                     component="div"
-                                    color="primary"
+                                    color="#0066ff"
                                 >
                                     FAQ
-                                    <Typography
-                                        sx={{ fontSize: 14 }}
-                                        color="text.secondary"
-                                        gutterBottom
-                                    >
-                                        Page: {currentPage}
-                                    </Typography>
                                 </Typography>
                             </Grid>
                         </Grid>

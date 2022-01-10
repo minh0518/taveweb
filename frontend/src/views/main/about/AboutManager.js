@@ -40,46 +40,47 @@ export default function AdminAboutManager() {
     }, []);
 
     const Nav = styled.nav`
-    text-align: center;
-    width: 70%;
-    margin: auto;
-    padding: 20px;
-    border: 5px solid #C4D4E0;
-    font-family: '"' Noto Sans KR ', sans-serif"';
+        text-align: center;
+        width: 70%;
+        margin: auto;
+        padding: 20px;
+        border: 5px solid #c4d4e0;
+        font-family: '"' Noto Sans KR ', sans-serif"';
     `;
 
     return (
         <Nav>
-        <Fragment>          
-            <div>{about_admin?.title}</div>
-            <br />
-            <div style={{ whiteSpace: 'pre-line' }}>
-            {about_admin?.content}          
-            </div>
-            <br /><br />
-            <div>
-            <Typography variant="body2">
-                {about_admin?.Images.map((image) => {
-                    return (
-                        <ImageListItem>
-                            <div class="ImageWrap">
-                            <div class="image">
-                            <img
-                                src={image.image_url}
-                                alt={image.image_description}
-                                loading="lazy"
-                                width="600"
-                            />
-                            </div>
-                            </div>
-                        </ImageListItem>
-                    );
-                })}
-            </Typography>
-            </div>
-            <br />
-            <br />
-        </Fragment>
+            <Fragment>
+                <div>{about_admin?.title}</div>
+                <br />
+                <div style={{ whiteSpace: 'pre-line' }}>
+                    {about_admin?.content}
+                </div>
+                <br />
+                <br />
+                <div>
+                    <Typography variant="body2">
+                        {about_admin?.Images.map((image) => {
+                            return (
+                                <div class="ImageWrap">
+                                    <div class="image">
+                                        <img
+                                            object-fit="contain"
+                                            src={image.image_url}
+                                            alt={image.image_description}
+                                            loading="lazy"
+                                        />
+                                        <br />
+                                        {image.image_description}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </Typography>
+                </div>
+                <br />
+                <br />
+            </Fragment>
         </Nav>
     );
 }

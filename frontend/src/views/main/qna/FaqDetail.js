@@ -24,11 +24,10 @@ export default function FaqsDetail() {
     }, [id]);
 
     const Nav = styled.nav`
-        margin:auto;
-        width:70%;
+        margin: auto;
+        width: 70%;
     `;
-    const Info = styled.div`
-    `;
+    const Info = styled.div``;
     const Section = styled.div``;
     const UnderLine = styled.hr`
         width: 80%;
@@ -36,15 +35,37 @@ export default function FaqsDetail() {
     `;
     return (
         <Nav>
-        <Fragment>
-            <Info>
-            <Section>
-            <div><h1>제목: {faq?.title}</h1></div> <UnderLine />  <br />
-            <div>질문: {faq?.question}</div> <br />
-            <div style={{ whiteSpace: 'pre-line' }}>답변: {faq?.answer}</div> <br />          
-            </Section>
-            </Info>          
-        </Fragment>
+            <Fragment>
+                <Info>
+                    <Section>
+                        <div>{faq?.title}</div> <UnderLine /> <br />
+                        <div>
+                            <Typography
+                                variant="h5"
+                                component="div"
+                                color="#0066ff"
+                            >
+                                Q
+                            </Typography>
+                            {faq?.question}
+                        </div>{' '}
+                        <br />
+                        <UnderLine />
+                        <br />
+                        <div style={{ whiteSpace: 'pre-line' }}>
+                            <Typography
+                                variant="h5"
+                                component="div"
+                                color="#0066ff"
+                            >
+                                A
+                            </Typography>
+                            {faq?.answer}
+                        </div>{' '}
+                        <br />
+                    </Section>
+                </Info>
+            </Fragment>
         </Nav>
     );
 }

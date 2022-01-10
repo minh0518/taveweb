@@ -40,34 +40,39 @@ export default function AdminAboutHistory() {
     }, []);
 
     const Nav = styled.nav`
-    text-align: center;
-    width: 70%;
-    margin: auto;
-    padding: 20px;
-    border: 5px solid #C4D4E0;
-    font-family: '"' Noto Sans KR ', sans-serif"';
+        text-align: center;
+        width: 70%;
+        margin: auto;
+        padding: 20px;
+        border: 5px solid #c4d4e0;
+        font-family: '"' Noto Sans KR ', sans-serif"';
     `;
 
     return (
         <Nav>
-        <Fragment>
-            <div>{history?.title}</div>
-            <div style={{ whiteSpace: 'pre-line' }}>{history?.content}</div>
-            <br />
-            <Typography variant="body2">
-                {history?.Images.map((image) => {
-                    return (
-                        <ImageListItem>
-                            <img
-                                src={image.image_url}
-                                alt={image.image_description}
-                                loading="lazy"
-                            />
-                        </ImageListItem>
-                    );
-                })}
-            </Typography>
-        </Fragment>
+            <Fragment>
+                <div>{history?.title}</div>
+                <div style={{ whiteSpace: 'pre-line' }}>{history?.content}</div>
+                <br />
+                <Typography variant="body2">
+                    {history?.Images.map((image) => {
+                        return (
+                            <div class="ImageWrap">
+                                <div class="image">
+                                    <img
+                                        object-fit="contain"
+                                        src={image.image_url}
+                                        alt={image.image_description}
+                                        loading="lazy"
+                                    />
+                                    <br />
+                                    {image.image_description}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </Typography>
+            </Fragment>
         </Nav>
     );
 }

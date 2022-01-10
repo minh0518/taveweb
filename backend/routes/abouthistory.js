@@ -24,13 +24,13 @@ router
     .get(async (req, res, next) => {
         try {
             const history = await Board.findOne({
-                attributes: ['title', 'content'],
                 include: [
                     {
                         model: Image,
                         //attributes: ['image_url', 'image_description'],
                     },
                 ],
+                attributes: ['title', 'content'],
                 where: { category: 'about_history' },
             });
             res.status(200).json({ history });

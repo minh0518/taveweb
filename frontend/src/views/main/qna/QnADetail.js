@@ -26,13 +26,21 @@ export default function QnADetail() {
     const navigate = useNavigate();
 
     const [question, setQuestion] = useState({});
-    const [answer, setAnswer] = useState({});
+    const [answerid, setAnswerid] = useState('');
+    const [answer, setAnswer] = useState('');
     const [answerform, setAnswerform] = useState({});
 
     useEffect(() => {
         axios.get(`/api/questions/${id}`).then((response) => {
             console.log('response', response.data);
             setQuestion(response.data['question']);
+            if (response.data['question'].Answers[0]) {
+                setAnswerid(response.data['question'].Answers[0]?.id);
+            } else {
+                setAnswerid(-1);
+                setAnswer('아직 답변이 달리지 않았습니다.');
+                console.log('답변이 없습니다.');
+            }
         });
     }, [id]);
 
@@ -42,15 +50,37 @@ export default function QnADetail() {
                 <Info>
                     <Section>
                         <div>
-                            <h1>제목: {question?.title}</h1>
+                            <h1>{question?.title}</h1>
                         </div>{' '}
                         <UnderLine /> <br />
-                        <div>질문: {question?.content}</div> <br />
+                        <div>
+                            <Typography
+                                variant="h5"
+                                component="div"
+                                color="#0066ff"
+                            >
+                                Q
+                            </Typography>
+                            {question?.content}
+                        </div>{' '}
+                        <br />
+                        <UnderLine />
+                        <br />
                         <div style={{ whiteSpace: 'pre-line' }}>
-                            답변: <br />
-                            {question.Answers?.map((answer) => (
-                                <div>{answer.content}</div>
-                            ))}
+                            {answerid && (
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="#0066ff"
+                                >
+                                    A
+                                </Typography>
+                            )}
+                            {answerid &&
+                                question.Answers?.map((answer) => (
+                                    <div>{answer.content}</div>
+                                ))}
+                            {answerid == -1 && answer}
                         </div>
                     </Section>
                 </Info>
