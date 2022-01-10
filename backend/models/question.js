@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Question extends Sequelize.Model {
+module.exports = class Question extends (
+    Sequelize.Model
+) {
     static init(sequelize) {
         return super.init(
             {
@@ -13,6 +15,10 @@ module.exports = class Question extends Sequelize.Model {
                     allowNull: false,
                 },
                 password: {
+                    type: Sequelize.STRING(20),
+                    allowNull: false,
+                },
+                name: {
                     type: Sequelize.STRING(20),
                     allowNull: false,
                 },

@@ -32,6 +32,7 @@ import {
 const Nav = styled.nav`
     margin: auto;
     width: 70%;
+    padding-bottom: 20px;
 `;
 
 export default function QnA() {
@@ -68,7 +69,7 @@ export default function QnA() {
         axios
             .get('/api/questions', { params: { skip, limit } })
             .then((response) => {
-                console.log(response.data);
+                console.log(response.data['questions']);
                 setQuestions(response.data['questions']);
             });
     }, [searchParams]);
@@ -121,10 +122,12 @@ export default function QnA() {
                         <Table sx={{ minWidth: 275 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>ID</TableCell>
-                                    <TableCell align="right">제목</TableCell>
-                                    <TableCell align="right">
-                                        작성일자
+                                    <TableCell width="30%">ID</TableCell>
+                                    <TableCell width="30%" align="center">
+                                        제목
+                                    </TableCell>
+                                    <TableCell width="30%" align="right">
+                                        작성자
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
@@ -163,13 +166,11 @@ export default function QnA() {
                                         <TableCell component="th" scope="row">
                                             {question.id}
                                         </TableCell>
-                                        <TableCell align="right">
+                                        <TableCell align="center">
                                             {question.title}
                                         </TableCell>
                                         <TableCell align="right">
-                                            {new Date(
-                                                Date.parse(question?.created_at)
-                                            ).toLocaleString()}
+                                            {question.name}
                                         </TableCell>
                                     </TableRow>
                                 ))}

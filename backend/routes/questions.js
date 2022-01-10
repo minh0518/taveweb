@@ -18,6 +18,7 @@ router
                     'content',
                     'created_at',
                     'password',
+                    'name',
                 ],
                 offset: Number(req.query.skip),
                 limit: Number(req.query.limit),
@@ -34,6 +35,7 @@ router
                 title: req.body.title,
                 content: req.body.content,
                 password: req.body.password,
+                name: req.body.name,
             });
             logger.debug(question);
             res.status(201).json(question);
@@ -68,7 +70,7 @@ router
                         model: Answer,
                     },
                 ],
-                attributes: ['id', 'title', 'content', 'created_at'],
+                attributes: ['id', 'title', 'content', 'created_at', 'name'],
                 where: { id: req.params.id },
             });
             res.status(200).json({ question });
@@ -84,6 +86,7 @@ router
                 {
                     title: req.body.title,
                     content: req.body.content,
+                    name: req.body.name,
                 },
                 {
                     where: { id: req.params.id },

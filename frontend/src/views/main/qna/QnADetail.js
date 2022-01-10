@@ -10,6 +10,8 @@ import Button from '@mui/material/Button';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ImageListItem from '@mui/material/ImageListItem';
 
+import { useConfirm } from '../../admin/utils/alert/confirm';
+
 const Nav = styled.nav`
     margin: auto;
     width: 70%;
@@ -44,44 +46,98 @@ export default function QnADetail() {
         });
     }, [id]);
 
+    const deleteConfirm = async () => {
+        console.log('삭제했습니다.');
+        try {
+            const response = await axios.delete(`/api/questions/${id}`);
+            console.log(response.data);
+        } catch (e) {
+            console.log(e);
+        }
+        navigate(-1);
+    };
+    const cancelConfirm = () => {
+        console.log('취소했습니다.');
+    };
+
+    const confirmDelete = useConfirm(
+        '삭제하시겠습니까?',
+        deleteConfirm,
+        cancelConfirm
+    );
+
     return (
         <Nav>
             <Fragment>
                 <Info>
                     <Section>
-                        <div>
-                            <h1>{question?.title}</h1>
-                        </div>{' '}
-                        <UnderLine /> <br />
-                        <div>
-                            <Typography
-                                variant="h5"
-                                component="div"
-                                color="#0066ff"
+                        <Grid>
+                            <div>
+                                <h1>{question?.title}</h1>
+                            </div>{' '}
+                            <div
+                                style={{
+                                    textAlign: 'right',
+                                    width: '80%',
+                                    fontSize: '11px',
+                                }}
                             >
-                                Q
-                            </Typography>
-                            {question?.content}
-                        </div>{' '}
-                        <br />
-                        <UnderLine />
-                        <br />
-                        <div style={{ whiteSpace: 'pre-line' }}>
-                            {answerid && (
+                                작성일자:{' '}
+                                {new Date(
+                                    Date.parse(question?.created_at)
+                                ).toLocaleString()}
+                            </div>
+                            <UnderLine /> <br />
+                            <div>
                                 <Typography
                                     variant="h5"
                                     component="div"
                                     color="#0066ff"
                                 >
-                                    A
+                                    Q
                                 </Typography>
-                            )}
-                            {answerid &&
-                                question.Answers?.map((answer) => (
-                                    <div>{answer.content}</div>
-                                ))}
-                            {answerid == -1 && answer}
-                        </div>
+                                {question?.content}
+                            </div>{' '}
+                            <br />
+                            <UnderLine />
+                            <br />
+                            <div style={{ whiteSpace: 'pre-line' }}>
+                                {answerid && (
+                                    <Typography
+                                        variant="h5"
+                                        component="div"
+                                        color="#0066ff"
+                                    >
+                                        A
+                                    </Typography>
+                                )}
+                                {answerid &&
+                                    question.Answers?.map((answer) => (
+                                        <div>{answer.content}</div>
+                                    ))}
+                                {answerid == -1 && answer}
+                            </div>
+                        </Grid>
+                        <Grid>
+                            <Button
+                                style={{
+                                    color: 'white',
+                                    backgroundColor: '#0066ff',
+                                    fontSize: '15px',
+                                    //marginLeft: '100%',
+                                    align: 'right',
+                                    marginLeft: '70%',
+                                    //float: 'right',
+                                    //marginRight: '%',
+                                }}
+                                onClick={confirmDelete}
+                                variant="contained"
+                                endIcon={<DeleteForeverIcon />}
+                                size={'small'}
+                            >
+                                질문 삭제
+                            </Button>
+                        </Grid>
                     </Section>
                 </Info>
             </Fragment>

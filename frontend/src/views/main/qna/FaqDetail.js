@@ -38,7 +38,10 @@ export default function FaqsDetail() {
             <Fragment>
                 <Info>
                     <Section>
-                        <div>{faq?.title}</div> <UnderLine /> <br />
+                        <div>
+                            <h1>{faq?.title}</h1>
+                        </div>{' '}
+                        <UnderLine /> <br />
                         <div>
                             <Typography
                                 variant="h5"

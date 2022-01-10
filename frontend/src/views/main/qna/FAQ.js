@@ -110,9 +110,11 @@ export default function Faqs() {
                         <Table sx={{ minWidth: 275 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>ID</TableCell>
-                                    <TableCell align="right">제목</TableCell>
-                                    <TableCell align="right">
+                                    <TableCell width="30%">ID</TableCell>
+                                    <TableCell width="30%" align="center">
+                                        제목
+                                    </TableCell>
+                                    <TableCell width="30%" align="right">
                                         작성일자
                                     </TableCell>
                                 </TableRow>
@@ -134,13 +136,13 @@ export default function Faqs() {
                                         <TableCell component="th" scope="row">
                                             {faq.id}
                                         </TableCell>
-                                        <TableCell align="right">
+                                        <TableCell align="center">
                                             {faq.title}
                                         </TableCell>
                                         <TableCell align="right">
                                             {new Date(
                                                 Date.parse(faq?.created_at)
-                                            ).toLocaleString()}
+                                            ).toLocaleDateString()}
                                         </TableCell>
                                     </TableRow>
                                 ))}

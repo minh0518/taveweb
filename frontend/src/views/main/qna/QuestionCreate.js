@@ -23,6 +23,7 @@ const QuestionCreate = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
 
     const nextId = useRef(1);
 
@@ -39,6 +40,10 @@ const QuestionCreate = () => {
         setPassword(e.target.value);
     };
 
+    const handleChangeName = (e) => {
+        setName(e.target.value);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -46,6 +51,7 @@ const QuestionCreate = () => {
             title: title,
             content: content,
             password: password,
+            name: name,
         };
 
         axios
@@ -108,6 +114,30 @@ const QuestionCreate = () => {
                                     rows={5}
                                     value={content}
                                     onChange={handleChangeContent}
+                                />
+                            </FormControl>
+                        </Grid>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper elevation={3} sx={{ minWidth: 275 }}>
+                        <Grid item xs={12} align={'left'} sx={{ p: 1 }}>
+                            <Typography
+                                sx={{ fontSize: 15, mb: 2 }}
+                                color="text.secondary"
+                                gutterBottom
+                            >
+                                이름
+                            </Typography>
+                            <FormControl>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    label="이름을 입력하세요."
+                                    fontSize="10"
+                                    variant="outlined"
+                                    value={name}
+                                    onChange={handleChangeName}
                                 />
                             </FormControl>
                         </Grid>
