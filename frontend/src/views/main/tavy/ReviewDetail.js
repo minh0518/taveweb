@@ -25,41 +25,56 @@ export default function ReviewDetail() {
     }, [id]);
 
     const Nav = styled.nav`
-        margin:auto;
-        width:70%;
+        margin: auto;
+        width: 70%;
     `;
-    const Info = styled.div`
-    `;
+    const Info = styled.div``;
     const UnderLine = styled.hr`
         width: 80%;
         margin-left: 0px;
     `;
     const Section = styled.div``;
 
-    return ( 
-    <Nav>
-        <Fragment>           
-            <Info>
-            <Section>
-            <div><h1>{review?.title}</h1></div>
-            </Section>
-            </Info>
-            <div style={{ whiteSpace: 'pre-line' }}>{review?.content}</div>
-            <br />
-            <Typography variant="body2">
-                {review.Images?.map((image) => {
-                    return (
-                        <ImageListItem>
-                            <img
-                                src={image.image_url}
-                                alt={image.image_description}
-                                loading="lazy"
-                            />
-                        </ImageListItem>
-                    );
-                })}
-            </Typography>
-        </Fragment>
+    return (
+        <Nav>
+            <Fragment>
+                <Info>
+                    <Section>
+                        <div>
+                            <h1>{review?.title}</h1>
+                        </div>
+                        <div
+                            style={{
+                                textAlign: 'right',
+                                width: '80%',
+                                fontSize: '11px',
+                            }}
+                        >
+                            작성일자:{' '}
+                            {new Date(
+                                Date.parse(review?.created_at)
+                            ).toLocaleString()}
+                        </div>
+                        <UnderLine />
+                        <br />
+                    </Section>
+                </Info>
+                <div style={{ whiteSpace: 'pre-line' }}>{review?.content}</div>
+                <br />
+                <Typography variant="body2">
+                    {review.Images?.map((image) => {
+                        return (
+                            <ImageListItem>
+                                <img
+                                    src={image.image_url}
+                                    alt={image.image_description}
+                                    loading="lazy"
+                                />
+                            </ImageListItem>
+                        );
+                    })}
+                </Typography>
+            </Fragment>
         </Nav>
     );
 }

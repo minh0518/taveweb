@@ -43,6 +43,18 @@ export default function NoticeDetail() {
                         <div>
                             <h1>{notice?.title}</h1>
                         </div>
+                        <div
+                            style={{
+                                textAlign: 'right',
+                                width: '80%',
+                                fontSize: '11px',
+                            }}
+                        >
+                            작성일자:{' '}
+                            {new Date(
+                                Date.parse(notice?.created_at)
+                            ).toLocaleString()}
+                        </div>
                         <UnderLine />
                     </Section>
                 </Info>

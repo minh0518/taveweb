@@ -43,6 +43,18 @@ export default function NewsDetail() {
                         <div>
                             <h1>{news?.title}</h1>
                         </div>
+                        <div
+                            style={{
+                                textAlign: 'right',
+                                width: '80%',
+                                fontSize: '11px',
+                            }}
+                        >
+                            작성일자:{' '}
+                            {new Date(
+                                Date.parse(news?.created_at)
+                            ).toLocaleString()}
+                        </div>
                         <UnderLine />
                     </Section>
                 </Info>

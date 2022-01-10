@@ -25,11 +25,10 @@ export default function PicturesDetail() {
     }, [id]);
 
     const Nav = styled.nav`
-        margin:auto;
-        width:70%;
+        margin: auto;
+        width: 70%;
     `;
-    const Info = styled.div`
-    `;
+    const Info = styled.div``;
     const UnderLine = styled.hr`
         width: 80%;
         margin-left: 0px;
@@ -38,28 +37,44 @@ export default function PicturesDetail() {
 
     return (
         <Nav>
-        <Fragment>
-            <Info>
-            <Section>
-            <div><h1>{picture?.title}</h1></div>
-            </Section>
-            </Info>
-            <div style={{ whiteSpace: 'pre-line' }}>{picture?.content}</div>
-            <br />
-            <Typography variant="body2">
-                {picture.Images?.map((image) => {
-                    return (
-                        <ImageListItem>
-                            <img
-                                src={image.image_url}
-                                alt={image.image_description}
-                                loading="lazy"
-                            />
-                        </ImageListItem>
-                    );
-                })}
-            </Typography>
-        </Fragment>
+            <Fragment>
+                <Info>
+                    <Section>
+                        <div>
+                            <h1>{picture?.title}</h1>
+                        </div>
+                        <div
+                            style={{
+                                textAlign: 'right',
+                                width: '80%',
+                                fontSize: '11px',
+                            }}
+                        >
+                            작성일자:{' '}
+                            {new Date(
+                                Date.parse(picture?.created_at)
+                            ).toLocaleString()}
+                        </div>
+                        <UnderLine />
+                        <br />
+                    </Section>
+                </Info>
+                <div style={{ whiteSpace: 'pre-line' }}>{picture?.content}</div>
+                <br />
+                <Typography variant="body2">
+                    {picture.Images?.map((image) => {
+                        return (
+                            <ImageListItem>
+                                <img
+                                    src={image.image_url}
+                                    alt={image.image_description}
+                                    loading="lazy"
+                                />
+                            </ImageListItem>
+                        );
+                    })}
+                </Typography>
+            </Fragment>
         </Nav>
     );
 }

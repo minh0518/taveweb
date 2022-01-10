@@ -85,109 +85,119 @@ export default function QnA() {
     return (
         <Nav>
             <Fragment>
-                <Card elevation={3} sx={{ minWidth: 275 }}>
-                    <CardContent>
-                        <Grid container spacing={2}>
-                            <Grid item xs={8}>
-                                <Typography
-                                    align="left"
-                                    variant="h5"
-                                    component="div"
-                                    color="#0066ff"
-                                >
-                                    Q&A
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={4} align={'right'}>
-                                <Button
-                                    style={{
-                                        boxShadow: 'none',
-                                        color: '#0066ff',
-                                        backgroundColor: 'white',
-                                        fontSize: '15px',
-                                    }}
-                                    component={Link}
-                                    to={`create`}
-                                    variant="contained"
-                                    endIcon={<AddIcon />}
-                                    size={'small'}
-                                    color={'inherit'}
-                                >
-                                    질문 작성
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </CardContent>
-                    <TableContainer component={Paper} elevation={0}>
-                        <Table sx={{ minWidth: 275 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell width="30%">ID</TableCell>
-                                    <TableCell width="30%" align="center">
-                                        제목
-                                    </TableCell>
-                                    <TableCell width="30%" align="right">
-                                        작성자
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {questions.map((question) => (
-                                    <TableRow
-                                        component={Link}
-                                        to={`${question.id}`}
-                                        key={question.id}
-                                        onClick={(e) => {
-                                            const password_check = prompt(
-                                                '비밀번호를 입력하세요'
-                                            );
-                                            if (
-                                                password_check !=
-                                                question.password
-                                            ) {
-                                                if (password_check == null) {
-                                                    e.preventDefault();
-                                                } else {
-                                                    alert(
-                                                        '비밀번호가 틀렸습니다.'
-                                                    );
-                                                    e.preventDefault();
-                                                }
-                                            }
-                                        }}
-                                        sx={{
-                                            '&:last-child td, &:last-child th': {
-                                                border: 0,
-                                            },
-                                            color: 'inherit',
-                                            textDecoration: 'inherit',
-                                        }}
+                <div style={{ height: '100vh' }}>
+                    <Card elevation={3} sx={{ minWidth: 275 }}>
+                        <CardContent>
+                            <Grid container spacing={2}>
+                                <Grid item xs={8}>
+                                    <Typography
+                                        align="left"
+                                        variant="h5"
+                                        component="div"
+                                        color="#0066ff"
                                     >
-                                        <TableCell component="th" scope="row">
-                                            {question.id}
+                                        Q&A
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={4} align={'right'}>
+                                    <Button
+                                        style={{
+                                            boxShadow: 'none',
+                                            color: '#0066ff',
+                                            backgroundColor: 'white',
+                                            fontSize: '15px',
+                                        }}
+                                        component={Link}
+                                        to={`create`}
+                                        variant="contained"
+                                        endIcon={<AddIcon />}
+                                        size={'small'}
+                                        color={'inherit'}
+                                    >
+                                        질문 작성
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                        <TableContainer component={Paper} elevation={0}>
+                            <Table
+                                sx={{ minWidth: 275 }}
+                                aria-label="simple table"
+                            >
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell width="30%">ID</TableCell>
+                                        <TableCell width="30%" align="center">
+                                            제목
                                         </TableCell>
-                                        <TableCell align="center">
-                                            {question.title}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {question.name}
+                                        <TableCell width="30%" align="right">
+                                            작성자
                                         </TableCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <CardActions sx={{ justifyContent: 'center' }}>
-                        <Stack spacing={2}>
-                            <Pagination
-                                count={count}
-                                page={currentPage}
-                                boundaryCount={1}
-                                onChange={handlePaginationClick}
-                            />
-                        </Stack>
-                    </CardActions>
-                </Card>
+                                </TableHead>
+                                <TableBody>
+                                    {questions.map((question) => (
+                                        <TableRow
+                                            component={Link}
+                                            to={`${question.id}`}
+                                            key={question.id}
+                                            onClick={(e) => {
+                                                const password_check = prompt(
+                                                    '비밀번호를 입력하세요'
+                                                );
+                                                if (
+                                                    password_check !=
+                                                    question.password
+                                                ) {
+                                                    if (
+                                                        password_check == null
+                                                    ) {
+                                                        e.preventDefault();
+                                                    } else {
+                                                        alert(
+                                                            '비밀번호가 틀렸습니다.'
+                                                        );
+                                                        e.preventDefault();
+                                                    }
+                                                }
+                                            }}
+                                            sx={{
+                                                '&:last-child td, &:last-child th': {
+                                                    border: 0,
+                                                },
+                                                color: 'inherit',
+                                                textDecoration: 'inherit',
+                                            }}
+                                        >
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                            >
+                                                {question.id}
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                {question.title}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {question.name}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        <CardActions sx={{ justifyContent: 'center' }}>
+                            <Stack spacing={2}>
+                                <Pagination
+                                    count={count}
+                                    page={currentPage}
+                                    boundaryCount={1}
+                                    onChange={handlePaginationClick}
+                                />
+                            </Stack>
+                        </CardActions>
+                    </Card>
+                </div>
             </Fragment>
         </Nav>
     );

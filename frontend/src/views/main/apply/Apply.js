@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import styled from 'styled-components';
 
-const Apply = ()=>{
+const UnderLine = styled.hr`
+    width: 70%;
+    align: center;
+`;
+
+const Apply = () => {
     return (
-        <div>
-            <p>tave 지원 페이지</p>
-        </div>
+        <Fragment>
+            <div
+                style={{
+                    textAlign: 'center',
+                    fontSize: '15px',
+                    height: '100vh',
+                }}
+            >
+                <UnderLine /> <p>현재 모집 기간이 아닙니다.</p>
+                <UnderLine />
+            </div>
+        </Fragment>
     );
-}
+};
 
 export default Apply;
