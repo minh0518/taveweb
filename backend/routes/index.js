@@ -24,8 +24,8 @@ router.use('/questions', questionsRouter);
 router.use('/answers', answersRouter);
 router.use('/test', testsRouter);
 router.use('/faqs', faqsRouter);
-router.use('/apply', applyRouter);
-router.use('/recruit', recruitRouter);
+router.use('/applies', applyRouter);
+router.use('/recruits', recruitRouter);
 router.use('/about/tave', abouttaveRouter);
 router.use('/about/history', historyRouter);
 router.use('/news', newsRouter);
@@ -41,27 +41,6 @@ router.get('/', async (req, res, next) => {
         console.error(err);
         next(err);
     }
-});
-
-router.get('/hi', function (req, res) {
-    res.status(200).send('good');
-});
-
-router.get('/values', function (req, res) {
-    db.pool.query('SELECT * FROM lists;', (err, results, fileds) => {
-        if (err) return res.status(500).send(err);
-        else return res.json(results);
-    });
-});
-
-router.post('/value', function (req, res, next) {
-    db.pool.query(
-        `INSERT INTO lists (value) VALUES("${req.body.value}")`,
-        (err, results, fileds) => {
-            if (err) return res.status(500).send(err);
-            else return res.json({ success: true, value: req.body.value });
-        }
-    );
 });
 
 module.exports = router;

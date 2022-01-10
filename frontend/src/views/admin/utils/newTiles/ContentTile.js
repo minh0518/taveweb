@@ -91,7 +91,11 @@ export default function ContentTile({ content, handleContent }) {
                             </Grid>
                         </>
                     ) : (
-                        <Typography variant="h6" component="div">
+                        <Typography
+                            variant="h6"
+                            component="div"
+                            sx={{ whiteSpace: 'pre-line' }}
+                        >
                             {content}
                         </Typography>
                     )}
