@@ -136,7 +136,7 @@ export default function QnA() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {questions.map((question) => (
+                                    {questions.map((question, index) => (
                                         <TableRow
                                             component={Link}
                                             to={`${question.id}`}
@@ -173,7 +173,9 @@ export default function QnA() {
                                                 component="th"
                                                 scope="row"
                                             >
-                                                {question.id}
+                                                {index +
+                                                    1 +
+                                                    limit * (currentPage - 1)}
                                             </TableCell>
                                             <TableCell align="center">
                                                 {question.title}

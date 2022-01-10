@@ -64,13 +64,16 @@ export default function PicturesDetail() {
                 <Typography variant="body2">
                     {picture.Images?.map((image) => {
                         return (
-                            <ImageListItem>
+                            <div>
                                 <img
+                                    object-fit="contain"
                                     src={image.image_url}
                                     alt={image.image_description}
                                     loading="lazy"
                                 />
-                            </ImageListItem>
+                                <br />
+                                {image.image_description}
+                            </div>
                         );
                     })}
                 </Typography>

@@ -63,8 +63,6 @@ export default function AdminAbout() {
                             <div>
                                 <img
                                     object-fit="contain"
-                                    width="600"
-                                    height="600"
                                     src={image.image_url}
                                     alt={image.image_description}
                                     loading="lazy"

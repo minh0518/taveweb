@@ -114,7 +114,7 @@ export default function News() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {news.map((news) => (
+                                    {news.map((news, index) => (
                                         <TableRow
                                             component={Link}
                                             to={`${news.id}`}
@@ -131,7 +131,9 @@ export default function News() {
                                                 component="th"
                                                 scope="row"
                                             >
-                                                {news.id}
+                                                {index +
+                                                    1 +
+                                                    limit * (currentPage - 1)}
                                             </TableCell>
                                             <TableCell align="center">
                                                 {news.title}

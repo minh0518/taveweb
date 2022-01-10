@@ -40,6 +40,7 @@ router
                     },
                 ],
                 where: { category: 'notice' },
+                order: [['id', 'DESC']],
                 offset: Number(req.query.skip),
                 limit: Number(req.query.limit),
             });

@@ -37,6 +37,7 @@ router
                     },
                 ],
                 where: { category: 'activity_picture' },
+                order: [['id', 'DESC']],
                 offset: Number(req.query.skip),
                 limit: Number(req.query.limit),
             });
