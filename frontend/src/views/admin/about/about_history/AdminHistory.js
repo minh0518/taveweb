@@ -30,7 +30,7 @@ export default function AdminHistory() {
     useEffect(() => {
         axios.get(`/api/about/history`).then((response) => {
             console.log('response', response);
-            console.log('response', response.data);
+            console.log('response:', response.data['history']);
             if (response.data['history'] == null) {
                 setVisible(true);
             } else {

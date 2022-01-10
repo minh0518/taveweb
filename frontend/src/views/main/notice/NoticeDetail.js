@@ -25,46 +25,61 @@ export default function NoticeDetail() {
         });
     }, [id]);
     const Nav = styled.nav`
-    margin:auto;
-    width:70%;
-    height:300px;
-`;
-const Info = styled.div`
-`;
-const UnderLine = styled.hr`
-    width: 80%;
-    margin-left: 0px;
-`;
-const Section = styled.div``;
+        margin: auto;
+        width: 70%;
+    `;
+    const Info = styled.div``;
+    const UnderLine = styled.hr`
+        width: 80%;
+        margin-left: 0px;
+    `;
+    const Section = styled.div``;
 
     return (
         <Nav>
-        <Fragment>           
-            <Info>
-            <Section>
-                <div><h1>
-                {notice?.title}</h1>
-                </div>               
-                <UnderLine />              
-            </Section>
-            </Info>          
-            <br />
-            <div>{notice?.content}</div>
-            <br />
-            <Typography variant="body2">
-                {notice?.Images?.map((image) => {
-                    return (
-                        <ImageListItem>
-                            <img
-                                src={image.image_url}
-                                alt={image.image_description}
-                                loading="lazy"                             
-                            />
-                        </ImageListItem>
-                    );
-                })}
-            </Typography>
-        </Fragment>
+            <Fragment>
+                <Info>
+                    <Section>
+                        <div>
+                            <h1>{notice?.title}</h1>
+                        </div>
+                        <div
+                            style={{
+                                textAlign: 'right',
+                                width: '80%',
+                                fontSize: '11px',
+                            }}
+                        >
+                            작성일자:{' '}
+                            {new Date(
+                                Date.parse(notice?.created_at)
+                            ).toLocaleString()}
+                        </div>
+                        <UnderLine />
+                    </Section>
+                </Info>
+                <br />
+                <div style={{ whiteSpace: 'pre-line' }}>{notice?.content}</div>
+                <br />
+                <Typography variant="body2">
+                    {notice?.Images?.map((image) => {
+                        return (
+                            <div class="ImageWrap">
+                                <div class="image">
+                                    <img
+                                        object-fit="contain"
+                                        src={image.image_url}
+                                        alt={image.image_description}
+                                        loading="lazy"
+                                    />
+                                    <br />
+                                    {image.image_description}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </Typography>
+            </Fragment>
         </Nav>
     );
 }

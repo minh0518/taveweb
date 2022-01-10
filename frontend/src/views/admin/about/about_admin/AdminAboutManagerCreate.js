@@ -29,6 +29,7 @@ const AdminCreateAboutManager = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [images, setImages] = useState([]);
+    const [imagedesc, setImagedesc] = useState('');
     const [imageForms, setImageForms] = useState([]);
     const navigate = useNavigate();
 
@@ -95,6 +96,7 @@ const AdminCreateAboutManager = () => {
                     : imageForm
             )
         );
+        setImagedesc(value);
     };
 
     const handleSubmit = (e) => {
@@ -109,7 +111,7 @@ const AdminCreateAboutManager = () => {
             // console.log(image.name);
             data.append('images', image, image.name);
         });
-        data.append('image_description', '{}');
+        data.append('image_description', JSON.stringify(imagedesc));
 
         console.log(title);
         console.log(content);

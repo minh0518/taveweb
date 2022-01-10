@@ -15,7 +15,7 @@ const Nav = styled.nav`
 const Logo = styled.img`
     width: 15%;
     height: 50%;
-    margin: 1% 1% 1% 5%;
+    margin: 2% 1% 1% 9%;
 `;
 
 const SubMenu = styled.div`
@@ -25,9 +25,9 @@ const SubMenu = styled.div`
 const UnList = styled.ul`
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: right;
     height: 120px;
-    margin-right: 20%;
+    margin-top: 4%;
 `;
 
 const List = styled.li`
@@ -44,6 +44,8 @@ const List = styled.li`
 
 const MenuLink = styled(Link)`
     color: black;
+    padding: 2px 2px 2px 2px;
+    text-align: center;
     text-decoration: none;
     transition: 550ms;
     font-size: 20px;
@@ -51,20 +53,22 @@ const MenuLink = styled(Link)`
     font-family: '"' Noto Sans KR ', sans-serif"';
     &:hover {
         color: white;
-        background-color: navy;
-        border: 1px solid navy;
+        background-color: #0066ff;
+        border: 1px solid #0066ff;
         border-radius: 4px;
     }
 `;
 
 const SubMenuLinks = styled(Link)`
     text-decoration: none;
+    text-align: center;
+    padding: 1px 1px 1px 1px;
     font-size: 15px;
     font-family: '"' Noto Sans KR ', sans-serif"';
     color: black;
     &:hover {
         color: navy;
-        border: 1px solid navy;
+        border: 1px solid #0066ff;
         border-radius: 4px;
     }
 `;
@@ -102,7 +106,10 @@ function Navbar() {
                         </SubMenuLinks>
                         <a
                             href="https://www.youtube.com/channel/UCLEXVED0YBiMCl7tFCSD7cQ"
-                            style={{ textDecoration: 'none' }}
+                            style={{
+                                textDecoration: 'none',
+                                textAlign: 'center',
+                            }}
                         >
                             YouTube
                         </a>

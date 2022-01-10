@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import styled from 'styled-components';
 
-const ApplyCheck = () => {
+const UnderLine = styled.hr`
+    width: 70%;
+    align: center;
+`;
+
+const Apply = () => {
     return (
-        <div>
-            <p>지원 확인</p>
-        </div>
+        <Fragment>
+            <div
+                style={{
+                    textAlign: 'center',
+                    fontSize: '15px',
+                    height: '100vh',
+                }}
+            >
+                <UnderLine /> <p>현재 지원 확인 기간이 아닙니다.</p>
+                <UnderLine />
+            </div>
+        </Fragment>
     );
 };
 
-export default ApplyCheck;
+export default Apply;

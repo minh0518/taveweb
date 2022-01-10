@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 
+import styled from 'styled-components';
+
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -32,30 +34,48 @@ export default function AdminAbout() {
     useEffect(() => {
         axios.get(`/api/about/tave`).then((response) => {
             console.log('response', response);
-            console.log('response', response.data);
+            console.log('response:', response.data['about_tave']);
             setAbouttave(response.data['about_tave']);
         });
         console.log();
     }, []);
 
+    const Nav = styled.nav`
+        text-align: center;
+        width: 70%;
+        margin: auto;
+        padding: 20px;
+        border: 5px solid #c4d4e0;
+        font-family: '"' Noto Sans KR ', sans-serif"';
+    `;
+
     return (
-        <Fragment>
-            <div>{about_tave?.title}</div>
-            <div>{about_tave?.content}</div>
-            <br />
-            <Typography variant="body2">
-                {about_tave?.Images.map((image) => {
-                    return (
-                        <ImageListItem>
-                            <img
-                                src={image.image_url}
-                                alt={image.image_description}
-                                loading="lazy"
-                            />
-                        </ImageListItem>
-                    );
-                })}
-            </Typography>
-        </Fragment>
+        <Nav>
+            <Fragment>
+                <div>{about_tave?.title}</div>
+                <div style={{ whiteSpace: 'pre-line' }}>
+                    {about_tave?.content}
+                </div>
+                <br />
+                <Typography variant="body2">
+                    {about_tave?.Images.map((image) => {
+                        return (
+                            <div>
+                                <img
+                                    object-fit="contain"
+                                    width="600"
+                                    height="600"
+                                    src={image.image_url}
+                                    alt={image.image_description}
+                                    loading="lazy"
+                                />
+                                <br />
+                                {image.image_description}
+                            </div>
+                        );
+                    })}
+                </Typography>
+            </Fragment>
+        </Nav>
     );
 }

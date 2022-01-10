@@ -30,6 +30,7 @@ const AdminCreateAboutTave = () => {
     const [content, setContent] = useState('');
     const [images, setImages] = useState([]);
     const [imageForms, setImageForms] = useState([]);
+    const [imagedesc, setImagedesc] = useState('');
     const navigate = useNavigate();
 
     const nextId = useRef(1);
@@ -95,6 +96,7 @@ const AdminCreateAboutTave = () => {
                     : imageForm
             )
         );
+        setImagedesc(value);
     };
 
     const handleSubmit = (e) => {
@@ -109,11 +111,12 @@ const AdminCreateAboutTave = () => {
             // console.log(image.name);
             data.append('images', image, image.name);
         });
-        data.append('image_description', '{}');
+        data.append('image_description', JSON.stringify(imagedesc));
 
         console.log(title);
         console.log(content);
         console.log(images);
+        console.log(imagedesc);
         console.log(imageForms);
 
         axios

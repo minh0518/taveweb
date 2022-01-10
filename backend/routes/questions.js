@@ -3,7 +3,7 @@ const logger = require('../config/winston');
 
 const Question = require('../models/question');
 const Answer = require('../models/answer');
-const Op = require('sequelize');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -18,7 +18,10 @@ router
                     'content',
                     'created_at',
                     'password',
+                    'name',
                 ],
+                offset: Number(req.query.skip),
+                limit: Number(req.query.limit),
             });
             res.json({ questions });
         } catch (err) {
@@ -32,6 +35,7 @@ router
                 title: req.body.title,
                 content: req.body.content,
                 password: req.body.password,
+                name: req.body.name,
             });
             logger.debug(question);
             res.status(201).json(question);
@@ -46,9 +50,7 @@ router.route('/count').get(async (req, res, next) => {
     const title = req.query.search ? req.query.search : '';
     try {
         const count = await Question.count({
-            where: {
-                title: { [Op.like]: `%${title}%` },
-            },
+            where: { title: { [Op.like]: `%${title}%` } },
         });
         res.status(200).json({ count });
     } catch (err) {
@@ -68,7 +70,7 @@ router
                         model: Answer,
                     },
                 ],
-                attributes: ['id', 'title', 'content', 'created_at'],
+                attributes: ['id', 'title', 'content', 'created_at', 'name'],
                 where: { id: req.params.id },
             });
             res.status(200).json({ question });
@@ -84,6 +86,7 @@ router
                 {
                     title: req.body.title,
                     content: req.body.content,
+                    name: req.body.name,
                 },
                 {
                     where: { id: req.params.id },

@@ -91,16 +91,6 @@ export default function AdminQna() {
                                 </Typography>
                             </Typography>
                         </Grid>
-                        {/* <Grid item xs={4} align={'right'}>
-                            <Button
-                                component={Link}
-                                to={`create`}
-                                variant="contained"
-                                endIcon={<AddIcon />}
-                            >
-                                작성
-                            </Button>
-                        </Grid> */}
                     </Grid>
                 </CardContent>
                 <TableContainer component={Paper} elevation={0}>

@@ -29,6 +29,7 @@ const AdminCreateHistory = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [images, setImages] = useState([]);
+    const [imagedesc, setImagedesc] = useState('');
     const [imageForms, setImageForms] = useState([]);
     const navigate = useNavigate();
 
@@ -95,6 +96,7 @@ const AdminCreateHistory = () => {
                     : imageForm
             )
         );
+        setImagedesc(value);
     };
 
     const handleSubmit = (e) => {
@@ -109,11 +111,12 @@ const AdminCreateHistory = () => {
             // console.log(image.name);
             data.append('images', image, image.name);
         });
-        data.append('image_description', '{}');
+        data.append('image_description', JSON.stringify(imagedesc));
 
         console.log(title);
         console.log(content);
         console.log(images);
+        console.log(imagedesc);
         console.log(imageForms);
 
         axios

@@ -73,87 +73,92 @@ export default function News() {
     };
 
     const Nav = styled.nav`
-    margin:auto;
-    width:70%;
-    padding-bottom:20px;
+        margin: auto;
+        width: 70%;
+        padding-bottom: 20px;
     `;
 
     return (
         <Nav>
-        <Fragment>
-            <Card elevation={3} sx={{ minWidth: 275 }}>
-                <CardContent>
-                    <Grid container spacing={2}>
-                        <Grid item xs={8}>
-                            <Typography
-                                align="left"
-                                variant="h5"
-                                component="div"
-                                color="primary"
+            <Fragment>
+                <div style={{ height: '100vh' }}>
+                    <Card elevation={3} sx={{ minWidth: 275 }}>
+                        <CardContent>
+                            <Grid container spacing={2}>
+                                <Grid item xs={8}>
+                                    <Typography
+                                        align="left"
+                                        variant="h5"
+                                        component="div"
+                                        color="#0066ff"
+                                    >
+                                        Tavy News
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                        <TableContainer component={Paper} elevation={0}>
+                            <Table
+                                sx={{ minWidth: 275 }}
+                                aria-label="simple table"
                             >
-                                테이비 뉴스
-                                <Typography
-                                    sx={{ fontSize: 14 }}
-                                    color="text.secondary"
-                                    gutterBottom
-                                >
-                                    Page: {currentPage}
-                                </Typography>
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                </CardContent>
-                <TableContainer component={Paper} elevation={0}>
-                    <Table sx={{ minWidth: 275 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>ID</TableCell>
-                                <TableCell align="right">제목</TableCell>
-                                <TableCell align="right">작성일자</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {news.map((news) => (
-                                <TableRow
-                                    component={Link}
-                                    to={`${news.id}`}
-                                    key={news.id}
-                                    sx={{
-                                        '&:last-child td, &:last-child th': {
-                                            border: 0,
-                                        },
-                                        color: 'inherit',
-                                        textDecoration: 'inherit',
-                                    }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {news.id}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {news.title}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {new Date(
-                                            Date.parse(news?.created_at)
-                                        ).toLocaleString()}
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <CardActions sx={{ justifyContent: 'center' }}>
-                    <Stack spacing={2}>
-                        <Pagination
-                            count={count}
-                            page={currentPage}
-                            boundaryCount={1}
-                            onChange={handlePaginationClick}
-                        />
-                    </Stack>
-                </CardActions>
-            </Card>
-        </Fragment>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell width="30%">ID</TableCell>
+                                        <TableCell width="30%" align="center">
+                                            제목
+                                        </TableCell>
+                                        <TableCell width="30%" align="right">
+                                            작성일자
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {news.map((news) => (
+                                        <TableRow
+                                            component={Link}
+                                            to={`${news.id}`}
+                                            key={news.id}
+                                            sx={{
+                                                '&:last-child td, &:last-child th': {
+                                                    border: 0,
+                                                },
+                                                color: 'inherit',
+                                                textDecoration: 'inherit',
+                                            }}
+                                        >
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                            >
+                                                {news.id}
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                {news.title}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {new Date(
+                                                    Date.parse(news?.created_at)
+                                                ).toLocaleDateString()}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        <CardActions sx={{ justifyContent: 'center' }}>
+                            <Stack spacing={2}>
+                                <Pagination
+                                    count={count}
+                                    page={currentPage}
+                                    boundaryCount={1}
+                                    onChange={handlePaginationClick}
+                                />
+                            </Stack>
+                        </CardActions>
+                    </Card>
+                </div>
+            </Fragment>
         </Nav>
     );
 }

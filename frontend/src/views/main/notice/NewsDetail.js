@@ -24,44 +24,62 @@ export default function NewsDetail() {
         });
     }, [id]);
 
-const Nav = styled.nav`
-    margin:auto;
-    width:70%;
-`;
-const Info = styled.div`
-`;
-const UnderLine = styled.hr`
-    width: 80%;
-    margin-left: 0px;
-`;
-const Section = styled.div``;
+    const Nav = styled.nav`
+        margin: auto;
+        width: 70%;
+    `;
+    const Info = styled.div``;
+    const UnderLine = styled.hr`
+        width: 80%;
+        margin-left: 0px;
+    `;
+    const Section = styled.div``;
 
     return (
         <Nav>
-        <Fragment>
-        <Info>
-            <Section>
-                <div><h1>{news?.title}</h1></div>
-                <UnderLine />  
-            </Section>
-            </Info>
-            <br />
-            <div>{news?.content}</div>
-            <br />
-            <Typography variant="body2">
-                {news.Images?.map((image) => {
-                    return (
-                        <ImageListItem>
-                            <img
-                                src={image.image_url}
-                                alt={image.image_description}
-                                loading="lazy"
-                            />
-                        </ImageListItem>
-                    );
-                })}
-            </Typography>
-        </Fragment>
+            <Fragment>
+                <Info>
+                    <Section>
+                        <div>
+                            <h1>{news?.title}</h1>
+                        </div>
+                        <div
+                            style={{
+                                textAlign: 'right',
+                                width: '80%',
+                                fontSize: '11px',
+                            }}
+                        >
+                            작성일자:{' '}
+                            {new Date(
+                                Date.parse(news?.created_at)
+                            ).toLocaleString()}
+                        </div>
+                        <UnderLine />
+                    </Section>
+                </Info>
+                <br />
+                <div style={{ whiteSpace: 'pre-line' }}> {news?.content}</div>
+                <br />
+                <Typography variant="body2">
+                    {news.Images?.map((image) => {
+                        return (
+                            <div class="ImageWrap">
+                                <div class="image">
+                                    <img
+                                        object-fit="contain"
+                                        src={image.image_url}
+                                        alt={image.image_description}
+                                        loading="lazy"
+                                    />
+                                    <br />
+                                    {image.image_description}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </Typography>
+            </Fragment>
         </Nav>
     );
 }

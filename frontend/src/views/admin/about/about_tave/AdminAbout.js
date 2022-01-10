@@ -30,7 +30,7 @@ export default function AdminAbout() {
     useEffect(() => {
         axios.get(`/api/about/tave`).then((response) => {
             console.log('response', response);
-            console.log('response', response.data);
+            console.log('response:', response.data['about_tave']);
             if (response.data['about_tave'] == null) {
                 setVisible(true);
             } else {

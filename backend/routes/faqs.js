@@ -12,7 +12,10 @@ router
         try {
             const faqs = await FaQ.findAll({
                 attributes: ['id', 'title', 'question', 'created_at'],
+                offset: Number(req.query.skip),
+                limit: Number(req.query.limit),
             });
+
             res.json({ faqs });
         } catch (err) {
             logger.error(err);
