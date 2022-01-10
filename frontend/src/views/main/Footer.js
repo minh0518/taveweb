@@ -14,7 +14,6 @@ const UnderLine = styled.hr`
 const Section = styled.div`
     margin-left: 3%;
 `;
-
 const Title = styled.p`
     font-size: xx-large;
     letter-spacing: 30px;
@@ -60,9 +59,10 @@ function Footer() {
                 <Contact>CONTACT</Contact>
                 <UnderLine />
                 <Text>
-                    TAVE는 2018년도 초에 창설된 국내 최초 4차
-                    산업혁명동아리입니다. Technology WAVE의 약자로 4차 산업혁명
-                    기술의 물결을 선도한다 라는 뜻을 가지고 있습니다.
+                    회장 : 010-xxxx-xxxx<br/>
+                    부회장 : 010-xxxx-xxxx<br/>
+                    경영처 : 010-xxxx-xxxx<br/>
+                    등등..
                 </Text>
             </Section>
         </Info>

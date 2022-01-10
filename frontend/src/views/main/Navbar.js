@@ -34,8 +34,7 @@ const List = styled.li`
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
-    width: 100px;
-    margin: 10px;
+    margin: 3px 25px;
     &:hover ${SubMenu} {
         display: flex;
         flex-direction: column;
@@ -49,7 +48,7 @@ const MenuLink = styled(Link)`
     text-decoration: none;
     transition: 550ms;
     font-size: 20px;
-    font-weight: bold;
+    letter-spacing: 8px;
     font-family: '"' Noto Sans KR ', sans-serif"';
     &:hover {
         color: white;
