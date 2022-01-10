@@ -115,7 +115,7 @@ export default function AdminNotice() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {notices.map((notice) => (
+                            {notices.map((notice, index) => (
                                 <TableRow
                                     component={Link}
                                     to={`${notice.id}`}
@@ -129,7 +129,8 @@ export default function AdminNotice() {
                                     }}
                                 >
                                     <TableCell component="th" scope="row">
-                                        {notice.id}
+                                        {/* {notice.id} */}
+                                        {index + 1 + limit * (currentPage - 1)}
                                     </TableCell>
                                     <TableCell align="right">
                                         {notice.title}
