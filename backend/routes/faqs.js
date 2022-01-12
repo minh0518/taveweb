@@ -14,6 +14,7 @@ router
                 attributes: ['id', 'title', 'question', 'created_at'],
                 offset: Number(req.query.skip),
                 limit: Number(req.query.limit),
+                order: [['id', 'DESC']],
             });
 
             res.json({ faqs });

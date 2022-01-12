@@ -117,7 +117,7 @@ export default function Review() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {reviews.map((review) => (
+                                    {reviews.map((review, index) => (
                                         <TableRow
                                             component={Link}
                                             to={`${review.id}`}
@@ -134,7 +134,9 @@ export default function Review() {
                                                 component="th"
                                                 scope="row"
                                             >
-                                                {review.id}
+                                                {index +
+                                                    1 +
+                                                    limit * (currentPage - 1)}
                                             </TableCell>
                                             <TableCell align="center">
                                                 {review.title}

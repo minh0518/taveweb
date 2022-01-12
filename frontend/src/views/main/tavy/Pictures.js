@@ -117,7 +117,7 @@ export default function Pictures() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {pictures.map((picture) => (
+                                    {pictures.map((picture, index) => (
                                         <TableRow
                                             component={Link}
                                             to={`${picture.id}`}
@@ -134,7 +134,9 @@ export default function Pictures() {
                                                 component="th"
                                                 scope="row"
                                             >
-                                                {picture.id}
+                                                {index +
+                                                    1 +
+                                                    limit * (currentPage - 1)}
                                             </TableCell>
                                             <TableCell align="center">
                                                 {picture.title}

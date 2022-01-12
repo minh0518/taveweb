@@ -37,6 +37,7 @@ router
                     },
                 ],
                 where: { category: 'news' },
+                order: [['id', 'DESC']],
                 offset: Number(req.query.skip),
                 limit: Number(req.query.limit),
             });

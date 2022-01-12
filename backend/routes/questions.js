@@ -22,6 +22,7 @@ router
                 ],
                 offset: Number(req.query.skip),
                 limit: Number(req.query.limit),
+                order: [['id', 'DESC']],
             });
             res.json({ questions });
         } catch (err) {

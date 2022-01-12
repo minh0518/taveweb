@@ -124,7 +124,7 @@ export default function Faqs() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {faqs.map((faq) => (
+                                    {faqs.map((faq, index) => (
                                         <TableRow
                                             component={Link}
                                             to={`${faq.id}`}
@@ -141,7 +141,9 @@ export default function Faqs() {
                                                 component="th"
                                                 scope="row"
                                             >
-                                                {faq.id}
+                                                {index +
+                                                    1 +
+                                                    limit * (currentPage - 1)}
                                             </TableCell>
                                             <TableCell align="center">
                                                 {faq.title}

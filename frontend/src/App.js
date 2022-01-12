@@ -66,7 +66,9 @@ import AdminQnaDetail from './views/admin/qna/qna/AdminQnaDetail';
 // Apply
 import AdminApply from './views/admin/apply/AdminApply';
 import AdminApplyCheck from './views/admin/apply/AdminApplyCheck';
-import AdminApplyForm from './views/admin/apply/AdminApplyForm';
+import AdminApplyForm from './views/admin/apply/form/AdminApplyForm';
+import AdminApplyFormCreate from './views/admin/apply/form/AdminApplyFormCreate';
+import AdminApplyFormDetail from './views/admin/apply/form/AdminApplyFormDetail';
 import AdminApplyResult from './views/admin/apply/AdminApplyResult';
 //User
 import AdminUsers from './views/admin/users/AdminUsers';
@@ -143,6 +145,15 @@ function App() {
                         {/* Apply */}
                         <Route path="apply" element={<AdminApply />} />
                         <Route path="apply/form" element={<AdminApplyForm />} />
+                        <Route
+                            path="apply/form/:id"
+                            element={<AdminApplyFormDetail />}
+                        />
+                        <Route
+                            path="apply/form/create"
+                            element={<AdminApplyFormCreate />}
+                        />
+
                         <Route
                             path="apply/check"
                             element={<AdminApplyCheck />}

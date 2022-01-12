@@ -39,7 +39,7 @@ export default function AdminNotice() {
 
     useEffect(() => {
         axios
-            .get('/api/notices/count', { params: { search } }) //api백엔드에는 현재7개
+            .get('/api/recruits/count', { params: { search } }) //api백엔드에는 현재7개
             //의 notices가 있음
             .then((response) => {
                 const pageCount = Math.ceil(response.data['count'] / limit);
@@ -58,9 +58,9 @@ export default function AdminNotice() {
         setCurrentPage(page);
 
         axios
-            .get('/api/notices', { params: { skip, limit } })
+            .get('/api/recruits', { params: { skip, limit } })
             .then((response) => {
-                setNotices(response.data['notices']);
+                setNotices(response.data['recruits']);
             });
     }, [searchParams]);
 
@@ -83,7 +83,7 @@ export default function AdminNotice() {
                                 variant="h5"
                                 component="div"
                             >
-                                공지사항
+                                신청서 목록
                                 <Typography
                                     sx={{ fontSize: 14 }}
                                     color="text.secondary"
@@ -115,7 +115,7 @@ export default function AdminNotice() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {notices.map((notice, index) => (
+                            {notices.map((notice) => (
                                 <TableRow
                                     component={Link}
                                     to={`${notice.id}`}
@@ -129,8 +129,7 @@ export default function AdminNotice() {
                                     }}
                                 >
                                     <TableCell component="th" scope="row">
-                                        {/* {notice.id} */}
-                                        {index + 1 + limit * (currentPage - 1)}
+                                        {notice.id}
                                     </TableCell>
                                     <TableCell align="right">
                                         {notice.title}

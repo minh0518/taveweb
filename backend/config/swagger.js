@@ -4,9 +4,9 @@ const options = {
     swaggerDefinition: {
         components: {},
         info: {
-            title: 'Test API',
+            title: 'Tave-Web API',
             verssion: '1.0.0',
-            description: 'Test API with express',
+            description: 'Tave-Web API with express',
         },
         //host: 'localhost:3300',
         //basePath: '/',
