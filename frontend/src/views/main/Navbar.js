@@ -35,6 +35,7 @@ const List = styled.li`
     display: flex;
     flex-direction: column;
     margin: 3px 25px;
+    
     &:hover ${SubMenu} {
         display: flex;
         flex-direction: column;

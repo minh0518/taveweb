@@ -29,7 +29,7 @@ import {
     useSearchParams,
 } from 'react-router-dom';
 
-const Nav = styled.nav`
+const StyledDiv = styled.div`
     margin: auto;
     width: 70%;
     padding-bottom: 20px;
@@ -83,7 +83,7 @@ export default function QnA() {
     };
 
     return (
-        <Nav>
+        <StyledDiv>
             <Fragment>
                 <div style={{ height: '100vh' }}>
                     <Card elevation={3} sx={{ minWidth: 275 }}>
@@ -199,6 +199,6 @@ export default function QnA() {
                     </Card>
                 </div>
             </Fragment>
-        </Nav>
+        </StyledDiv>
     );
 }
