@@ -50,8 +50,11 @@ export default function QnA() {
     useEffect(() => {
         axios
             .get('/api/questions/count', { params: { search } })
+            //현재 내 qna갯수들이 백엔드에 "count": (갯수) 로 저장돼있음
             .then((response) => {
                 const pageCount = Math.ceil(response.data['count'] / limit);
+                                        // "count": 11 처럼 문자열로 키값이 들어가있으므로
+                                        //대괄호 표기법으로 접근
 
                 setCount(pageCount);
             });
@@ -80,6 +83,7 @@ export default function QnA() {
         navigate({ search: `?${createSearchParams({ page })}` });
         //createSearchParams : 쿼리스트링을 만듦
         //page : 2 들어감
+        // 쿼리스트링 형식 그대로 넣어주기 위해 .search 부분에 들어가는 ? 도 적어줌
     };
 
     return (
@@ -141,19 +145,14 @@ export default function QnA() {
                                             component={Link}
                                             to={`${question.id}`}
                                             key={question.id}
-                                            onClick={(e) => {
+                                            onClick={(e) => { //각 질문들 클릭하면 발생
                                                 const password_check = prompt(
                                                     '비밀번호를 입력하세요'
                                                 );
-                                                if (
-                                                    password_check !=
-                                                    question.password
-                                                ) {
-                                                    if (
-                                                        password_check == null
-                                                    ) {
+                                                if (password_check !=question.password) { // 비번이 틀렸을 때
+                                                    if (password_check == null) { // 공백일때는 그냥 이벤트 막기만 함
                                                         e.preventDefault();
-                                                    } else {
+                                                    } else {                //진짜 비번을 틀리게 입력한거면 경고창 뜨고 이벤트 막기
                                                         alert(
                                                             '비밀번호가 틀렸습니다.'
                                                         );
@@ -173,7 +172,7 @@ export default function QnA() {
                                                 component="th"
                                                 scope="row"
                                             >
-                                                {index +
+                                                {index +    //질문번호들(mysql에 있는 번호와 상관없이 map돌면서 얻게 되는 번호들 첫번째 질문이면 그냥 0이 되는것임)
                                                     1 +
                                                     limit * (currentPage - 1)}
                                             </TableCell>
