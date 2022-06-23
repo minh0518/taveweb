@@ -50,26 +50,25 @@ export default function QnA() {
     useEffect(() => {
         axios
             .get('/api/questions/count', { params: { search } })
-            //현재 내 qna갯수들이 백엔드에 "count": (갯수) 로 저장돼있음
             .then((response) => {
                 const pageCount = Math.ceil(response.data['count'] / limit);
-                                        // "count": 11 처럼 문자열로 키값이 들어가있으므로
-                                        //대괄호 표기법으로 접근
 
                 setCount(pageCount);
+                
             });
     }, [limit]);
 
     useEffect(() => {
         let page = Number(searchParams.get('page'));
-        //쿼리스트링에서 page키값의 value를 가져옴
-        page = page ? page : 1; // undefined면 1을 채워 넣음
+        
+        page = page ? page : 1;
         console.log(page);
         let skip = (page - 1) * limit;
 
         setCurrentPage(page);
 
-        axios
+        axios               ///api/questions에서 get하는 것이고
+                            //쿼리스트링으로 skip=0 , limit=8 을 줌
             .get('/api/questions', { params: { skip, limit } })
             .then((response) => {
                 console.log(response.data['questions']);
@@ -80,6 +79,8 @@ export default function QnA() {
     const handlePaginationClick = (e, page) => {
         setCurrentPage(page);
 
+        //navigate() 함수에 전달되는 parameter 중 첫 번째 매개변수는 이동할 화면이고, 
+        //두 번째 매개변수는 전달할 parameter들
         navigate({ search: `?${createSearchParams({ page })}` });
         //createSearchParams : 쿼리스트링을 만듦
         //page : 2 들어감
@@ -190,10 +191,14 @@ export default function QnA() {
                         <CardActions sx={{ justifyContent: 'center' }}>
                             <Stack spacing={2}>
                                 <Pagination
-                                    count={count}
-                                    page={currentPage}
+                                    count={count} //전체 페이지 버튼 수
+                                    page={currentPage} //그냥 현재 선택된 페이지를 의미
                                     boundaryCount={1}
                                     onChange={handlePaginationClick}
+                                    //Pagination 번호목록을 클릭해서 페이지 번호 or pageSize가 바뀔 때 마다 함수가 실행
+                                    //그리고 이 함수에 전달되는 인자는 event와 
+                                    //page(직접 클릭하거나 화살표를 통해 넘어가려는 타겟 페이지가)를 인자로 받는다.
+                                    //여기 page는 위 속성의 page와 다르다
                                 />
                             </Stack>
                         </CardActions>
